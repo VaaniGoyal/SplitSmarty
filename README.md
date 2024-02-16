@@ -1,71 +1,81 @@
-# Getting Started with Create React App
+# SplitSmarty
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SplitSmarty is a comprehensive web application designed to streamline the management of group expenses, facilitating fair and transparent financial transactions among group members.
 
-## Available Scripts
+Skip keeping records of your group payments in separate spaces. A one place webapp to settle up your billsplits!
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+SplitSmarty offers the following key features to effectively manage group expenses:
 
-### `npm test`
+- **Bill Splitting**: Automate bill splitting among group members using advanced algorithms to ensure fairness.
+- **User Dashboard**: Personalized dashboard providing an overview of monthly expenses, budget status, and savings.
+- **Group Management**: Create and manage groups for shared expenses, including group invites and real-time expense updates.
+- **Expense Tracking**: Input and categorize expenses with the option for equal or unequal splits among participants.
+- **Secure Authentication**: Robust user authentication system with secure login/signup features.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+SplitSmarty is built using the following technology stack:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Frontend**:
+  - HTML
+  - CSS
+  - JavaScript (React.js)
+- **Backend**:
+  - Node.js
+  - Express.js
+- **Database**:
+  - Sequelise or MySQL (Relational Database Management System)
+- **Authentication**:
+  - JSON Web Tokens (JWT)
+- **Development Tools**:
+  - Git
+  - npm (Node Package Manager)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To install SplitSmarty locally, follow these steps:
 
-### `npm run eject`
+1. Clone the repository: `git clone https://github.com/splitsmarty.git`
+2. Install dependencies: `npm install`
+3. Set up the database: []
+4. Run the server: `npm start`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Once the application is installed and running, users can access SplitSmarty through a web browser. Here are some key actions users can perform:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **User Authentication**: Log in or sign up securely using username and password.
+2. **User Dashboard**: View personalized dashboard with monthly expenses, budget status, and savings.
+3. **Group Management**: Create, join, or manage groups for shared expenses.
+4. **Expense Tracking**: Input expenses, categorize them, and split among group members.
+5. **Real-Time Updates**: Receive real-time updates on shared expenses within the group.
+6. **Payment Integration**: Optionally, integrate third-party payment gateways for secure financial transactions.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contributing
 
-## Learn More
+Contributions to SplitSmarty are welcome! If you'd like to contribute to the project, please follow these steps:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fork the repository on GitHub.
+2. Make your changes and commit them to your fork.
+3. Submit a pull request with a detailed description of your changes.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
+This project is maintained by the following geeks:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+[![Contributors](https://contributors-img.web.app/image?repo=komalgt13/SplitSmarty)](https://github.com/komalgt13/SplitSmarty/graphs/contributors)
 
-### Analyzing the Bundle Size
+SplitSmarty is licensed under the [MIT License](LICENSE).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# SplitSmarty" 
+---
