@@ -16,6 +16,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+// Read each model file in the models directory and import it
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -30,13 +31,21 @@ fs
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
+  
+// Sync models with database
+(async () => {
+  await sequelize.sync({ force: true }); // This will drop the tables if they already exist and create new ones
+})();
 
+// Apply associations
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+
+// Export sequelize and Sequelize instance along with models
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
