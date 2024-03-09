@@ -11,14 +11,17 @@ function minTransfers(transactions) {
     }
     
     const balances = Array.from(balancesMap.values()).filter(balance => balance !== 0);
+    const transactionsList = [];
     
-    return settleDebts(balances, 0);
+    const minTransactionCount = settleDebts(balances, 0, transactionsList);
+    
+    return { minTransactionCount, transactionsList };
 }
 
-function settleDebts(balanceList, currentIndex) {
+function settleDebts(balanceList, currentIndex, transactionsList) {
     if (balanceList.length === 0 || currentIndex >= balanceList.length) return 0;
     if (balanceList[currentIndex] === 0) {
-        return settleDebts(balanceList, currentIndex + 1);
+        return settleDebts(balanceList, currentIndex + 1, transactionsList);
     }
     
     const currentBalance = balanceList[currentIndex];
@@ -28,7 +31,8 @@ function settleDebts(balanceList, currentIndex) {
         const nextBalance = balanceList[nextIndex];
         if (currentBalance * nextBalance < 0) {
             balanceList[nextIndex] = currentBalance + nextBalance;
-            minTransactionCount = Math.min(minTransactionCount, 1 + settleDebts(balanceList, currentIndex + 1));
+            transactionsList.push({ from: currentIndex, to: nextIndex, amount: Math.abs(nextBalance) });
+            minTransactionCount = Math.min(minTransactionCount, 1 + settleDebts(balanceList, currentIndex + 1, transactionsList));
             balanceList[nextIndex] = nextBalance;
             if (currentBalance + nextBalance === 0) {
                 break;
