@@ -46,6 +46,9 @@
         minCashFlowRec(amount);
     }
 
+    //person 0 paid 1000 to 1 and 2000 to 2
+    //person 1 paid 5000 to 2
+    //person 2 doesn't to pay anything 
     var graph = [ [0, 1000, 2000],
                         [0, 0, 5000],
                         [0, 0, 0]];
