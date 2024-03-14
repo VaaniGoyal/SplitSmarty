@@ -7,16 +7,23 @@ module.exports = (sequelize) => {
         user_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            allowNull: false
         },
-        username: DataTypes.STRING,
-        password: DataTypes.STRING,
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: DataTypes.STRING,
         creation_date: DataTypes.DATE,
         profile_picture: DataTypes.STRING,
         name: DataTypes.STRING,
-        description: DataTypes.STRING,
+        self_description: DataTypes.STRING,
         phone_number: DataTypes.STRING,
-        email: DataTypes.STRING,
         upi_id: DataTypes.STRING
     }, { sequelize, modelName: 'user' });
 

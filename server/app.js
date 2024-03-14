@@ -1,11 +1,23 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
-const { User, SplitGroup, GroupMember } = require('./models');
+const { sequelize } = require('./models/');
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
+
+// import routes from controllers
+const userController = require('./controllers/userController')
+const authRoutes = require('./routes/requireAuth');
+
+
+// routes
+app.post('/signup', userController.signUp)
+app.post('/login', userController.login)
+app.get('/logout', userController.logout)
+
+app.use('/auth', authRoutes);
 
 // Route for creating a split group for a user
 app.post('/api/splitGroups', async (req, res) => {
@@ -19,10 +31,10 @@ app.post('/api/splitGroups', async (req, res) => {
     }
 
     // Create SplitGroup
-    const splitGroup = await SplitGroup.create({ name: group_name, description });
+    const splitGroup = await sequelize.SplitGroup.create({ name: group_name, description });
 
     // Associate user with the group
-    await GroupMember.create({ user_id, group_id: splitGroup.group_id });
+    await sequelize.User.create({ user_id, group_id: splitGroup.group_id });
 
     // Send success response
     res.status(201).json({ message: 'Split group created successfully.', data: splitGroup });
