@@ -1,32 +1,33 @@
-// Group_Page.js
+
+
 
 import React, { useState, useEffect } from 'react';
 import { LeftNavBar, Logout, VerticalLine } from './Template';
 import { Link } from 'react-router-dom';
 import './Group_Page.css'; // Import CSS file for global styles
 
-const dummyGroups = [
-  { id: 1, name: "Group 1" },
-  { id: 2, name: "Group 2" },
-  { id: 3, name: "Group 3" },
-  { id: 4, name: "Group 4" },
-  { id: 5, name: "Group 5" }
+const dummyexpenseInfo = [
+  { id: 1, name: "expense-1" },
+  { id: 2, name: "expense-2" }
 ];
 
 function Group_Page() {
-  const [groups, setGroups] = useState([]);
+  // Define state to store group info
+  const [expenseInfo, setexpenseInfo] = useState(null);
 
+  // Fetch Group info from the backend when the component mounts
   useEffect(() => {
-    fetchGroups();
+    fetchexpenseInfo();
   }, []);
 
-  const fetchGroups = async () => {
+  // Function to fetch group info from the backend
+  const fetchexpenseInfo = async () => {
     try {
       // Simulating a delay to mimic API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      setGroups(dummyGroups);
+      setexpenseInfo(dummyexpenseInfo);
     } catch (error) {
-      console.error('Error fetching groups:', error);
+      console.error('Error fetching expense info:', error);
     }
   };
 
@@ -36,12 +37,15 @@ function Group_Page() {
       <Logout />
       <VerticalLine />
       <br />
-      <p> <span className="page-head">Your Groups</span></p><br /><br />
-      <ul className="ul">
-        {groups.map((group, index) => (
-          <li className="li" key={group.id}>Group{index + 1}</li>
-        ))}
-      </ul>
+      <p> <span className="page-head">Group Name</span></p><br /><br />
+      <div className="expense-button">
+      
+        {expenseInfo && expenseInfo.map(expense => (
+          <React.Fragment key={expense.id}>
+            <button className="expense-button" >{expense.name}</button>
+          </React.Fragment>
+          ))}
+      </div>
     </div>
   );
 }

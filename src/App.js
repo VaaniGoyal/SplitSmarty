@@ -7,7 +7,7 @@ import Create_Acc from './Create_Acc';
 import User_Page from './User_Page';
 import Group_Page from './Group_Page';
 import Add_Expense from './Add_Expense';
-import Change_Pass from './Change_Pass';
+import Display_Group from './Display_Group';
 import './App.css';
 
 function App() {
@@ -18,11 +18,12 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Login_Page />} />
+          <Route path="/Login_Page" element={<Login_Page />} />
           <Route path="/Create_Acc" element={<Create_Acc />} />
           <Route path="/User_Page" element={<User_Page />} />
           <Route path="/Group_Page" element={<Group_Page />} />
           <Route path="/Add_Expense" element={<Add_Expense />} />
-          <Route path="/Change_Pass" element={<Change_Pass />} />
+          <Route path="/Display_Group" element={<Display_Group />} />
         </Routes>
       </div>
     </Router>

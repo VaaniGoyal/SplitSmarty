@@ -1,19 +1,4 @@
-body {
-    background-image: url('images/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow: scroll;
-    font-family: Arial, sans-serif;
-    color: #333;
-    height: 100vh;
-    margin-left: 5rem;
-    line-height: 1rem;
-  }
-  
-  nav {
-    color: #444b59;
-  }
+
   
   ul {
     list-style-type: none;

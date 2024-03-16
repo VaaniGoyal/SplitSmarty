@@ -1,35 +1,4 @@
-body {
-    background-image: url('images/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow: scroll;
-    font-family: Arial, sans-serif;
-    color: #333;
-    height: 100vh;
-    margin-left: 5rem;
-    line-height: 1rem;
-  }
-  
-  nav {
-    color: #444b59;
-  }
-  
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 2rem; /* Converted from 2% */
-  }
-  
-  li {
-    margin: 0 1rem; /* Converted from 0 1% */
-    padding: 0;
-  }
-  
+
   /* Input Styles */
   .input-container {
     margin-bottom: 0.1rem;
@@ -62,22 +31,7 @@ body {
     color: #000f73;
   }
   
-  .radio-label {
-    font-size: 1rem; /* Converted from 100% */
-    color: #444b59;
-    display: block;
-    margin-bottom: 1rem; /* Converted from 1px */
-    margin-left: -0.9rem; /* Converted from -1.5% */
-    margin-top: 1rem; /* Converted from 1% */
-    display: inline-block;
-  }
   
-  .radio-input {
-    width: 1rem; /* Converted from 15px */
-    height: 1rem; /* Converted from 15px */
-    margin-right: 0.5rem; /* Converted from 5px */
-    border-radius: 50%;
-  }
   
   .sign-in-button {
     background-color: #8699da; /* Change background color to purple */
@@ -89,14 +43,7 @@ body {
   }
   
   
-  footer {
-    background-color: #444b59;
-    height: 0.5rem; /* Converted from 1% */
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-  }
+  
   
   /* Responsive Styling */
   @media (max-width: 768px) {

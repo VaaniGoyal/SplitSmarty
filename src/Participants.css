@@ -1,0 +1,27 @@
+/* Group_Page.css */
+/* Group_Page.css */
+
+.Participants {
+    font-size: 18px;
+  }
+  
+  .button {
+    align-items: center;
+    margin-left: 32rem;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #8699da;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  
