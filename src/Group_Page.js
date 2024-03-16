@@ -1,7 +1,8 @@
 // Group_Page.js
 
 import React, { useState, useEffect } from 'react';
-import { Navigation, LeftNavBar, Logout, VerticalLine } from './Template';
+import { LeftNavBar, Logout, VerticalLine } from './Template';
+import { Link } from 'react-router-dom';
 import './Group_Page.css'; // Import CSS file for global styles
 
 const dummyGroups = [
@@ -31,7 +32,6 @@ function Group_Page() {
 
   return (
     <div className="Group_Page">
-      <Navigation />
       <LeftNavBar />
       <Logout />
       <VerticalLine />
@@ -42,7 +42,6 @@ function Group_Page() {
           <li className="li" key={group.id}>Group{index + 1}</li>
         ))}
       </ul>
-      <footer></footer>
     </div>
   );
 }

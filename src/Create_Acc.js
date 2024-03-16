@@ -1,20 +1,12 @@
 // Create_Acc.js
 
 import React from 'react';
-import './Create_Acc.css'; // Import CSS file for global styles
+import './Create_Acc.css'; 
 import { Link } from 'react-router-dom';
 
 function Create_Acc() {
   return (
     <div className="Create_Acc">
-      <nav>
-        <ul>
-          <li><button>Help</button></li>
-          <li><button>About Us</button></li>
-          <li><button id="sign-up-1" >Sign Up</button></li> 
-          <li><button>Home</button></li>
-        </ul>
-      </nav>
       <br />
       <p> <span className="page-head">Split Smarty</span></p><br /><br />
       <span style={{ fontSize: '1.5rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', fontWeight: 'bold' }}>CREATE YOUR ACCOUNT!</span><br /><br /><br></br>
@@ -33,8 +25,7 @@ function Create_Acc() {
             <input type="password" placeholder="Confirm your password" /><br /><br />
             <button onClick={togglePasswordVisibility}></button>
       </div>
-      <button id="sign-in" className="sign-in-button" style={{ marginLeft: '4rem', marginRight: '5rem' }}>Sign in</button><br /><br />
-      <footer></footer>
+      <Link to='/User_Page'><button id="sign-in" className="sign-in-button" style={{ marginLeft: '4rem', marginRight: '5rem' }}>Sign In</button></Link><br /><br />
     </div>
   );
 }
