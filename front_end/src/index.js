@@ -7,12 +7,13 @@ import Create_Acc from './Create_Acc';
 import Group_Page from './Group_Page';
 import User_Page from './User_Page';
 import Add_Expense from './Add_Expense';
+import Change_Pass from './Change_Pass';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Add_Expense />
+    <App />
   </React.StrictMode>
 );
 

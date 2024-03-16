@@ -1,6 +1,7 @@
 // Login_Page.js
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Login_Page.css'; // Import CSS file for global styles
 function Login_Page() {
   return (
