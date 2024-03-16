@@ -22,7 +22,7 @@ function LeftNavBar() {
           <img src="./user.png" /> Your Profile
         </button>
       </Link>
-      <Link to='/Group_Page'>
+      <Link to='/Display_Group'>
         <button>
         <img src="./group.png" /> Your Groups
         </button>
@@ -35,11 +35,6 @@ function LeftNavBar() {
       <button>
         <img src="./transactions.png" /> Transactions
       </button>
-      <Link to='/Change_Pass'>
-        <button>
-          <img src="./lock.png" /> Change Password
-        </button>
-      </Link>
     </div>
   );
 }

@@ -8,7 +8,8 @@ import './User_Page.css'; // Import CSS file for global styles
 const dummyUserInfo = {
   name: "John Doe",
   contactNo: "123-456-7890",
-  email: "john.doe@example.com"
+  email: "john.doe@example.com",
+  upi: "12344"
 };
 
 function User_Page() {
@@ -43,7 +44,7 @@ function User_Page() {
           <p>Name: {userInfo.name}</p>
           <p>Contact No: {userInfo.contactNo}</p>
           <p>Email Address: {userInfo.email}</p>
-          {/* Render other user info fields as needed */}
+          <p>UPI ID: {userInfo.upi}</p>
         </div>
       )}
     </div>

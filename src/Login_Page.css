@@ -27,22 +27,6 @@
     text-align: left; /* Align the text to the left */
   }
   
-  .radio-label {
-    font-size: 1rem; /* Converted from 100% */
-    color: #444b59;
-    display: block;
-    margin-bottom: 1rem; /* Converted from 1px */
-    margin-left: -0.9rem; /* Converted from -1.5% */
-    margin-top: 1rem; /* Converted from 1% */
-    display: inline-block;
-  }
-  
-  .radio-input {
-    width: 1rem; /* Converted from 15px */
-    height: 1rem; /* Converted from 15px */
-    margin-right: 0.5rem; /* Converted from 5px */
-    border-radius: 50%;
-  }
   
   .sign-in-button {
     background-color: #8699da; /* Change background color to purple */
@@ -51,16 +35,6 @@
     padding: 0.5rem 4rem; /* Increase padding for larger size */
     font-size: 1.2rem; /* Increase font size for larger size */
     border-radius: 5rem;
-  }
-  
-  .icon a {
-    display: inline-block; 
-    visibility: inherit;
-    text-decoration: none; /* Remove underline */
-  }
-  .icons img {
-    margin-left: 3rem; /* Converted from 2.5% */
-    margin-right: 5rem; /* Converted from 6% */
   }
 
   
