@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Login_Page.css'; 
 function Login_Page() {
   const [data, setData] = useState([]);
@@ -28,15 +28,17 @@ function Login_Page() {
   };
   const handleButtonClick = () => {
     let success = false;
+    let userId = null;
     data.forEach((d, i) => {
       if (email === d.email && password === d.password) {
+        userId = d.user_id;
         success = true;
       }
     });
   
     if (success) {
       setSignInSuccess(true);
-      navigate('/User_Page');
+      navigate('/User_Page', { state: { userId: userId } });
     } else {
       setError('Sign-in failed. Please try again.');
     }
