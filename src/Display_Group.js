@@ -1,34 +1,24 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { LeftNavBar, Logout, VerticalLine } from './Template';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Don't forget to import axios
 import './Display_Group.css'; // Import CSS file for global styles
 
-const dummyGroupInfo = [
-  { id: 1, name: "Group-1" },
-  { id: 2, name: "Group-2" }
-];
-
 function Display_Group() {
-  // Define state to store group info
-  const [groupInfo, setGroupInfo] = useState(null);
+  const [groupInfo, setGroupInfo] = useState([]);
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-  // Fetch Group info from the backend when the component mounts
   useEffect(() => {
-    fetchGroupInfo();
+    axios.get('http://localhost:3030/group')
+      .then(res => {
+        setGroupInfo(res.data); // Set the group info from the API response
+      })
+      .catch(err => setError(err.message));
   }, []);
 
-  // Function to fetch group info from the backend
-  const fetchGroupInfo = async () => {
-    try {
-      // Simulating a delay to mimic API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setGroupInfo(dummyGroupInfo);
-    } catch (error) {
-      console.error('Error fetching group info:', error);
-    }
+  const handleGroupClick = (groupId) => {
+    navigate('/Group_Page'); // Navigate to the group details page
   };
 
   return (
@@ -38,17 +28,16 @@ function Display_Group() {
       <VerticalLine />
       <br />
       <p> <span className="page-head">Your Groups</span></p><br /><br />
-      <div className="group-button">
-      
-        {groupInfo && groupInfo.map(group => (
-          <React.Fragment key={group.id}>
-            <Link to="/Group_Page"><button className="group-button" >{group.name}</button></Link>
-          </React.Fragment>
-          ))}
+      <div className="group-list">
+        {groupInfo.map(group => (
+          <button key={group.id} onClick={() => handleGroupClick(group.id)} className="group-button">
+            {group.group_describe}
+          </button>
+        ))}
       </div>
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }
 
 export default Display_Group;
-

@@ -101,7 +101,7 @@
     border-radius: 2rem;
     cursor: pointer;
     text-align: center; /* Align text to the center */
-    font-size: 1.5rem;
+    font-size: 0.5rem;
     text-decoration: none;
 }
 
@@ -120,7 +120,49 @@
     color: #000f73;
     margin-left: 25rem;
   }
+  .head {
+    font-size: 1.5rem; /* Converted from 500% */
+    font-family: 'Nunito', Arial, sans-serif;
+    color: #000f73;
+    margin-left: 13rem;
+  }
   
+  .dropdowns {
+    margin-bottom: 12rem;
+    margin-left: 25rem;
+  }
+  
+  .dropdowns button {
+    margin-right: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    background-color: blanchedalmond;
+    color:black;
+    border-radius: 2rem;
+  }
+  
+  .dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 0rem;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.2);
+    padding: 1rem;
+    z-index: 1;
+    margin-left: 6rem;
+  }
+  
+  .dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -10rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #f9f9f9 transparent;
+  }
   
   /* Responsive Styling */
   @media (max-width: 768px) {
