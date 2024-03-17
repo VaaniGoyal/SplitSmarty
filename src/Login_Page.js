@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login_Page.css'; 
-
 function Login_Page() {
-  const [data, setData] = useState({ email: '', password: '' });
+  const [data, setData] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [signInSuccess, setSignInSuccess] = useState(false);
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
   useEffect(() => {
-    // Fetch data or perform other side effects if needed
-    fetch('/api/data')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
+    axios.get('http://localhost:3030/user')
+    .then(res => {
+      setData(res.data);
+    })
+    .catch(err => console.log(err));
   }, []);
-
   const togglePasswordVisibility = () => {
     var passwordField = document.getElementById("password");
     if (passwordField.type === "password") {
@@ -25,15 +26,22 @@ function Login_Page() {
       document.querySelector("button").textContent = "Show Password";
     }
   };
-
-  const ifSignIn = () => {
-    if (email === data.email && password === data.password) {
-      return true;
+  const handleButtonClick = () => {
+    let success = false;
+    data.forEach((d, i) => {
+      if (email === d.email && password === d.password) {
+        success = true;
+      }
+    });
+  
+    if (success) {
+      setSignInSuccess(true);
+      navigate('/User_Page');
     } else {
-      return false;
+      setError('Sign-in failed. Please try again.');
     }
   };
-
+  
   return (
     <div className="Login_Page">
       <br />
@@ -45,7 +53,8 @@ function Login_Page() {
       <span style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59' }}>Password</span><br /><br />
       <input type="password" id="password" placeholder="Your password" onChange={(e) => setPassword(e.target.value)} /><br /><br />
       <button onClick={togglePasswordVisibility}></button>
-      <Link to='/User_Page'><button onClick={ifSignIn} id="sign-in" className="sign-in-button" style={{ marginLeft: '4rem', marginRight: '5rem' }}>Sign In</button></Link><br /><br />
+      <button onClick={handleButtonClick} id="sign-in" className="sign-in-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Sign In</button><br /><br />
+      {error && <div className="error">{error}</div>}
     </div>
   );
 }

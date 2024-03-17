@@ -27,11 +27,6 @@ function LeftNavBar() {
         <img src="./group.png" /> Your Groups
         </button>
       </Link>
-      <Link to='/Add_Expense'>
-        <button>
-          <img src="./Rupee.png" /> Add Expenses
-        </button>
-      </Link>
       <button>
         <img src="./transactions.png" /> Transactions
       </button>

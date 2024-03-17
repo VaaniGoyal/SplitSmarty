@@ -2,35 +2,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { LeftNavBar, Logout, VerticalLine } from './Template';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './User_Page.css'; // Import CSS file for global styles
 
-const dummyUserInfo = {
-  name: "John Doe",
-  contactNo: "123-456-7890",
-  email: "john.doe@example.com",
-  upi: "12344"
-};
-
 function User_Page() {
-  // Define state to store user info
   const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-  // Fetch user info from the backend when the component mounts
   useEffect(() => {
-    fetchUserInfo();
+    axios.get('http://localhost:3030/user')
+      .then(res => {
+        // Assuming users are stored in an array and you want the second user
+        if (res.data && res.data.length >= 2) {
+          setUserInfo(res.data[1]); // Index 1 corresponds to the second user
+        } else {
+          setError('User not found');
+        }
+      })
+      .catch(err => setError(err.message));
   }, []);
-
-  // Function to fetch user info from the backend
-  const fetchUserInfo = async () => {
-    try {
-      // Simulating a delay to mimic API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setUserInfo(dummyUserInfo);
-    } catch (error) {
-      console.error('Error fetching user info:', error);
-    }
-  };
+  
+  
 
   return (
     <div className="User_Page">
@@ -42,11 +36,12 @@ function User_Page() {
       {userInfo && (
         <div className="user-info">
           <p>Name: {userInfo.name}</p>
-          <p>Contact No: {userInfo.contactNo}</p>
+          <p>Contact No: {userInfo.contact}</p>
           <p>Email Address: {userInfo.email}</p>
-          <p>UPI ID: {userInfo.upi}</p>
+          <p>UPI ID: {userInfo.upi_id}</p>
         </div>
       )}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }
