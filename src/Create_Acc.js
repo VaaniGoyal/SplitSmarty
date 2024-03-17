@@ -1,8 +1,7 @@
-//Create_Acc.js
-
 import React, { useState } from 'react';
 import './Create_Acc.css'; 
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios for HTTP requests
 
 function Create_Acc() {
   const [formData, setFormData] = useState({
@@ -10,7 +9,7 @@ function Create_Acc() {
     email: '',
     contactNo: '',
     password: '',
-    confirmPassword: '',
+    self_describe: '',
     upiId: ''
   });
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,40 +21,37 @@ function Create_Acc() {
   };
 
   const handleSignIn = async () => {
-    const { password, confirmPassword } = formData;
-    if (password !== confirmPassword) {
-      setErrorMessage("Password and Confirm Password do not match.");
-      return; // Prevent form submission
-    }
-
     try {
-      const response = await fetch('http://localhost:3030/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const { password, confirmPassword, ...userData } = formData; // Exclude confirmPassword
+      if (password !== confirmPassword) {
+        setErrorMessage("Password and Confirm Password do not match.");
+        return; // Prevent form submission
+      }
 
-      if (response.ok) {
+      // Fetch the user data from the server
+      const response = await axios.get('http://localhost:3030/user');
+      const users = response.data;
+
+      // Find the maximum userId to generate the next userId
+      const maxUserId = Math.max(...users.map(user => parseInt(user.user_id)));
+
+      // Generate the next userId
+      const userId = maxUserId + 1;
+
+      // Add the userId to the form data
+      const userDataWithId = { user_id: userId, ...userData };
+
+      // Send the form data to the server to create the user
+      const createUserResponse = await axios.post('http://localhost:3030/user', userDataWithId);
+
+      if (createUserResponse.status === 201) {
         console.log('User created successfully');
-        navigate('/User_Page'); // Navigate to the next page if user creation is successful
+        navigate('/User_Page', { state: { userId: userId } });
       } else {
-        console.error('Failed to create user:', response.statusText);
+        console.error('Failed to create user:', createUserResponse.statusText);
       }
     } catch (error) {
       console.error('Error creating user:', error);
-    }
-  };
-
-  const togglePasswordVisibility = () => {
-    const passwordField = document.getElementById("password");
-    if (passwordField.type === "password") {
-      passwordField.type = "text";
-      document.querySelector("button").textContent = "Hide Password";
-    } else {
-      passwordField.type = "password";
-      document.querySelector("button").textContent = "Show Password";
     }
   };
 
@@ -77,6 +73,8 @@ function Create_Acc() {
         <input type="password" name="confirmPassword" placeholder="Confirm your password" onChange={handleInputChange} /><br /><br />
         <span style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '11rem' }}>UPI ID</span>
         <input type="text" name="upiId" placeholder="Your UPI Id" onChange={handleInputChange} /><br /><br />
+        <span style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '5.5rem' }}>Describe Yourself</span>
+        <input type="text" name="self_describe" placeholder="Describe yourself" onChange={handleInputChange} /><br /><br />
       </div>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <button onClick={handleSignIn} id="sign-in" className="sign-in-button" style={{ marginLeft: '10rem', marginRight: '5rem' }}>Sign In</button><br /><br />

@@ -2,80 +2,85 @@
   "user": [
     {
       "user_id": 1,
-      "name": "user 1",
+      "name": "Vaani",
       "password": "123",
       "self_describe": "mewo",
       "email": "samp@asd",
       "upi_id": "56",
-      "contact": "0978786",
-      "id": "693b"
+      "contact": "0978786"
     },
     {
       "user_id": 2,
-      "name": "user 2",
+      "name": "Shreya",
       "password": "456",
       "self_describe": "tytu",
       "email": "poi@asd",
       "upi_id": "78",
-      "contact": "5635678",
-      "id": "c63b"
+      "contact": "5635678"
     },
     {
       "user_id": 3,
-      "name": "user 3",
+      "name": "Avyan",
       "password": "789",
-      "self_describe": "cvxb",
-      "email": "xaxm@asd",
-      "upi_id": "09",
-      "contact": "5241356",
-      "id": "aa7a"
-    },
-    {
-      "id": "9d9d",
-      "name": "xc",
-      "email": "aa",
-      "contactNo": "13465432",
-      "password": "asd",
-      "confirmPassword": "asd",
-      "upiId": "8787"
+      "self_describe": "huij",
+      "email": "opi@asd",
+      "upi_id": "899",
+      "contact": "568785678"
     }
   ],
   "group": [
     {
-      "group_id": "1",
-      "group_describe": "vaani"
+      "group_id": 1,
+      "group_describe": "Group 1"
     },
     {
-      "group_id": "2",
-      "group_describe": "meow"
-    }
-  ],
-  "expense": [
-    {
-      "expense_id": "1",
-      "payer_id": "1",
-      "date_time": "9 april, 9:30", 
-      "amount": "100",
-      "type": "travel"
-    },
-    {
-      "expense_id": "2",
-      "payer_id": "7",
-      "date_time": "9 jan, 10:30", 
-      "amount": "1000",
-      "type": "food"
+      "group_id": 2,
+      "group_describe": "Group 2"
     }
   ],
   "member": [
     {
-      "group_id": "1",
-      "member_id": "1",
+      "group_id": 1,
+      "member_id": 1,
       "name": "Vaani"
     },
     {
-      "group_id": "1",
-      "member_id": "2",
+      "group_id": 1,
+      "member_id": 2,
       "name": "Shreya"
+    },
+    {
+      "group_id": 2,
+      "member_id": 1,
+      "name": "Vaani"
+    },
+    {
+      "group_id": 2,
+      "member_id": 3,
+      "name": "Avyan"
+    },
+    {
+      "group_id": 2,
+      "member_id": 4,
+      "name": "hu"
+    }
+  ],
+  "expense": [
+    {
+      "group_id": 1,
+      "expense_id": 1,
+      "payer_id": 1,
+      "date_time": "9 april, 9:30",
+      "amount": 100,
+      "type": "travel"
+    },
+    {
+      "group_id": 1,
+      "expense_id": 2,
+      "payer_id": 2,
+      "date_time": "9 jan, 10:30",
+      "amount": 1000,
+      "type": "food"
     }
   ]
 }

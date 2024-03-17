@@ -1,37 +1,50 @@
+//Display_Group.js
 import React, { useState, useEffect } from 'react';
-import { LeftNavBar, Logout, VerticalLine } from './Template';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Don't forget to import axios
-import './Display_Group.css'; // Import CSS file for global styles
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import './Display_Group.css';
 
 function Display_Group() {
   const [groupInfo, setGroupInfo] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const location = useLocation();
+  const userId = location.state && location.state.userId;
 
   useEffect(() => {
-    axios.get('http://localhost:3030/group')
-      .then(res => {
-        setGroupInfo(res.data); // Set the group info from the API response
-      })
-      .catch(err => setError(err.message));
-  }, []);
+    if (userId) {
+      axios.get(`http://localhost:3030/member`)
+        .then(res => {
+          const matchedGroups = res.data.filter(member => member.member_id === userId);
+          if (matchedGroups.length > 0) {
+            const groupIdsArray = matchedGroups.map(group => group.group_id);
+            // Fetch group information using group IDs
+            axios.get(`http://localhost:3030/group`)
+              .then(response => {
+                const groups = response.data.filter(group => groupIdsArray.includes(group.group_id));
+                setGroupInfo(groups);
+              })
+              .catch(error => setError('Failed to fetch group information'));
+          } else {
+            setError('No groups found for the user');
+          }
+        })
+        .catch(err => setError(err.message));
+    }
+  }, [userId]);
 
   const handleGroupClick = (groupId) => {
-    navigate('/Group_Page'); // Navigate to the group details page
+    navigate('/Group_Page', { state: { groupId: groupId } });
   };
 
   return (
     <div className="Display_Group">
-      <LeftNavBar />
-      <Logout />
-      <VerticalLine />
       <br />
       <p> <span className="page-head">Your Groups</span></p><br /><br />
       <div className="group-list">
         {groupInfo.map(group => (
-          <button key={group.id} onClick={() => handleGroupClick(group.id)} className="group-button">
-            {group.group_describe}
+          <button key={group.group_id} onClick={() => handleGroupClick(group.group_id)} className="group-button">
+            Group Name: {group.group_describe}
           </button>
         ))}
       </div>
