@@ -13,7 +13,7 @@ function Display_Group() {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:3030/member`)
+      axios.get(`http://localhost:3030/members`)
         .then(res => {
           const matchedGroups = res.data.filter(member => member.member_id === userId);
           if (matchedGroups.length > 0) {
@@ -34,9 +34,14 @@ function Display_Group() {
   }, [userId]);
 
   const handleGroupClick = (groupId) => {
-    navigate('/Group_Page', { state: { groupId: groupId } });
+    navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
   };
-
+  const handleLogoutClick = () => {
+    // Logic to clear user session data and redirect to login page
+    // For example, you can use localStorage to clear user data
+    localStorage.removeItem('userId');
+    navigate('/login_page');
+  };
   return (
     <div className="Display_Group">
       <br />
@@ -49,7 +54,11 @@ function Display_Group() {
         ))}
       </div>
       {error && <p>Error: {error}</p>}
+      <div className="button-container">
+          <button className="button" onClick={handleLogoutClick}>Log out</button>
+      </div>
     </div>
+    
   );
 }
 

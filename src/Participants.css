@@ -1,13 +1,37 @@
-/* Group_Page.css */
-/* Group_Page.css */
-
 .Participants {
     font-size: 18px;
+    padding: 20px;
   }
+  .participants-button {
+    background-color: none;
+    color: #444b59;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 0.5rem;
+    margin-left: auto; /* Align to the right */
+    margin-right: auto; /* Align to the left */
+    display: block; /* Ensures full-width */
+    width: fit-content; /* Adjust width to content */
+    padding: 1rem; /* Adjusted padding for smaller screens */
+    border-radius: 2rem;
+    cursor: pointer;
+    text-align: center; /* Align text to the center */
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+.member-list {
+  margin-top: 20px;
   
+}
+
+.member-list p {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-left: 25rem;
+}
   .button {
     align-items: center;
-    margin-left: 32rem;
+    margin-left: -10rem;
     display: inline-block;
     padding: 10px 20px;
     background-color: #8699da;
@@ -24,4 +48,9 @@
     background-color: #0056b3;
   }
   
+  
+.error {
+  color: red;
+  margin-top: 10px;
+}
   

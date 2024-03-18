@@ -31,7 +31,10 @@ function User_Page() {
   };
 
   const handleLogoutClick = () => {
-    // Handle logic to logout
+    // Logic to clear user session data and redirect to login page
+    // For example, you can use localStorage to clear user data
+    localStorage.removeItem('userId');
+    navigate('/login_page');
   };
 
   return (
@@ -47,13 +50,16 @@ function User_Page() {
         </div>
       )}
       {error && <p>Error: {error}</p>}
-      
-      {/* Buttons */}
       <div className="button-container">
             <button className="button" onClick={handleViewGroupsClick}>View Groups</button><br/><br />
-            <button className="button" onClick={handleLogoutClick}>Logout</button>
       </div>
-
+      <div className="button-container">
+            <button className="button" >Settle Your Expenses</button><br/><br />
+      </div>
+      <div className="button-container">
+          <button className="button" onClick={handleLogoutClick}>Log out</button>
+      </div>
+      
     </div>
   );
 }

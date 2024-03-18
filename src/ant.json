@@ -7,7 +7,8 @@
       "self_describe": "mewo",
       "email": "samp@asd",
       "upi_id": "56",
-      "contact": "0978786"
+      "contact": "0978786",
+      "id": "743a"
     },
     {
       "user_id": 2,
@@ -16,7 +17,8 @@
       "self_describe": "tytu",
       "email": "poi@asd",
       "upi_id": "78",
-      "contact": "5635678"
+      "contact": "5635678",
+      "id": "ee5f"
     },
     {
       "user_id": 3,
@@ -25,62 +27,116 @@
       "self_describe": "huij",
       "email": "opi@asd",
       "upi_id": "899",
-      "contact": "568785678"
+      "contact": "568785678",
+      "id": "a388"
+    },
+    {
+      "id": "c524",
+      "user_id": 4,
+      "name": "nitu",
+      "password": "hui",
+      "self_describe": "jknjiuiu",
+      "email": "nitu@gmail.com",
+      "upi_id": "7657656",
+      "contact": "65767867867"
     }
   ],
   "group": [
     {
       "group_id": 1,
-      "group_describe": "Group 1"
+      "group_describe": "Group 1",
+      "id": "c03f"
     },
     {
       "group_id": 2,
-      "group_describe": "Group 2"
+      "group_describe": "Group 2",
+      "id": "f58b"
+    },
+    {
+      "group_id": 3,
+      "group_describe": "Group 3"
     }
   ],
-  "member": [
+  "members": [
     {
       "group_id": 1,
-      "member_id": 1,
-      "name": "Vaani"
+      "member_id": 1
     },
     {
       "group_id": 1,
-      "member_id": 2,
-      "name": "Shreya"
+      "member_id": 2
+    },
+    {
+      "group_id": 1,
+      "member_id": 3
     },
     {
       "group_id": 2,
-      "member_id": 1,
-      "name": "Vaani"
+      "member_id": 1
     },
     {
       "group_id": 2,
-      "member_id": 3,
-      "name": "Avyan"
+      "member_id": 3
     },
     {
       "group_id": 2,
-      "member_id": 4,
-      "name": "hu"
+      "member_id": 4
     }
   ],
-  "expense": [
+  "expenses": [
     {
-      "group_id": 1,
       "expense_id": 1,
       "payer_id": 1,
-      "date_time": "9 april, 9:30",
+      "date_time": "2023-01-20T09:12",
       "amount": 100,
-      "type": "travel"
+      "type": "travel",
+      "id": "2f4b"
+    },
+    {
+      "expense_id": 2,
+      "payer_id": 1,
+      "date_time": "2023-02-20T21:12",
+      "amount": 200,
+      "type": "food",
+      "id": "2fe6"
+    },
+    {
+      "expense_id": 3,
+      "payer_id": 4,
+      "date_time": "2023-03-20T03:12",
+      "amount": 5000,
+      "type": "accomodation",
+      "id": "2fe6"
+    },
+    {
+      "id": "976f",
+      "expense_id": 4,
+      "payer_id": 3,
+      "amount": "500",
+      "date_time": "2024-05-12T12:45",
+      "type": "party",
+      "split_type": "uniform"
+    }
+  ],
+  "group_expenses": [
+    {
+      "group_id": 1,
+      "expense_id": 1
     },
     {
       "group_id": 1,
-      "expense_id": 2,
-      "payer_id": 2,
-      "date_time": "9 jan, 10:30",
-      "amount": 1000,
-      "type": "food"
+      "expense_id": 2
+    },
+    {
+      "group_id": 2,
+      "expense_id": 3
+    },
+    {
+      "id": "2d7b",
+      "group_id": 1,
+      "expense_id": 4
     }
-  ]
+  ],
+  "split": [],
+  "payment": []
 }
