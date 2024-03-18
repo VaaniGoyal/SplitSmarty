@@ -29,9 +29,9 @@ module.exports = (sequelize) => {
 
     // Define associations
     User.associate = (models) => {
-        User.belongsToMany(models.SplitGroup, { through: 'Udhaari', foreignKey: 'user_id' });
-        User.hasMany(models.Invite, { foreignKey: 'invitee_user_id' });
-        User.hasMany(models.Invite, { foreignKey: 'host_user_id' });
+        // User.belongsToMany(models.SplitGroup, { through: 'Udhaari', foreignKey: 'user_id' });
+        // User.hasMany(models.Invite, { foreignKey: 'invitee_user_id' });
+        // User.hasMany(models.Invite, { foreignKey: 'host_user_id' });
     };
 
     return User;

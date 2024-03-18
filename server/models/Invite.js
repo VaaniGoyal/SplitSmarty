@@ -17,8 +17,8 @@ module.exports = (sequelize) => {
 
     // Define associations
     Invite.associate = (models) => {
-        Invite.belongsTo(models.User, { as: 'host', foreignKey: 'host_user_id' });
-        Invite.belongsTo(models.User, { as: 'invitee', foreignKey: 'invitee_user_id' });
+        // Invite.belongsTo(models.User, { as: 'host', foreignKey: 'host_user_id' });
+        // Invite.belongsTo(models.User, { as: 'invitee', foreignKey: 'invitee_user_id' });
     };
 
     return Invite;

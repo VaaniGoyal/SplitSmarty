@@ -1,14 +1,22 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
-const { sequelize } = require('./models/');
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
 
+const db = require('./models')
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db");
+  })
+  .catch(err => {
+    console.log("Failed to sync db")
+  })
+
 // import routes from controllers
-const userController = require('./controllers/userController')
+const userController = require('./controllers/user.controller.js')
 const authRoutes = require('./routes/requireAuth');
 
 
@@ -31,10 +39,10 @@ app.post('/api/splitGroups', async (req, res) => {
     }
 
     // Create SplitGroup
-    const splitGroup = await sequelize.SplitGroup.create({ name: group_name, description });
+    const splitGroup = await db.sequelize.SplitGroup.create({ name: group_name, description });
 
     // Associate user with the group
-    await sequelize.User.create({ user_id, group_id: splitGroup.group_id });
+    await db.sequelize.User.create({ user_id, group_id: splitGroup.group_id });
 
     // Send success response
     res.status(201).json({ message: 'Split group created successfully.', data: splitGroup });
@@ -118,6 +126,7 @@ app.post('/api/splitGroups', async (req, res) => {
  *     });
  * });
  */
+require('./routes/user.routes')(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

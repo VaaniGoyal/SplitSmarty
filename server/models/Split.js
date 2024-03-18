@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
 
     // Define associations
     Split.associate = (models) => {
-        Split.belongsTo(models.SplitGroup, { foreignKey: 'group_id' });
+        // Split.belongsTo(models.SplitGroup, { foreignKey: 'group_id' });
     };
 
     return Split;
