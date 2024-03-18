@@ -25,7 +25,7 @@
     font-weight: bold;
     border: none; /* Remove button border */
     padding: 1rem 2rem; /* Padding around button text */
-    margin: 0 0.5rem; /* Margin between buttons */
+    margin: 0 0; /* Margin between buttons */
     cursor: pointer; /* Show pointer cursor on hover */
     border-radius: 2rem; /* Rounded corners */
     width: 10rem;

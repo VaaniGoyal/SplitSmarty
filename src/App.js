@@ -8,6 +8,8 @@ import User_Page from './User_Page';
 import Group_Page from './Group_Page';
 import Create_Acc from './Create_Acc';
 import Display_Group from './Display_Group';
+import Participants from './Participants';
+import Add_Expense from './Add_Expense';
 import './App.css';
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Route path="/Group_Page" element={<Group_Page />} />
           <Route path="/Uniform_Split" element={<Uniform_Split />} />
           <Route path="/Display_Group" element={<Display_Group />} />
+          <Route path="/Participants" element={<Participants />} />
+          <Route path="/Add_Expense" element={<Add_Expense />} />
         </Routes>
       </div>
     </Router>
