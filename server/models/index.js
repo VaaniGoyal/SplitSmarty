@@ -7,7 +7,6 @@ const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
@@ -15,6 +14,8 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+const db = {};
 
 // Read each model file in the models directory and import it
 fs
@@ -44,9 +45,8 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-
 // Export sequelize and Sequelize instance along with models
-db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
 module.exports = sequelize;
