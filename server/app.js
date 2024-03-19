@@ -2,8 +2,8 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import sequelize from "./config/database.js";
-import userController from "./controllers/user.controller"; // ! import statement giving error
-import authRoutes from "./routes/requireAuth"; // ! import statement giving error
+// import userController from "./controllers/user.controller"; // ! import statement giving error
+// import authRoutes from "./routes/requireAuth"; // ! import statement giving error
 
 dotenv.config();
 
@@ -25,18 +25,15 @@ async function ConnectToDatabaseAuthentication() {
 
 // ! Convert properly to ESM format
 
-import routes from controllers
+// app.post("/signup", userController.signUp);
+// app.post("/login", userController.login);
+// app.get("/logout", userController.logout);
 
-routes
-app.post("/signup", userController.signUp);
-app.post("/login", userController.login);
-app.get("/logout", userController.logout);
+// app.use("/auth", authRoutes);
 
-app.use("/auth", authRoutes);
-
-require("./routes/user.routes")(app);
-require("./routes/splitgroup.routes")(app);
-require("./routes/split.routes")(app);
+// require("./routes/user.routes")(app);
+// require("./routes/splitgroup.routes")(app);
+// require("./routes/split.routes")(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -46,5 +43,6 @@ ConnectToDatabaseAuthentication();
 // TODO: Convert the codebase to ESM format so that import statements can be used.
 // TODO: Make a seperate file for routing.
 // TODO: Update the controllers according to the architecture of databases.
+// TODO: Export classes properly in controller files. Their import statments for them not working
 // TODO: Implementing simplified transaction algorithm.
 // TODO: Try to structurise the codebase to mvc architecture.
