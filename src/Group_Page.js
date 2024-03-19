@@ -51,7 +51,7 @@ function Group_Page() {
   }, [groupId]); // Fetch data whenever groupId changes
 
   const handleParticipantsClick = () => {
-    navigate('/Participants', { state: { groupId: groupId } });
+    navigate('/Participants', { state: { groupId: groupId, userId: userId } });
   };
 
   const handleUniformSplitClick = () => {
