@@ -163,7 +163,7 @@ function Group_Page() {
   };
 
   const handleNonUniformSplitClick = () => {
-    navigate('/NonUni_Split', { state: { groupId: groupId, userId: userId } });
+    // navigate('/NonUni_Split', { state: { groupId: groupId, userId: userId } });
   };
 
   const handleLogoutClick = () => {
