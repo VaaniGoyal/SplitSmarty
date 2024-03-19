@@ -9,7 +9,8 @@ import Group_Page from './Group_Page';
 import Create_Acc from './Create_Acc';
 import Display_Group from './Display_Group';
 import Participants from './Participants';
-import Add_Expense from './Add_Expense';
+import NonUni_Split from './NonUni_Split';
+import Settle_Expense from './Settle_Expense';
 import './App.css';
 
 function App() {
@@ -27,7 +28,8 @@ function App() {
           <Route path="/Uniform_Split" element={<Uniform_Split />} />
           <Route path="/Display_Group" element={<Display_Group />} />
           <Route path="/Participants" element={<Participants />} />
-          <Route path="/Add_Expense" element={<Add_Expense />} />
+          <Route path="/NonUni_Split" element={<NonUni_Split />} />
+          <Route path="/Settle_Expense" element={<Settle_Expense />} />
         </Routes>
       </div>
     </Router>

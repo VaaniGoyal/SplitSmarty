@@ -1,0 +1,155 @@
+
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2rem; /* Converted from 2% */
+  }
+  
+  li {
+    margin: 0 1rem; /* Converted from 0 1% */
+    padding: 0;
+  }
+  /* styles.css */
+
+/* Left navigation bar */
+.left-nav-bar {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    height: 100%;
+    width: 20%; /* Set width to 10% of the page */
+    background-color: transparent;
+    padding: 1rem;
+  }
+  
+  /* Button styles */
+  .left-nav-bar button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5%;
+    border: none;
+    background-color: transparent;
+    color: #444b59;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .left-nav-bar button:hover {
+    background-color: transparent;
+  }
+  
+  .left-nav-bar button:focus {
+    outline: none;
+  }
+  /* Logout */
+  .logout {
+    position: fixed;
+    top: 30rem;
+    left: 0;
+    height: 100%;
+    width: 20%; /* Set width to 10% of the page */
+    background-color: transparent;
+    padding: 1rem;
+  }
+  .logout button{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5%;
+    border: none;
+    background-color: transparent;
+    color: #444b59;
+    font-size: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+  }
+  .logout button:hover {
+    background-color: transparent;
+  }
+  
+  .logout button:focus {
+    outline: none;
+  }
+  /* Vertical line */
+  .vertical-line {
+    position: fixed;
+    top: 0;
+    left: 20%; /* Position the vertical line after the left navigation bar */
+    height: 100%;
+    width: 0.5rem; /* Width of the vertical line */
+    background-color: #444b59;
+  }
+
+.group-button {
+    background-color: none;
+    color: #444b59;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 0.5rem;
+    margin-left: auto; /* Align to the right */
+    margin-right: auto; /* Align to the left */
+    display: block; /* Ensures full-width */
+    width: fit-content; /* Adjust width to content */
+    padding: 1rem; /* Adjusted padding for smaller screens */
+    border-radius: 2rem;
+    cursor: pointer;
+    text-align: center; /* Align text to the center */
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+  
+  .group-button:hover {
+    background-color: none;
+  }
+  
+  button:hover {
+    text-decoration: underline;
+    
+  }
+  .page-head {
+    font-size: 5rem; /* Converted from 500% */
+    font-family: 'Nunito', Arial, sans-serif;
+    color: #000f73;
+    margin-left: 25rem;
+  }
+  .expense-list {
+    font-size: 1rem;
+  }
+  
+  .expense-item {
+    display: flex; /* Display items in a row */
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px; /* Add margin for spacing */
+  }
+  
+  .settle-button {
+    margin-left: 10rem; /* Add margin to separate button from expense details */
+    border: none;
+    background-color: #6689da;
+    font-weight: bold;
+    padding: 1rem;
+    border-radius: 2rem;
+    
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    body {
+      margin-left: 0;
+    }
+    .page-head {
+      font-size: 3.5rem; /* Adjust font size for smaller screens */
+    }
+    .group-button {
+        padding: 1rem; /* Adjusted padding for smaller screens */
+    }
+  }
+  

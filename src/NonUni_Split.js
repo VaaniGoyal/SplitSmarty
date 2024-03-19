@@ -4,9 +4,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './Add_Expense.css';
+import './NonUni_Split.css';
 
-function Add_Expense() {
+function NonUni_Split() {
   const location = useLocation();
   const groupId = location.state && location.state.groupId;
   const userId = location.state && location.state.userId;
@@ -42,7 +42,7 @@ function Add_Expense() {
   };
 
   return (
-    <div className="Add_Expense">
+    <div className="NonUni_Split">
       <br />
       <p> <span className="page-head">Add an Expense</span></p><br /><br />
       <div className="input-container">
@@ -77,7 +77,7 @@ function Add_Expense() {
   );
 }
 
-export default Add_Expense;
+export default NonUni_Split;
 
 
 

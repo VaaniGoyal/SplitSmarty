@@ -29,7 +29,9 @@ function User_Page() {
   const handleViewGroupsClick = () => {
     navigate('/Display_Group', { state: { userId: userId } });
   };
-
+  const handleSettleExpensesClick = () => {
+    navigate('/Settle_Expense', { state: { userId: userId } });
+  };
   const handleLogoutClick = () => {
     // Logic to clear user session data and redirect to login page
     // For example, you can use localStorage to clear user data
@@ -54,7 +56,10 @@ function User_Page() {
             <button className="button" onClick={handleViewGroupsClick}>View Groups</button><br/><br />
       </div>
       <div className="button-container">
-            <button className="button" >Settle Your Expenses</button><br/><br />
+            <button className="button" onClick={handleViewGroupsClick}>Create Group</button><br/><br />
+      </div>
+      <div className="button-container">
+            <button className="button" onClick={handleSettleExpensesClick}>View Your Expenses</button><br/><br />
       </div>
       <div className="button-container">
           <button className="button" onClick={handleLogoutClick}>Log out</button>

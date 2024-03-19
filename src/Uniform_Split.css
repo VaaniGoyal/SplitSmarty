@@ -1,32 +1,63 @@
-/* Add_Expense.css */
 
-.split-options {
-  display: flex;
-  justify-content: center;
-  margin-top: -0.5rem; /* Adjust as needed */
-}
-
-.split-options label {
-  margin-right: 0rem; /* Adjust spacing between radio buttons */
-  display: flex;
-  align-items: center; /* Align radio button vertically with label text */
-}
-
-.split-options input[type="radio"] {
-  margin-left: 10rem;
-  margin-right: 0.5rem; /* Adjust spacing between radio button and label */
-}
-
-.group-list {
-  list-style: none;
-  margin-left: 0; /* Reset margin-left */
-  padding: 0;
-}
-
-.group-list li {
-  margin-bottom: 0.5rem; /* Adjust spacing between groups */
-}
-
-.group-list input[type="radio"] {
-  margin-right: 2rem; /* Adjust spacing between radio buttons and group names */
-}
+  /* Input Styles */
+  .input-container {
+    margin-bottom: 0.1rem;
+  }
+  input[type="text"], 
+  input[type="password"]{
+    width: 15rem; /* Converted from 25% */
+    height: 1rem;
+    font-family: 'Overpass', Arial, sans-serif;
+    font-size: 0.875rem; /* Converted from 14px */
+    padding: 0.5rem; /* Converted from 8px */
+    border: 0.0625rem solid #789ade; /* Converted from 1px */
+    border-radius: 1rem; /* Converted from 100px */
+  }
+  
+  button {
+    color: #444b59;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    text-decoration: underline;
+  }
+  
+  .page-head {
+    font-size: 5rem; /* Converted from 500% */
+    font-family: 'Nunito', Arial, sans-serif;
+    color: #000f73;
+  }
+  
+  
+  
+  .sign-in-button {
+    background-color: #8699da; /* Change background color to purple */
+    color: white; /* Change text color to white */
+    font-weight: bold;
+    padding: 0.5rem 4rem; /* Increase padding for larger size */
+    font-size: 1.2rem; /* Increase font size for larger size */
+    border-radius: 5rem;
+  }
+  
+  
+  
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    body {
+      margin-left: 0;
+    }
+  
+    .page-head {
+      font-size: 3.5rem; /* Adjust font size for smaller screens */
+    }
+  
+    input[type="text"],
+    input[type="password"] {
+      width: 90%; /* Adjust input width for smaller screens */
+    }
+  }
+  
