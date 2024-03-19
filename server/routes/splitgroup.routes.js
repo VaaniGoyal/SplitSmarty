@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/splitGroup.controller.js');
+const sgController = require('../controllers/splitGroup.controller.js');
 
 // Define routes for user-related operations
-router.post('/', UserController.createSplitGroup);
-router.get('/:userId', UserController.getUserGroups);
-router.get('/:groupId', UserController.getMembers);
-router.put('/:id', UserController.updateGroup);
-router.delete('/:id', UserController.deleteGroup);
+router.post('/', sgController.createSplitGroup);
+router.get('/:userId', sgController.getUserGroups);
+router.get('/:groupId', sgController.getMembers);
+router.put('/:id', sgController.updateGroup);
+router.post('/:groupId/addMember', sgController.addNewMember);
+router.delete('/:id', sgController.deleteGroup);
 
 module.exports = function(app) {
-    app.use('/api/splitGroup', router);
+    app.use('/api/sg', router); // sg = split-group
 };

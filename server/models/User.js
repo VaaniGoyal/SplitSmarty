@@ -22,8 +22,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             unique: true
         },
-        timestamps: true,
-        createdAt: true,
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
         profile_picture: DataTypes.STRING,
         name: DataTypes.STRING,
         self_description: DataTypes.STRING,

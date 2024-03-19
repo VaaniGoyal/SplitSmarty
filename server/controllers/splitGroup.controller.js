@@ -2,23 +2,25 @@ const db = require('../models')
 const SplitGroup = db.SplitGroup;
 const Op = db.sequelize.Op;
 
-// Create a new user
+// Create a new group
 async function createSplitGroup(req, res, next) {
     try {
         // add all attributes
-        const { username, email } = req.body;
-        const group = await SplitGroup.create({ username, email }).then(
-            data => {
-                res.send(data)
-            })
-            .catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occured while creating user. Please try again!"
-                })
-            })
-        res.json(group);
+        const { user_id, group_name, description } = req.body;
+        if (!group_name) {
+            return res.status(400).json({ error: 'Group name is required.' });
+        }
+
+        // Create SplitGroup
+        const splitGroup = await SplitGroup.create({ name: group_name, description });
+
+        // Associate user with the group
+        await db.Udhaari.create({ user_id, group_id: splitGroup.group_id });
+        res.status(201).json({ message: 'Split group created successfully.', data: splitGroup });
 
     } catch (error) {
+        console.error('Error creating split group:', error);
+        res.status(500).json({ error: 'Internal server error.' });
         next(error);
     }
 }
@@ -91,7 +93,27 @@ async function getGroupByTitle(req, res, next) {
 
 // Add new member to group
 async function addNewMember(req, res, next) {
+    try {
+        const groupId = req.params.groupId;
 
+        const { user_email } = req.query.user_email;
+        const user = db.User.findOne({ where: { email: user_email } })
+        db.Udhaari.create({
+            group_id: groupId,
+            user_id: user.user_id
+        })
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occured while getting Groups. Please try again!"
+                });
+            })
+
+    } catch (error) {
+
+    }
 }
 
 // Update group

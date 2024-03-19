@@ -1,22 +1,22 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "database_development",
+    "password": "sanjana1908",
+    "database": "splitsmarty_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "sanjana1908",
+    "database": "splitsmarty_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
+    "password": "sanjana1908",
+    "database": "splitsmarty_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

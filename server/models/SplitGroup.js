@@ -11,8 +11,10 @@ module.exports = (sequelize) => {
         },
         group_name: DataTypes.STRING,
         description: DataTypes.STRING,
-        timestamps: true,
-        createdAt: true,
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
         group_icon: {
             type: DataTypes.STRING,
             defaultValue: './public/default_group_icon.jpg'

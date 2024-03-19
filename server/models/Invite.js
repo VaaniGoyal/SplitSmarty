@@ -1,5 +1,4 @@
 const { DataTypes, Model } = require('sequelize');
-const SplitGroup = require('./SplitGroup');
 
 module.exports = (sequelize) => {
     // Define Invite model

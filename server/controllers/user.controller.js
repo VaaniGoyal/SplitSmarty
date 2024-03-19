@@ -1,10 +1,10 @@
+const { Op } = require('sequelize');
 const express = require('express')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const db = require('../models')
 const User = db.User;
-const Op = db.sequelize.Op;
 
 const router = express.Router()
 const SECRET_KEY = 'LKJnbvgHJK8765RfG'
