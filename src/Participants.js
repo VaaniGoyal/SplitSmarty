@@ -64,7 +64,7 @@ function Participants() {
         {error && <p>Error: {error}</p>}
       </div>
       <button id="add-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Participant</button><br /><br />
-      <button id="remove-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Remove Participant</button><br /><br />
+      {/* <button id="remove-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Remove Participant</button><br /><br /> */}
       <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
   );
