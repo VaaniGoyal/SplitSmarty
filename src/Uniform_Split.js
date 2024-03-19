@@ -1,464 +1,3 @@
-
-// // // import React, { useState, useEffect } from 'react';
-// // // import { useNavigate, useLocation } from 'react-router-dom';
-// // // import axios from 'axios';
-// // // import './Uniform_Split.css';
-
-// // // function Uniform_Split() {
-// // //   const [expenseInfo, setExpenseInfo] = useState([]);
-// // //   const [selectedParticipants, setSelectedParticipants] = useState([]);
-// // //   const [error, setError] = useState('');
-// // //   const navigate = useNavigate();
-// // //   const location = useLocation();
-// // //   const groupId = location.state && location.state.groupId;
-// // //   const userId = location.state && location.state.userId;
-
-// // //   useEffect(() => {
-// // //     const fetchData = async () => {
-// // //       try {
-// // //         const [participantsRes, usersRes] = await Promise.all([
-// // //           axios.get('http://localhost:3030/members'), // Fetch members
-// // //           axios.get('http://localhost:3030/user') // Fetch users
-// // //         ]);
-
-// // //         const membersData = participantsRes.data;
-// // //         const usersData = usersRes.data;
-
-// // //         // Filter members based on groupId matching
-// // //         const matchedMembers = membersData.filter(member => member.group_id === groupId && member.member_id !== userId);
-
-// // //         // Map member_id to user_id and get user names
-// // //         const expenseInfo = matchedMembers.map(member => {
-// // //           const user = usersData.find(user => user.user_id === member.member_id);
-// // //           return {
-// // //             user_id: member.member_id,
-// // //             name: user ? user.name : 'Unknown User'
-// // //           };
-// // //         });
-
-// // //         setExpenseInfo(expenseInfo);
-// // //       } catch (error) {
-// // //         setError('Failed to fetch data: ' + error.message);
-// // //       }
-// // //     };
-
-// // //     fetchData();
-// // //   }, [groupId, userId]);
-
-// // //   const handleCheckboxChange = (event) => {
-// // //     const { value, checked } = event.target;
-// // //     if (checked) {
-// // //       setSelectedParticipants([...selectedParticipants, value]);
-// // //     } else {
-// // //       setSelectedParticipants(selectedParticipants.filter(participant => participant !== value));
-// // //     }
-// // //   };
-// // //   const handleDone = async (event) => {
-// // //     event.preventDefault();
-// // //     try {
-// // //       // Iterate over selected participants and enter their data into the database
-// // //       await Promise.all(selectedParticipants.map(async (participantId) => {
-// // //         const toId = parseInt(participantId); // Convert to number
-// // //         const expenseData = {
-// // //           from_id: userId,
-// // //           to_id: toId,
-// // //           shared_expense: 0, // You need to set this value accordingly
-// // //           isSettled: 0 // Assuming the expense is not settled initially
-// // //         };
-// // //         // Fetch the user data from the server to determine the next user_id
-// // //         const response = await axios.get('http://localhost:3030/expenses');
-// // //         const expenses = response.data;
-// // //         // Find the maximum userId to generate the next userId
-// // //         const maxExpenseId = Math.max(...expenses.map(expense => parseInt(expense.expense_id)));
-// // //         // Generate the next userId
-// // //         const expenseId = maxExpenseId + 1;
-// // //         // Add the userId to the form data
-// // //         const expenseDataWithId = { expense_id: expenseId, ...expenseData };
-// // //         // Send the form data to the server to create the user
-// // //         const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseDataWithId);
-  
-// // //         return createExpenseResponse; // Return the response for handling later
-// // //       }));
-// // //       // Check if all expenses are successfully created
-// // //       alert("Expense Added Successfully!")
-// // //       navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
-// // //     } catch (error) {
-// // //       console.error('Error adding expense:', error);
-// // //     }
-// // //   };
-  
-// // //   return (
-// // //     <div className="Group_Page">
-// // //       <br />
-// // //       <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
-// // //       <p> <span className="head">Choose participants for expense</span></p><br /><br />
-// // //       <form onSubmit={handleDone}>
-// // //         <div className="expense-list">
-// // //           {expenseInfo.map(participant => (
-// // //             <div key={participant.user_id}>
-// // //               <input
-// // //                 type="checkbox"
-// // //                 id={participant.user_id}
-// // //                 name="participant"
-// // //                 value={participant.user_id}
-// // //                 onChange={handleCheckboxChange}
-// // //               />
-// // //               <label htmlFor={participant.user_id}>{participant.name}</label>
-// // //             </div>
-// // //           ))}
-// // //         </div>
-// // //         <div className="button-container">
-// // //         <button className="button" onClick={handleDone}>Done</button>
-// // //         </div>
-// // //         </form>
-// // //         <div className="input-container">
-// // //           <form >
-// // //               <div>
-// // //                 <label htmlFor="name" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Name</label>
-// // //                 <input type="text" name="name" placeholder='your name' onChange={e => setInputData({...inputData, name: e.target.value})}></input><br /><br />
-// // //               </div>
-// // //         <div className="button-container">
-// // //         <button className="button">Add Expense</button>
-// // //         </div>
-// // //       </form>
-// // //       {error && <p>Error: {error}</p>}
-// // //     </div>
-// // //   );
-// // // }
-
-// // // export default Uniform_Split;
-
-
-
-// // import React, { useState, useEffect } from 'react';
-// // import { useNavigate, useLocation } from 'react-router-dom';
-// // import axios from 'axios';
-// // import './Uniform_Split.css';
-
-// // function Uniform_Split() {
-// //   const [expenseInfo, setExpenseInfo] = useState([]);
-// //   const [selectedParticipants, setSelectedParticipants] = useState([]);
-// //   const [error, setError] = useState('');
-// //   const [inputData, setInputData] = useState({ name: '' });
-// //   const navigate = useNavigate();
-// //   const location = useLocation();
-// //   const groupId = location.state && location.state.groupId;
-// //   const userId = location.state && location.state.userId;
-
-// //   useEffect(() => {
-// //     const fetchData = async () => {
-// //       try {
-// //         const [participantsRes, usersRes] = await Promise.all([
-// //           axios.get('http://localhost:3030/members'), // Fetch members
-// //           axios.get('http://localhost:3030/user') // Fetch users
-// //         ]);
-
-// //         const membersData = participantsRes.data;
-// //         const usersData = usersRes.data;
-
-// //         // Filter members based on groupId matching
-// //         const matchedMembers = membersData.filter(member => member.group_id === groupId && member.member_id !== userId);
-
-// //         // Map member_id to user_id and get user names
-// //         const expenseInfo = matchedMembers.map(member => {
-// //           const user = usersData.find(user => user.user_id === member.member_id);
-// //           return {
-// //             user_id: member.member_id,
-// //             name: user ? user.name : 'Unknown User'
-// //           };
-// //         });
-
-// //         setExpenseInfo(expenseInfo);
-// //       } catch (error) {
-// //         setError('Failed to fetch data: ' + error.message);
-// //       }
-// //     };
-
-// //     fetchData();
-// //   }, [groupId, userId]);
-
-// //   const handleCheckboxChange = (event) => {
-// //     const { value, checked } = event.target;
-// //     if (checked) {
-// //       setSelectedParticipants([...selectedParticipants, value]);
-// //     } else {
-// //       setSelectedParticipants(selectedParticipants.filter(participant => participant !== value));
-// //     }
-// //   };
-  
-// //   const handleDone = async (event) => {
-// //     event.preventDefault();
-// //     try {
-// //       // Iterate over selected participants and enter their data into the database
-// //       await Promise.all(selectedParticipants.map(async (participantId) => {
-// //         const toId = parseInt(participantId); // Convert to number
-// //         const expenseData = {
-// //           from_id: userId,
-// //           to_id: toId,
-// //           shared_expense: 0, // You need to set this value accordingly
-// //           isSettled: 0 // Assuming the expense is not settled initially
-// //         };
-// //         // Fetch the user data from the server to determine the next user_id
-// //         const response = await axios.get('http://localhost:3030/expenses');
-// //         const expenses = response.data;
-// //         // Find the maximum userId to generate the next userId
-// //         const maxExpenseId = Math.max(...expenses.map(expense => parseInt(expense.expense_id)));
-// //         // Generate the next userId
-// //         const expenseId = maxExpenseId + 1;
-// //         // Add the userId to the form data
-// //         const expenseDataWithId = { expense_id: expenseId, ...expenseData };
-// //         // Send the form data to the server to create the user
-// //         const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseDataWithId);
-  
-// //         return createExpenseResponse; // Return the response for handling later
-// //       }));
-// //       // Check if all expenses are successfully created
-// //       alert("Expense Added Successfully!")
-// //       navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
-// //     } catch (error) {
-// //       console.error('Error adding expense:', error);
-// //     }
-// //   };
-
-// //   const handleAddExpense = async (event) => {
-// //     event.preventDefault();
-// //     try {
-// //       const expenseData = {
-// //         expense_id: expenseId,
-// //         payer_id: userId,
-// //         date_time: inputData.date_time,
-// //         amount: parseFloat(inputData.amount), // Convert amount to a number
-// //         type: inputData.type
-// //       };
-// //       // Send the form data to the server to create the expense
-// //       const createExpenseResponse = await axios.post('http://localhost:3030/expenses', expenseData);
-// //       if (createExpenseResponse.status === 201) {
-// //         alert("Expense Added Successfully!");
-// //         // You can redirect or perform any necessary action after adding the expense
-// //       } else {
-// //         console.error('Failed to add expense:', createExpenseResponse.statusText);
-// //       }
-// //     } catch (error) {
-// //       console.error('Error adding expense:', error);
-// //     }
-// //   };
-
-// //   return (
-// //     <div className="Group_Page">
-// //       <br />
-// //       <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
-// //       <p> <span className="head">Choose participants for expense</span></p><br /><br />
-// //       <form onSubmit={handleDone}>
-// //         <div className="expense-list">
-// //           {expenseInfo.map(participant => (
-// //             <div key={participant.user_id}>
-// //               <input
-// //                 type="checkbox"
-// //                 id={participant.user_id}
-// //                 name="participant"
-// //                 value={participant.user_id}
-// //                 onChange={handleCheckboxChange}
-// //               />
-// //               <label htmlFor={participant.user_id}>{participant.name}</label>
-// //             </div>
-// //           ))}
-// //         </div>
-// //         <div className="button-container">
-// //           <button className="button" type="submit">Done</button>
-// //         </div>
-// //       </form>
-// //       <div className="input-container">
-// //   <form onSubmit={handleAddExpense}>
-// //     <div>
-// //       <label htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
-// //       <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
-// //     </div>
-// //     <div>
-// //       <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
-// //       <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
-// //     </div>
-// //     <div>
-// //       <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
-// //       <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
-// //     </div>
-// //     <div className="button-container">
-// //       <button className="button" type="submit">Add Expense</button>
-// //     </div>
-// //   </form>
-// // </div>
-
-// //       {error && <p>Error: {error}</p>}
-// //     </div>
-// //   );
-// // }
-
-// // export default Uniform_Split;
-
-
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate, useLocation } from 'react-router-dom';
-// import axios from 'axios';
-// import './Uniform_Split.css';
-
-// function Uniform_Split() {
-//   const [expenseInfo, setExpenseInfo] = useState([]);
-//   const [selectedParticipants, setSelectedParticipants] = useState([]);
-//   const [error, setError] = useState('');
-//   const [inputData, setInputData] = useState({ date_time: '', amount: '', type: '' });
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const groupId = location.state && location.state.groupId;
-//   const userId = location.state && location.state.userId;
-//   const expenseId = 0; // Define or pass the expenseId as needed
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const [participantsRes, usersRes] = await Promise.all([
-//           axios.get('http://localhost:3030/members'), // Fetch members
-//           axios.get('http://localhost:3030/user') // Fetch users
-//         ]);
-
-//         const membersData = participantsRes.data;
-//         const usersData = usersRes.data;
-
-//         // Filter members based on groupId matching
-//         const matchedMembers = membersData.filter(member => member.group_id === groupId && member.member_id !== userId);
-
-//         // Map member_id to user_id and get user names
-//         const expenseInfo = matchedMembers.map(member => {
-//           const user = usersData.find(user => user.user_id === member.member_id);
-//           return {
-//             user_id: member.member_id,
-//             name: user ? user.name : 'Unknown User'
-//           };
-//         });
-
-//         setExpenseInfo(expenseInfo);
-//       } catch (error) {
-//         setError('Failed to fetch data: ' + error.message);
-//       }
-//     };
-
-//     fetchData();
-//   }, [groupId, userId]);
-
-//   const handleCheckboxChange = (event) => {
-//     const { value, checked } = event.target;
-//     if (checked) {
-//       setSelectedParticipants([...selectedParticipants, value]);
-//     } else {
-//       setSelectedParticipants(selectedParticipants.filter(participant => participant !== value));
-//     }
-//   };
-
-//   const handleDone = async (event) => {
-//     event.preventDefault();
-//     try {
-//       // Iterate over selected participants and enter their data into the database
-//       await Promise.all(selectedParticipants.map(async (participantId) => {
-//         const toId = parseInt(participantId); // Convert to number
-//         const expenseData = {
-//           from_id: userId,
-//           to_id: toId,
-//           shared_expense: 0, // You need to set this value accordingly
-//           isSettled: 0 // Assuming the expense is not settled initially
-//         };
-//         // Fetch the user data from the server to determine the next user_id
-//         const response = await axios.get('http://localhost:3030/expenses');
-//         const expenses = response.data;
-//         // Find the maximum userId to generate the next userId
-//         const maxExpenseId = Math.max(...expenses.map(expense => parseInt(expense.expense_id)));
-//         // Generate the next userId
-//         const expenseId = maxExpenseId + 1;
-//         // Add the userId to the form data
-//         const expenseDataWithId = { expense_id: expenseId, ...expenseData };
-//         // Send the form data to the server to create the user
-//         const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseDataWithId);
-  
-//         return createExpenseResponse; // Return the response for handling later
-//       }));
-//       // Check if all expenses are successfully created
-//       alert("Participants Successfully!")
-//     } catch (error) {
-//       console.error('Error adding expense:', error);
-//     }
-//   };
-
-//   const handleAddExpense = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const expenseData = {
-//         expense_id: expenseId,
-//         payer_id: userId,
-//         date_time: inputData.date_time,
-//         amount: parseFloat(inputData.amount), // Convert amount to a number
-//         type: inputData.type
-//       };
-//       // Send the form data to the server to create the expense
-//       const createExpenseResponse = await axios.post('http://localhost:3030/expenses', expenseData);
-//       if (createExpenseResponse.status === 201) {
-//         alert("Expense Added Successfully!");
-//         navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
-//       } else {
-//         console.error('Failed to add expense:', createExpenseResponse.statusText);
-//       }
-//     } catch (error) {
-//       console.error('Error adding expense:', error);
-//     }
-//   };
-
-//   return (
-//     <div className="Group_Page">
-//       <br />
-//       <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
-//       <p> <span className="head">Choose participants for expense</span></p><br /><br />
-//       <form onSubmit={handleDone}>
-//         <div className="expense-list">
-//           {expenseInfo.map(participant => (
-//             <div key={participant.user_id}>
-//               <input
-//                 type="checkbox"
-//                 id={participant.user_id}
-//                 name="participant"
-//                 value={participant.user_id}
-//                 onChange={handleCheckboxChange}
-//               />
-//               <label htmlFor={participant.user_id}>{participant.name}</label>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="button-container">
-//           <button className="button" type="submit">Done</button>
-//         </div>
-//       </form>
-//       <div className="input-container">
-//         <form onSubmit={handleAddExpense}>
-//           <div>
-//             <label htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
-//             <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
-//           </div>
-//           <div>
-//             <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
-//             <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
-//           </div>
-//           <div>
-//             <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
-//             <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
-//           </div>
-//           <div className="button-container">
-//             <button className="button" type="submit">Add Expense</button>
-//           </div>
-//         </form>
-//       </div>
-//       {error && <p>Error: {error}</p>}
-//     </div>
-//   );
-// }
-
-// export default Uniform_Split;
-
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -474,6 +13,7 @@ function Uniform_Split() {
   const location = useLocation();
   const groupId = location.state && location.state.groupId;
   const userId = location.state && location.state.userId;
+  var newExpenseId;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -516,56 +56,34 @@ function Uniform_Split() {
     }
   };
 
-  const handleDone = async (event) => {
-    event.preventDefault();
-    try {
-      // Iterate over selected participants and enter their data into the database
-      await Promise.all(selectedParticipants.map(async (participantId) => {
-        const toId = parseInt(participantId); // Convert to number
-        const expenseData = {
-          from_id: userId,
-          to_id: toId,
-          shared_expense: 0, // You need to set this value accordingly
-          isSettled: 0 // Assuming the expense is not settled initially
-        };
-        // Fetch the user data from the server to determine the next user_id
-        const response = await axios.get('http://localhost:3030/expenses');
-        const expenses = response.data;
-        // Find the maximum expenseId to generate the next expenseId
-        const maxExpenseId = Math.max(...expenses.map(expense => parseInt(expense.expense_id)));
-        // Generate the next expenseId
-        const newExpenseId = maxExpenseId + 1;
-        setExpenseId(newExpenseId); // Update the expenseId state
-        // Add the expenseId to the form data
-        const expenseDataWithId = { expense_id: newExpenseId, ...expenseData };
-        // Send the form data to the server to create the user
-        const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseDataWithId);
-  
-        return createExpenseResponse; // Return the response for handling later
-      }));
-      // Check if all expenses are successfully created
-      alert("Participants chosen Successfully!")
-      
-    } catch (error) {
-      console.error('Error adding expense:', error);
-    }
-  };
-
   const handleAddExpense = async (event) => {
     event.preventDefault();
     try {
       const expenseData = {
-        expense_id: expenseId, // Use the expenseId state
         payer_id: userId,
         date_time: inputData.date_time,
         amount: parseFloat(inputData.amount), // Convert amount to a number
         type: inputData.type
       };
+      // Fetch the user data from the server to determine the next user_id
+      const response = await axios.get('http://localhost:3030/expenses');
+      const expenses = response.data;
+      // Find the maximum expenseId to generate the next expenseId
+      const maxExpenseId = Math.max(...expenses.map(expense => parseInt(expense.expense_id)));
+      // Generate the next expenseId
+      newExpenseId = maxExpenseId + 1;
+      setExpenseId(newExpenseId); // Update the expenseId state
+      // Add the expenseId to the form data
+      const expenseDataWithId = { expense_id: newExpenseId, ...expenseData };
       // Send the form data to the server to create the expense
-      const createExpenseResponse = await axios.post('http://localhost:3030/expenses', expenseData);
+      const createExpenseResponse = await axios.post('http://localhost:3030/expenses', expenseDataWithId);
+      const group_expenseData = {
+        expense_id: newExpenseId,
+        group_id: groupId
+      };
+      const createGroup_ExpenseResponse = await axios.post('http://localhost:3030/group_expenses', group_expenseData);
       if (createExpenseResponse.status === 201) {
         alert("Expense Added Successfully!");
-        navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
       } else {
         console.error('Failed to add expense:', createExpenseResponse.statusText);
       }
@@ -574,10 +92,54 @@ function Uniform_Split() {
     }
   };
 
+  const handleDone = async (event) => {
+    event.preventDefault();
+    try {
+      // Iterate over selected participants and enter their data into the database
+      await Promise.all(selectedParticipants.map(async (participantId) => {
+        const toId = parseInt(participantId); // Convert to number
+        const expenseData = {
+          expense_id: expenseId,
+          from_id: userId,
+          to_id: toId,
+          shared_expense: 0, // You need to set this value accordingly
+          isSettled: 0 // Assuming the expense is not settled initially
+        };
+        const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseData);
+        return createExpenseResponse; // Return the response for handling later
+      }));
+      // Check if all expenses are successfully created
+      alert("Participants chosen Successfully!");
+      navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
+      
+    } catch (error) {
+      console.error('Error adding expense:', error);
+    }
+  };
+
   return (
-    <div className="Group_Page">
+    <div className="Uniform_Split">
       <br />
       <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
+      <div className="input-container">
+        <form onSubmit={handleAddExpense}>
+          <div>
+            <label htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
+            <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
+          </div>
+          <div>
+            <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
+            <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
+          </div>
+          <div>
+            <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
+            <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
+          </div>
+          <div className="button-container">
+            <button className="button" type="submit">Add Expense</button>
+          </div>
+        </form>
+      </div>
       <p> <span className="head">Choose participants for expense</span></p><br /><br />
       <form onSubmit={handleDone}>
       <div className="expense-list">
@@ -598,25 +160,6 @@ function Uniform_Split() {
           <button className="button" type="submit">Done</button>
         </div>
       </form>
-      <div className="input-container">
-        <form onSubmit={handleAddExpense}>
-          <div>
-            <label htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
-            <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
-          </div>
-          <div>
-            <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
-            <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
-          </div>
-          <div>
-            <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
-            <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
-          </div>
-          <div className="button-container">
-            <button className="button" type="submit">Add Expense</button>
-          </div>
-        </form>
-      </div>
       {error && <p>Error: {error}</p>}
     </div>
   );
