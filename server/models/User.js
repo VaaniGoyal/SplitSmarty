@@ -1,44 +1,44 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
 
-module.exports = (sequelize) => {
-    // Define User model
-    class User extends Model { }
-    User.init({
-        user_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false
-        },
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
-        profile_picture: DataTypes.STRING,
-        name: DataTypes.STRING,
-        self_description: DataTypes.STRING,
-        phone_number: DataTypes.STRING,
-        upi_id: DataTypes.STRING
-    }, { sequelize, modelName: 'User' });
+const User = sequelize.define(
+  "User",
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
+    self_describe: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    upi_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    contact: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  },
+  {
+    freezeTableName: true,
+  }
+);
 
-    // Define associations
-    User.associate = (models) => {
-        User.belongsToMany(models.SplitGroup, { through: 'Udhaari' });
-        User.belongsToMany(models.Invite, { through: 'SentInvites', foreignKey: 'senderId' });
-        User.belongsToMany(models.Invite, { through: 'ReceivedInvites', foreignKey: 'receiverId' });
-    };
-
-    return User;
-}
+export default User;
