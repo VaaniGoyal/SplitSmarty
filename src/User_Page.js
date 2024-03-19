@@ -1,8 +1,8 @@
-
+//User_Page.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './User_Page.css'; // Import CSS file for global styles
+import './App.css'
 
 function User_Page() {
   const [userInfo, setUserInfo] = useState(null);
@@ -44,7 +44,7 @@ function User_Page() {
       <br />
       <p> <span className="page-head">User Profile</span></p><br /><br />
       {userInfo && (
-        <div className="user-info">
+        <div className="normal-info">
           <p>Name: {userInfo.name}</p>
           <p>Contact No: {userInfo.contact}</p>
           <p>Email Address: {userInfo.email}</p>
@@ -52,19 +52,10 @@ function User_Page() {
         </div>
       )}
       {error && <p>Error: {error}</p>}
-      <div className="button-container">
-            <button className="button" onClick={handleViewGroupsClick}>View Groups</button><br/><br />
-      </div>
-      <div className="button-container">
-            <button className="button" onClick={handleViewGroupsClick}>Create Group</button><br/><br />
-      </div>
-      <div className="button-container">
-            <button className="button" onClick={handleSettleExpensesClick}>View Your Expenses</button><br/><br />
-      </div>
-      <div className="button-container">
-          <button className="button" onClick={handleLogoutClick}>Log out</button>
-      </div>
-      
+      <button onClick={handleViewGroupsClick} id="view-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View Groups</button><br /><br />
+      <button onClick={handleViewGroupsClick} id="create-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Create Group</button><br /><br />
+      <button onClick={handleSettleExpensesClick} id="view-expenses" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View your expenses</button><br /><br />
+      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
   );
 }

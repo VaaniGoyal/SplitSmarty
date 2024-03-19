@@ -1,7 +1,8 @@
+//Participants.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './Participants.css';
+import './App.css';
 
 function Participants() {
   const [memberInfo, setMemberInfo] = useState([]);
@@ -54,7 +55,7 @@ function Participants() {
     <div className="Participants">
       <br />
       <p> <span className="page-head">Group Members</span></p><br /><br />
-      <div className="member-list">
+      <div className="normal-info">
         {memberInfo.map((name, index) => (
           <div key={index}>
             <p>{name}</p>
@@ -62,15 +63,9 @@ function Participants() {
         ))}
         {error && <p>Error: {error}</p>}
       </div>
-      <div className="button-container">
-            <button className="button" >Add Participant</button><br/><br />
-      </div>
-      <div className="button-container">
-            <button className="button" >Remove Participant</button><br/><br />
-      </div>
-      <div className="button-container">
-          <button className="button" onClick={handleLogoutClick}>Log out</button>
-      </div>
+      <button id="add-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Participant</button><br /><br />
+      <button id="remove-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Remove Participant</button><br /><br />
+      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
   );
 }

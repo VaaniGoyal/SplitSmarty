@@ -1,8 +1,8 @@
+//Uniform_Split.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './Uniform_Split.css';
-
+import './App.css';
 function Uniform_Split() {
   const [expenseInfo, setExpenseInfo] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
@@ -121,10 +121,10 @@ function Uniform_Split() {
     <div className="Uniform_Split">
       <br />
       <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
-      <div className="input-container">
+      <div className="normal-info">
         <form onSubmit={handleAddExpense}>
           <div>
-            <label htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
+            <label className="normal-info" htmlFor="date_time" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '3rem' }}>Date & Time</label>
             <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
           </div>
           <div>
@@ -135,14 +135,12 @@ function Uniform_Split() {
             <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
             <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
           </div>
-          <div className="button-container">
-            <button className="button" type="submit">Add Expense</button>
-          </div>
+          <button id="add-expense" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Expense</button><br /><br />
         </form>
       </div>
-      <p> <span className="head">Choose participants for expense</span></p><br /><br />
+      <p> <span className="normal-info">Choose participants for expense</span></p>
       <form onSubmit={handleDone}>
-      <div className="expense-list">
+      <div className="normal-info">
           {expenseInfo.map(participant => (
             <div key={participant.user_id}>
               <input
@@ -156,9 +154,7 @@ function Uniform_Split() {
             </div>
           ))}
         </div>
-        <div className="button-container">
-          <button className="button" type="submit">Done</button>
-        </div>
+        <button id="done" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Done</button><br /><br />
       </form>
       {error && <p>Error: {error}</p>}
     </div>

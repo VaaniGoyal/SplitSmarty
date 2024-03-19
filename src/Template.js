@@ -1,6 +1,7 @@
 // Template.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './App.css';
 function Navigation() {
   return (
     <nav className='nav'>
@@ -14,24 +15,11 @@ function Navigation() {
   );
 }
 
-// function Logout() {
-//   return (
-//     <div className="logout">
-//       <button>
-//         <img src="./logout.png" /> Log Out
-//       </button>
-//     </div>
-//   );
-// }
-
-// function VerticalLine() {
-//   return <div className="vertical-line"></div>;
-// }
 function Footer() {
   return (
     <footer className="footer">
-      {/* Footer content */}
     </footer>
   );
 }
+
 export { Navigation, Footer };
