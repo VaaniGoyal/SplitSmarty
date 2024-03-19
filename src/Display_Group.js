@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './Display_Group.css';
+import './App.css';
 
 function Display_Group() {
   const [groupInfo, setGroupInfo] = useState([]);
@@ -46,7 +46,7 @@ function Display_Group() {
     <div className="Display_Group">
       <br />
       <p> <span className="page-head">Your Groups</span></p><br /><br />
-      <div className="group-list">
+      <div className="normal-info">
         {groupInfo.map(group => (
           <button key={group.group_id} onClick={() => handleGroupClick(group.group_id)} className="group-button">
             Group Name: {group.group_describe}
@@ -55,7 +55,7 @@ function Display_Group() {
       </div>
       {error && <p>Error: {error}</p>}
       <div className="button-container">
-          <button className="button" onClick={handleLogoutClick}>Log out</button>
+          <button className="universal-button" onClick={handleLogoutClick}>Log out</button>
       </div>
     </div>
     

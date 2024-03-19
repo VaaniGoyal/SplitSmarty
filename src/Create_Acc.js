@@ -1,8 +1,8 @@
 //Create_Acc.js
 import axios from 'axios';
-import React, { useState } from 'react';
-import './Create_Acc.css'; 
+import React, { useState } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
+import './App.css';
 
 function Create_Acc(){
     const [inputData, setInputData]=useState({
@@ -74,11 +74,12 @@ function Create_Acc(){
                 <label htmlFor="self_describe" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '2rem' }}>Describe Yourself</label>
                 <input type="text" name="self_describe" placeholder='describe yourself' onChange={e => setInputData({...inputData, self_describe: e.target.value})}></input><br /><br />
               </div>
-              <button id="sign-in" className="sign-in-button" style={{ marginLeft: '10rem', marginRight: '5rem' }}>Sign In</button><br /><br />
+              <button id="sign-in" className="universal-button" style={{ marginLeft: '10rem', marginRight: '5rem' }}>Sign In</button><br /><br />
             </form>
         </div>
       </div>
     );
 }
+
 export default Create_Acc;
 

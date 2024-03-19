@@ -39,7 +39,7 @@ body {
   font-size: 5rem; /* Converted from 500% */
   font-family: 'Nunito', Arial, sans-serif;
   color: #000f73;
-  margin-left: 1rem;
+  margin-left: 0rem;
 }
 /* Input Styles */
 input[type="text"],
@@ -51,24 +51,60 @@ input[type="password"] {
   border: 0.0625rem solid #789ade; /* Converted from 1px */
   border-radius: 1rem; /* Converted from 100px */
 }
-
-button {
-  color: #444b59;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  text-decoration: underline;
-}
-
 /*buttons*/
-.sign-in-button {
+.universal-button {
   background-color: #8699da; /* Change background color to purple */
   color: white; /* Change text color to white */
   font-weight: bold;
   padding: 0.5rem 4rem; /* Increase padding for larger size */
   font-size: 1.2rem; /* Increase font size for larger size */
   border-radius: 5rem;
+}
+.universal-button {
+  background-color: #8699da; /* Change background color to purple */
+  color: white; /* Change text color to white */
+  font-weight: bold;
+  padding: 0.5rem 4rem; /* Increase padding for larger size */
+  font-size: 1.2rem; /* Increase font size for larger size */
+  border-radius: 5rem;
+}
+.group-button {
+  background-color: none;
+  color: #444b59;
+  font-weight: bold;
+  border: none;
+  margin-bottom: 0.5rem;
+  margin-left: auto; /* Align to the right */
+  margin-right: auto; /* Align to the left */
+  display: block; /* Ensures full-width */
+  width: fit-content; /* Adjust width to content */
+  padding: 1rem; /* Adjusted padding for smaller screens */
+  border-radius: 2rem;
+  cursor: pointer;
+  text-align: center; /* Align text to the center */
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+.group-button:hover {
+  background-color: none;
+}
+button {
+  color: #444b59;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  text-decoration: underline;
+}
+/* information to be displayed*/
+.normal-info {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
+
+.normal-info p {
+  margin-bottom: 2rem;
+  color: #444b59; /* Change color as needed */
 }
