@@ -11,6 +11,7 @@ function Participants() {
   const navigate = useNavigate();
   const location = useLocation();
   const groupId = location.state && location.state.groupId;
+  const userId = location.state && location.state.userId;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,9 +45,10 @@ function Participants() {
       fetchData();
     }
   }, [groupId]);
+  const handleAddParticipantClick = () => {
+    navigate('/Add_Participant', { state: { groupId: groupId, userId: userId } });
+  };
   const handleLogoutClick = () => {
-    // Logic to clear user session data and redirect to login page
-    // For example, you can use localStorage to clear user data
     localStorage.removeItem('userId');
     navigate('/login_page');
   };
@@ -63,8 +65,7 @@ function Participants() {
         ))}
         {error && <p>Error: {error}</p>}
       </div>
-      <button id="add-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Participant</button><br /><br />
-      {/* <button id="remove-member" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Remove Participant</button><br /><br /> */}
+      <button id="add-member" onClick={handleAddParticipantClick} className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Participant</button><br /><br />
       <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
   );
