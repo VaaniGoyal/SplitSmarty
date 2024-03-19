@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
+
 function Uniform_Split() {
   const [expenseInfo, setExpenseInfo] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
@@ -95,6 +96,12 @@ function Uniform_Split() {
   const handleDone = async (event) => {
     event.preventDefault();
     try {
+      // Count the number of selected participants
+      const numberOfParticipants = selectedParticipants.length;
+
+      // Calculate the shared expense
+      const sharedExpense = parseFloat(inputData.amount) / (numberOfParticipants+1);
+
       // Iterate over selected participants and enter their data into the database
       await Promise.all(selectedParticipants.map(async (participantId) => {
         const toId = parseInt(participantId); // Convert to number
@@ -102,12 +109,13 @@ function Uniform_Split() {
           expense_id: expenseId,
           from_id: userId,
           to_id: toId,
-          shared_expense: 0, // You need to set this value accordingly
+          shared_expense: sharedExpense, // Set the shared expense
           isSettled: 0 // Assuming the expense is not settled initially
         };
         const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseData);
         return createExpenseResponse; // Return the response for handling later
       }));
+
       // Check if all expenses are successfully created
       alert("Participants chosen Successfully!");
       navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
