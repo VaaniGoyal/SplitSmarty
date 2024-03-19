@@ -18,20 +18,24 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        email: DataTypes.STRING,
-        creation_date: DataTypes.DATE,
+        email: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        timestamps: true,
+        createdAt: true,
         profile_picture: DataTypes.STRING,
         name: DataTypes.STRING,
         self_description: DataTypes.STRING,
         phone_number: DataTypes.STRING,
         upi_id: DataTypes.STRING
-    }, { sequelize, modelName: 'user' });
+    }, { sequelize, modelName: 'User' });
 
     // Define associations
     User.associate = (models) => {
-        // User.belongsToMany(models.SplitGroup, { through: 'Udhaari', foreignKey: 'user_id' });
-        // User.hasMany(models.Invite, { foreignKey: 'invitee_user_id' });
-        // User.hasMany(models.Invite, { foreignKey: 'host_user_id' });
+        User.belongsToMany(models.SplitGroup, { through: 'Udhaari' });
+        User.belongsToMany(models.Invite, { through: 'SentInvites', foreignKey: 'senderId' });
+        User.belongsToMany(models.Invite, { through: 'ReceivedInvites', foreignKey: 'receiverId' });
     };
 
     return User;

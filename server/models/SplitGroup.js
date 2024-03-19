@@ -9,15 +9,23 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: DataTypes.STRING,
+        group_name: DataTypes.STRING,
         description: DataTypes.STRING,
+        timestamps: true,
+        createdAt: true,
+        group_icon: {
+            type: DataTypes.STRING,
+            defaultValue: './public/default_group_icon.jpg'
+        },
         expenses_pending: DataTypes.FLOAT // Assuming expenses are represented as float values
-    }, { sequelize, modelName: 'splitGroup' });
+    }, { sequelize, modelName: 'SplitGroup' });
 
     // Define associations
     SplitGroup.associate = (models) => {
-        // SplitGroup.belongsToMany(models.User, { through: 'Udhaari', foreignKey: 'group_id' });
-        // SplitGroup.hasMany(models.Split, { foreignKey: 'group_id' });
+        SplitGroup.belongsToMany(models.User, { through: 'Udhaari'});
+        SplitGroup.hasMany(models.Split);
+        SplitGroup.hasMany(models.User, {as: 'GroupAdmin'});
+        SplitGroup.hasOne(models.Invite);
     };
 
     return SplitGroup;

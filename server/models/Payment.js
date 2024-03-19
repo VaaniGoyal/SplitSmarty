@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         amount: DataTypes.FLOAT,
         date: DataTypes.DATE,
         status: DataTypes.STRING
-      }, { sequelize, modelName: 'payment' });
+      }, { sequelize, modelName: 'Payment' });
 
     // Define associations
     Payment.associate = (models) => {

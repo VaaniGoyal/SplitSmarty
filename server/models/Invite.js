@@ -1,4 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
+const SplitGroup = require('./SplitGroup');
 
 module.exports = (sequelize) => {
     // Define Invite model
@@ -13,12 +14,13 @@ module.exports = (sequelize) => {
       status: DataTypes.STRING,
       sent_date: DataTypes.DATE,
       accepted_date: DataTypes.DATE
-    }, { sequelize, modelName: 'invite' });
+    }, { sequelize, modelName: 'Invite' });
 
     // Define associations
     Invite.associate = (models) => {
-        // Invite.belongsTo(models.User, { as: 'host', foreignKey: 'host_user_id' });
-        // Invite.belongsTo(models.User, { as: 'invitee', foreignKey: 'invitee_user_id' });
+      Invite.belongsTo(models.SplitGroup);
+      Invite.belongsTo(models.User, { as: 'Sender', foreignKey: 'senderId' });
+      Invite.belongsTo(models.User, { as: 'Receiver', foreignKey: 'receiverId' });
     };
 
     return Invite;
