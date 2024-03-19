@@ -18,7 +18,7 @@ function Add_Participant() {
       try {
         // Fetch members and users data
         const [membersRes, usersRes] = await Promise.all([
-          axios.get(http://localhost:3030/members?group_id=${groupId}),
+          axios.get(`http://localhost:3030/members?group_id=${groupId}`),
           axios.get('http://localhost:3030/user')
         ]);
 
@@ -78,13 +78,14 @@ function Add_Participant() {
       <div>
         <h3>Add Members to Group:</h3>
         <ul>
-          {usersNotInGroup.map(user => (
+            {usersNotInGroup.map(user => (
             <li key={user.user_id} className="normal-info">
-              {user.name}
-              <button className="universal-button" onClick={() => handleAddUserToGroup(user.user_id)}>Add</button>
+            {user.name}
+            <button className="universal-button" onClick={() => handleAddUserToGroup(user.user_id)}>Add</button>
             </li>
           ))}
         </ul>
+
       </div>
       <button id="log-out" onClick={handleLogoutClick} className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
