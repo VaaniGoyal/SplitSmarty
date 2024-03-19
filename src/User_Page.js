@@ -29,6 +29,9 @@ function User_Page() {
   const handleViewGroupsClick = () => {
     navigate('/Display_Group', { state: { userId: userId } });
   };
+  const handleCreateGroupClick = () => {
+    navigate('/Create_Group', { state: { userId: userId } });
+  };
   const handleSettleExpensesClick = () => {
     navigate('/Settle_Expense', { state: { userId: userId } });
   };
@@ -53,7 +56,7 @@ function User_Page() {
       )}
       {error && <p>Error: {error}</p>}
       <button onClick={handleViewGroupsClick} id="view-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View Groups</button><br /><br />
-      <button onClick={handleViewGroupsClick} id="create-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Create Group</button><br /><br />
+      <button onClick={handleCreateGroupClick} id="create-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Create Group</button><br /><br />
       <button onClick={handleSettleExpensesClick} id="view-expenses" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View your expenses</button><br /><br />
       <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>
