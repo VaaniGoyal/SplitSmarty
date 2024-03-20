@@ -1,5 +1,5 @@
-const db = require('../models');
-const Split = db.Split;
+import { Split as _Split, SplitGroup } from '../models';
+const Split = _Split;
 
 // Add a new split to a group
 async function addSplit(req, res) {
@@ -65,7 +65,7 @@ async function paySplit(req, res) {
 async function getAllSplits(req, res, next) {
     try {
         const groupId = req.params.groupId;
-        const groupMembers = await db.SplitGroup.Split.findAll({
+        const groupSplits = await SplitGroup.Split.findAll({
             where: {
                 group_id: groupId
             }
@@ -78,17 +78,23 @@ async function getAllSplits(req, res, next) {
                     message: err.message || "Some error occured while getting data. Please try again!"
                 });
             });
-        res.json(groupMembers);
+        res.json(groupSplits);
     } catch (error) {
         next(error);
     }
 }
 
+// settle up expenses of a given user
 async function settleUp(req, res, next) {
+    const userId = req.params.userId;
+    const groupId = req.params.groupId;
+
+    // get all splits involving userId in that gropId
+    let splits = [];
     
 }
 
-module.exports = {
+const spltController = {
     getAllSplits,
     addSplit,
     deleteSplit,
@@ -96,3 +102,4 @@ module.exports = {
     settleUp
 };
 
+export default spltController

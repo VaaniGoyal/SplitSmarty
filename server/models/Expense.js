@@ -1,37 +1,48 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
+import GroupExpense from "./GroupExpense";
+import User from "./User";
 
-module.exports = (sequelize) => {
-    // Define Expense model
-    class Expense extends Model { }
-    Expense.init({
-        expense_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        payer_id: { 
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false
-        },
-        type: DataTypes.STRING,
-        amount: DataTypes.FLOAT,
-        date_time: DataTypes.DATE,
+const Expense = sequelize.define(
+  "Expense",
+  {
+    expense_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    payer_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    date_time: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    amount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        group_id: { 
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
-    }, { sequelize, modelName: 'Expense' });
+Expense.belongsTo(GroupExpense, {
+  foreignKey: "expense_id",
+  onDelete: "CASCADE",
+  as: "groupExpense",
+});
 
-    // Define associations
-    Expense.associate = (models) => {
-        // Expense.hasOne(models.User);
-    };
+Expense.belongsTo(User, {
+  foreignKey: "payer_id",
+  onDelete: "CASCADE",
+  as: "payer",
+});
 
-    return Expense;
-}
+export default Expense;

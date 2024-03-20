@@ -1,36 +1,27 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
 
-module.exports = (sequelize) => {
-    // Define SplitGroup model
-    class SplitGroup extends Model { }
-    SplitGroup.init({
-        group_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        group_name: DataTypes.STRING,
-        description: DataTypes.STRING,
-        createdAt: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
-        group_icon: {
-            type: DataTypes.STRING,
-            defaultValue: './public/default_group_icon.jpg'
-        },
-        expenses_pending: DataTypes.FLOAT // Assuming expenses are represented as float values
-    }, { sequelize, modelName: 'SplitGroup' });
+const SplitGroup = sequelize.define(
+  "SplitGroup",
+  {
+    name: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    group_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
+    group_describe: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
-    // Define associations
-    SplitGroup.associate = (models) => {
-        SplitGroup.belongsToMany(models.User, { through: 'Udhaari'});
-        SplitGroup.hasMany(models.Split);
-        SplitGroup.hasMany(models.User, {as: 'GroupAdmin'});
-        SplitGroup.hasOne(models.Invite);
-    };
-
-    return SplitGroup;
-};
-
-
+export default SplitGroup;

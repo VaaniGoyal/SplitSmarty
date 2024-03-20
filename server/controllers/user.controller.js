@@ -1,23 +1,23 @@
-const { Op } = require('sequelize');
-const express = require('express')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+import { Op } from 'sequelize';
+import { Router } from 'express';
+import { hashSync, compareSync } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 
-const db = require('../models')
-const User = db.User;
+import { User as _User } from '../models';
+const User = _User;
 
-const router = express.Router()
+const router = Router()
 const SECRET_KEY = 'LKJnbvgHJK8765RfG'
 
 async function signup(req, res) {
     try {
         const user = await User.create({
-            username: req.body.username,
+            name: req.body.name,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8),
+            password: hashSync(req.body.password, 8),
             creation_date: new Date(),
-            self_description: req.body.self_description,
-            phone_number: req.body.phone_number,
+            self_describe: req.body.self_describe,
+            contact: req.body.contact,
             upi_id: req.body.upi_id
         })
         res.status(200).json(user)
@@ -42,7 +42,7 @@ async function login(req, res) {
         })
     }
 
-    const passwordMatch = bcrypt.compareSync(password, user.password);
+    const passwordMatch = compareSync(password, user.password);
     if (!passwordMatch) {
         return res.status(400).json({
             message: 'Wrong password!',
@@ -51,7 +51,7 @@ async function login(req, res) {
 
     // jwt token
     const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
-    const token = jwt.sign({ sub: user.user_id, exp }, SECRET_KEY)
+    const token = sign({ sub: user.user_id, exp }, SECRET_KEY)
 
     res.cookie("Authorization", token, {
         expires: new Date(exp),
@@ -60,7 +60,7 @@ async function login(req, res) {
     });
 
     res.json({
-        message: `Welcome back, ${user.username}`,
+        message: `Welcome back, ${user.name}`,
         token: token,
     })
 
@@ -95,8 +95,8 @@ async function createUser(req, res, next) {
         }
 
         // add all attributes
-        const { username, email } = req.body;
-        const user = await User.create({ username, email }).then(
+        const { name, email } = req.body;
+        const user = await User.create({ name, email }).then(
             data => {
                 res.send(data)
             })
@@ -145,10 +145,10 @@ async function getUserById(req, res, next) {
 }
 
 // Get user by title
-async function getUserByUsername(req, res, next) {
+async function name(req, res, next) {
     try {
-        const username = req.query.username;
-        var condition = username ? { username: { [Op.like]: `%${username}%`} } : null;
+        const name = req.query.name;
+        var condition = name ? { name: { [Op.like]: `%${name}%`} } : null;
 
         User.findAll({ where: condition })
         .then(data => {
@@ -191,7 +191,7 @@ async function updateUser(req, res, next) {
         // if (!user) {
         //     return res.status(404).json({ message: "User not found" });
         // }
-        // user.username = username;
+        // user.name = name;
         // user.email = email;
         // await user.save();
     } catch (error) {
@@ -214,12 +214,14 @@ async function deleteUser(req, res, next) {
     }
 }
 
-module.exports = {
+const userController = {
     login, logout, signup,
     createUser,
     getUsers,
     getUserById,
-    getUserByUsername,
+    name,
     updateUser,
     deleteUser
 }
+
+export default userController;

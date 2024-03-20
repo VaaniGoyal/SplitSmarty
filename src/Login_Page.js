@@ -1,7 +1,9 @@
+//login_Page.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import './Login_Page.css'; 
+import { Link, useNavigate, useLocation } from 'react-router-dom'; 
+import './App.css';
+
 function Login_Page() {
   const [data, setData] = useState([]);
   const [email, setEmail] = useState('');
@@ -55,7 +57,7 @@ function Login_Page() {
       <span style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59' }}>Password</span><br /><br />
       <input type="password" id="password" placeholder="Your password" onChange={(e) => setPassword(e.target.value)} /><br /><br />
       <button onClick={togglePasswordVisibility}></button>
-      <button onClick={handleButtonClick} id="sign-in" className="sign-in-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Sign In</button><br /><br />
+      <button onClick={handleButtonClick} id="sign-in" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Sign In</button><br /><br />
       {error && <div className="error">{error}</div>}
     </div>
   );

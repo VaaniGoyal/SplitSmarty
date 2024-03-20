@@ -1,23 +1,44 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
+import User from "./User";
 
-module.exports = (sequelize) => {
-    // Define Expense model
-    class Payment extends Model { }
-    Payment.init({
-        payment_id: {
-          type: DataTypes.INTEGER,
-          primaryKey: true,
-          autoIncrement: true
-        },
-        amount: DataTypes.FLOAT,
-        date: DataTypes.DATE,
-        status: DataTypes.STRING
-      }, { sequelize, modelName: 'Payment' });
+const Payment = sequelize.define(
+  "Payment",
+  {
+    payment_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
+    from_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    to_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    amount_paid: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
-    // Define associations
-    Payment.associate = (models) => {
-        // payment relations here
-    };
+Payment.belongsTo(User, {
+  foreignKey: "from_id",
+  onDelete: "CASCADE",
+  as: "fromUser",
+});
 
-    return Payment;
-}
+Payment.belongsTo(User, {
+  foreignKey: "to_id",
+  onDelete: "CASCADE",
+  as: "toUser",
+});
+
+export default Payment;

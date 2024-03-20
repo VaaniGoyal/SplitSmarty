@@ -1,6 +1,6 @@
-const { Op } = require('sequelize')
-const db = require('../models')
-const SplitGroup = db.SplitGroup;
+import { Op } from 'sequelize';
+import { SplitGroup as _SplitGroup, Udhaari, User } from '../models';
+const SplitGroup = _SplitGroup;
 
 // Create a new group
 async function createSplitGroup(req, res, next) {
@@ -15,7 +15,7 @@ async function createSplitGroup(req, res, next) {
         const splitGroup = await SplitGroup.create({ name: group_name, description });
 
         // Associate user with the group
-        await db.Udhaari.create({ user_id, group_id: splitGroup.group_id });
+        await Udhaari.create({ user_id, group_id: splitGroup.group_id });
         res.status(201).json({ message: 'Split group created successfully.', data: splitGroup });
 
     } catch (error) {
@@ -29,7 +29,7 @@ async function createSplitGroup(req, res, next) {
 async function getUserGroups(req, res, next) {
     try {
         const userId = req.params.userId;
-        const userGroups = await db.Udhaari.findAll({
+        const userGroups = await Udhaari.findAll({
             where: {
                 user_id: userId
             }
@@ -52,7 +52,7 @@ async function getUserGroups(req, res, next) {
 async function getMembers(req, res, next) {
     try {
         const groupId = req.params.groupId;
-        const groupMembers = await db.Udhaari.findAll({
+        const groupMembers = await Udhaari.findAll({
             where: {
                 group_id: groupId
             }
@@ -66,6 +66,29 @@ async function getMembers(req, res, next) {
                 });
             });
         res.json(groupMembers);
+    } catch (error) {
+        next(error);
+    }
+}
+
+// get all splits in a group
+async function getAllSplits(req, res, next) {
+    try {
+        const groupId = req.params.groupId;
+        const groupSplits = await SplitGroup.Split.findAll({
+            where: {
+                group_id: groupId
+            }
+        }).then(
+            data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occured while getting data. Please try again!"
+                });
+            });
+        res.json(groupSplits);
     } catch (error) {
         next(error);
     }
@@ -97,8 +120,8 @@ async function addNewMember(req, res, next) {
         const groupId = req.params.groupId;
 
         const { user_email } = req.query.user_email;
-        const user = db.User.findOne({ where: { email: user_email } })
-        db.Udhaari.create({
+        const user = User.findOne({ where: { email: user_email } })
+        Udhaari.create({
             group_id: groupId,
             user_id: user.user_id
         })
@@ -164,12 +187,15 @@ async function deleteGroup(req, res, next) {
     }
 }
 
-module.exports = {
+const splitGroupController = {
     createSplitGroup,
     getUserGroups,
     getMembers,
+    getAllSplits,
     addNewMember,
     getGroupByTitle,
     updateGroup,
     deleteGroup
 }
+
+export default splitGroupController;
