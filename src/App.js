@@ -11,6 +11,8 @@ import Display_Group from './Display_Group';
 import Participants from './Participants';
 import NonUni_Split from './NonUni_Split';
 import Settle_Expense from './Settle_Expense';
+import Create_Group from './Create_Group';
+import Add_Participant from './Add_Participant';
 import './App.css';
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/Participants" element={<Participants />} />
           <Route path="/NonUni_Split" element={<NonUni_Split />} />
           <Route path="/Settle_Expense" element={<Settle_Expense />} />
+          <Route path="/Create_Group" element={<Create_Group />} />
+          <Route path="/Add_Participant" element={<Add_Participant />} />
         </Routes>
       </div>
     </Router>

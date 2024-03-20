@@ -29,6 +29,9 @@ function User_Page() {
   const handleViewGroupsClick = () => {
     navigate('/Display_Group', { state: { userId: userId } });
   };
+  const handleCreateGroupClick = () => {
+    navigate('/Create_Group', { state: { userId: userId } });
+  };
   const handleSettleExpensesClick = () => {
     navigate('/Settle_Expense', { state: { userId: userId } });
   };
@@ -42,7 +45,7 @@ function User_Page() {
   return (
     <div className="User_Page">
       <br />
-      <p> <span className="page-head">User Profile</span></p><br /><br />
+      <p> <span className="page-head-2" >User Profile</span></p><br /><br />
       {userInfo && (
         <div className="normal-info">
           <p>Name: {userInfo.name}</p>
@@ -52,10 +55,10 @@ function User_Page() {
         </div>
       )}
       {error && <p>Error: {error}</p>}
-      <button onClick={handleViewGroupsClick} id="view-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View Groups</button><br /><br />
-      <button onClick={handleViewGroupsClick} id="create-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Create Group</button><br /><br />
-      <button onClick={handleSettleExpensesClick} id="view-expenses" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View your expenses</button><br /><br />
-      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
+      <button onClick={handleViewGroupsClick} id="view-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem'}}>View Groups</button>
+      <button onClick={handleCreateGroupClick} id="create-groups" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem'}}>Create Group</button>
+      <button onClick={handleSettleExpensesClick} id="view-expenses" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem'}}>View your expenses</button><br /><br /><br /><br />
+      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '25rem'}}>Log Out</button>
     </div>
   );
 }

@@ -46,7 +46,7 @@ function Create_Acc(){
     return (
       <div className="Create_Acc">
         <br />
-        <p> <span className="page-head">Split Smarty</span></p><br /><br />
+        <p> <span className="page-head-1">Split Smarty</span></p><br /><br />
         <span style={{ fontSize: '1.5rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', fontWeight: 'bold' }}>CREATE YOUR ACCOUNT!</span><br /><br /><br></br>
         <div className="input-container">
             <form onSubmit={handleSubmit}>

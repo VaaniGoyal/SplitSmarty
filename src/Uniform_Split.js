@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
+
 function Uniform_Split() {
   const [expenseInfo, setExpenseInfo] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
@@ -95,6 +96,12 @@ function Uniform_Split() {
   const handleDone = async (event) => {
     event.preventDefault();
     try {
+      // Count the number of selected participants
+      const numberOfParticipants = selectedParticipants.length;
+
+      // Calculate the shared expense
+      const sharedExpense = parseFloat(inputData.amount) / (numberOfParticipants+1);
+
       // Iterate over selected participants and enter their data into the database
       await Promise.all(selectedParticipants.map(async (participantId) => {
         const toId = parseInt(participantId); // Convert to number
@@ -102,12 +109,13 @@ function Uniform_Split() {
           expense_id: expenseId,
           from_id: userId,
           to_id: toId,
-          shared_expense: 0, // You need to set this value accordingly
+          shared_expense: sharedExpense, // Set the shared expense
           isSettled: 0 // Assuming the expense is not settled initially
         };
         const createExpenseResponse = await axios.post('http://localhost:3030/split', expenseData);
         return createExpenseResponse; // Return the response for handling later
       }));
+
       // Check if all expenses are successfully created
       alert("Participants chosen Successfully!");
       navigate('/Group_Page', { state: { groupId: groupId, userId: userId } });
@@ -120,7 +128,7 @@ function Uniform_Split() {
   return (
     <div className="Uniform_Split">
       <br />
-      <p> <span className="page-head">Add an Expense (Uniform)</span></p><br /><br />
+      <p> <span className="page-head-1">Add an Expense (Uniform)</span></p><br /><br />
       <div className="normal-info">
         <form onSubmit={handleAddExpense}>
           <div>
@@ -128,11 +136,11 @@ function Uniform_Split() {
             <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
           </div>
           <div>
-            <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
+            <label className="normal-info" htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '5.5rem' }}>Amount</label>
             <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
           </div>
           <div>
-            <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
+            <label className="normal-info" htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '7rem' }}>Type</label>
             <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
           </div>
           <button id="add-expense" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Expense</button><br /><br />
@@ -144,6 +152,7 @@ function Uniform_Split() {
           {expenseInfo.map(participant => (
             <div key={participant.user_id}>
               <input
+                className="normal-info"
                 type="checkbox"
                 id={participant.user_id}
                 name="participant"
@@ -153,7 +162,7 @@ function Uniform_Split() {
               <label htmlFor={participant.user_id}>{participant.name}</label>
             </div>
           ))}
-        </div>
+        </div><br /><br />
         <button id="done" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Done</button><br /><br />
       </form>
       {error && <p>Error: {error}</p>}

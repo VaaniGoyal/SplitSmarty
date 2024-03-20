@@ -1,4 +1,4 @@
-//Settle_Expense.js
+// Settle_Expense.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -7,9 +7,9 @@ import './App.css';
 function Settle_Expense() {
   const [toExpenses, setToExpenses] = useState([]);
   const [fromExpenses, setFromExpenses] = useState([]);
-  const [users, setUsers] = useState([]); // State to hold user data
-  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
   const location = useLocation();
   const userId = location.state && location.state.userId;
 
@@ -25,7 +25,6 @@ function Settle_Expense() {
         })
         .catch(err => setError(err.message));
 
-      // Fetch user data from user.json
       axios.get('http://localhost:3030/user')
         .then(res => {
           setUsers(res.data);
@@ -39,11 +38,11 @@ function Settle_Expense() {
     return user ? user.name : 'Unknown';
   };
   
-
-  const handleSettleFromExpense = (expenseId) => {
-    // Handle settling expense logic for expenses where the user is the payer (from_id)
+  const handleSettleFromExpense = (toId, fromId, sharedExpense, expenseId) => {
+    
   };
-
+  
+  
   const handleLogoutClick = () => {
     localStorage.removeItem('userId');
     navigate('/login_page');
@@ -52,7 +51,7 @@ function Settle_Expense() {
   return (
     <div className="Display_Group">
       <br />
-      <p> <span className="page-head">Your Expenses</span></p><br /><br />
+      <p> <span className="page-head-2">Your Expenses</span></p><br /><br />
       <div className="normal-info">
         {fromExpenses.map(expense => (
           <div key={expense.expense_id} className="expense-item">
@@ -69,7 +68,7 @@ function Settle_Expense() {
             ) : (
               <div className="normal-info">
                 <p>You are yet to pay Rupees {expense.shared_expense} to {getUsernameById(expense.from_id)}
-                <button onClick={() => handleSettleFromExpense(expense.expense_id)} className="universal-button" color="white">Settle Expense</button>
+                  <button onClick={() => handleSettleFromExpense} className="universal-button" style={{marginLeft: '7.5rem'}}>Settle Expense</button>
                 </p>
               </div>
             )}
