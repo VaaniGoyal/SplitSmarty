@@ -66,7 +66,7 @@ function Add_Participant() {
   return (
     <div className="Add_Participant">
       <br />
-      <p> <span className="page-head">Group Members</span></p><br /><br />
+      <p> <span className="page-head-2">Group Members</span></p><br /><br />
       <div className="normal-info">
         {members.map((member, index) => (
           <div key={index}>
@@ -75,17 +75,16 @@ function Add_Participant() {
         ))}
         {error && <p>Error: {error}</p>}
       </div>
-      <div>
-        <h3>Add Members to Group:</h3>
-        <ul>
+      <div className='normal-info'>
+      Add Members to Group: 
+        <ul className='normal-info'>
             {usersNotInGroup.map(user => (
-            <li key={user.user_id} className="normal-info">
+            <li key={user.user_id}>
             {user.name}
             <button className="universal-button" onClick={() => handleAddUserToGroup(user.user_id)}>Add</button>
             </li>
           ))}
         </ul>
-
       </div>
       <button id="log-out" onClick={handleLogoutClick} className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
     </div>

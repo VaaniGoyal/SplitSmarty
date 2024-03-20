@@ -78,7 +78,7 @@ function Group_Page() {
   return (
     <div className="Group_Page">
       <br />
-      <p> <span className="page-head">Group Name</span></p><br /><br />
+      <p> <span className="page-head-2">Group Name</span></p><br /><br />
       <div className="normal-info">
         {expenseInfo.map(expense => (
           <div key={expense.expense_id}>
@@ -88,11 +88,11 @@ function Group_Page() {
         ))}
       </div>
       {error && <p>Error: {error}</p>}
-      <button onClick={handleParticipantsClick} id="view-participants" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>View Participants</button><br /><br />
+      <button onClick={handleParticipantsClick} id="view-participants" className="universal-button" style={{ marginLeft: '10rem', marginRight: '10rem' }}>View Participants</button>
+      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '5rem', marginRight: '10rem' }}>Log out</button><br /><br />
        <p> <span className="normal-info" margin-left="1rem">Add an Expense (choose type of expense) : </span></p>
-       <button onClick={handleUniformSplitClick} id="uniform-split" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Uniform Split</button><br /><br />
-       <button onClick={handleNonUniformSplitClick} id="non-uniform-split" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Non-Uniform Split</button><br /><br />
-       <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log out</button><br /><br />
+       <button onClick={handleUniformSplitClick} id="uniform-split" className="universal-button" style={{ marginLeft: '10rem', marginRight: '10rem' }}>Uniform Split</button>
+       <button onClick={handleNonUniformSplitClick} id="non-uniform-split" className="universal-button" style={{ marginLeft: '5rem', marginRight: '10rem' }}>Non-Uniform Split</button><br /><br />
     </div>
   );
 }

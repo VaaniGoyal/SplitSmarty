@@ -45,8 +45,8 @@ function Display_Group() {
   return (
     <div className="Display_Group">
       <br />
-      <p> <span className="page-head">Your Groups</span></p><br /><br />
-      <div className="normal-info">
+      <p> <span className="page-head-2">Your Groups</span></p><br /><br />
+      <div>
         {groupInfo.map(group => (
           <button key={group.group_id} onClick={() => handleGroupClick(group.group_id)} className="group-button">
             Group Name: {group.group_describe}
@@ -55,7 +55,7 @@ function Display_Group() {
       </div>
       {error && <p>Error: {error}</p>}
       <div className="button-container">
-          <button className="universal-button" onClick={handleLogoutClick}>Log out</button>
+          <button className="universal-button" onClick={handleLogoutClick} style={{marginLeft: '25rem'}}>Log out</button>
       </div>
     </div>
     

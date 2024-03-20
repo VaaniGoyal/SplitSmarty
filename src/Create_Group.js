@@ -69,27 +69,28 @@ function Create_Group() {
 
   return (
     <div className="Create_Group">
-      <p> <span className="page-head">User Profile</span></p><br /><br />
+      <p> <span className="page-head-2">User Profile</span></p><br /><br />
       {error && <p>Error: {error}</p>}
       <form onSubmit={handleCreateGroup}>
         <div>
-          <label htmlFor="name" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Enter Group Name</label>
+          <label htmlFor="name" className="normal-info" >Enter Group Name </label>
           <input type="text" name="name" placeholder='your group name' onChange={e => setGroupData({ ...groupData, group_describe: e.target.value })}></input><br /><br />
         </div>
-        <p>Select Users: (Select your name as well)</p>
+        <p className='normal-info'>Select Users (Select your name as well)</p>
         {allUsers.map(user => (
           <div key={user.user_id}>
             <input
               type="checkbox"
+              className='normal-info'
               id={user.user_id}
               checked={selectedUsers.some(selectedUser => selectedUser.user_id === user.user_id)}
               onChange={() => handleCheckboxChange(user)}
             />
-            <label htmlFor={user.user_id}>{user.name}</label>
+            <label htmlFor={user.user_id} className='normal-info'>{user.name}</label>
           </div>
         ))}
         <br />
-        <button type="submit" id="sign-in" className="universal-button" style={{ marginLeft: '10rem', marginRight: '5rem' }}>Done</button><br /><br />
+        <button type="submit" id="sign-in" className="universal-button" style={{ marginLeft: '1rem', marginRight: '5rem' }}>Done</button><br /><br />
       </form>
     </div>
   );

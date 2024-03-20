@@ -129,7 +129,7 @@ function NonUni_Split() {
   return (
     <div className="NonUni_Split">
       <br />
-      <p> <span className="page-head">Add an Expense (Non-Uniform)</span></p><br /><br />
+      <p> <span className="page-head-1">Add an Expense (Non-Uniform)</span></p><br /><br />
       <div className="normal-info">
         <form onSubmit={handleAddExpense}>
           <div>
@@ -137,11 +137,11 @@ function NonUni_Split() {
             <input type="datetime-local" name="date_time" value={inputData.date_time} onChange={e => setInputData({...inputData, date_time: e.target.value})} /><br /><br />
           </div>
           <div>
-            <label htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '4.5rem' }}>Amount</label>
+            <label className="normal-info" htmlFor="amount" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '5.5rem' }}>Amount</label>
             <input type="number" name="amount" placeholder='amount' value={inputData.amount} onChange={e => setInputData({...inputData, amount: e.target.value})} /><br /><br />
           </div>
           <div>
-            <label htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '8.5rem' }}>Type</label>
+            <label className="normal-info" htmlFor="type" style={{ fontSize: '1.2rem', fontFamily: 'Overpass, Arial, sans-serif', color: '#444b59', marginRight: '7rem' }}>Type</label>
             <input type="text" name="type" placeholder='type' value={inputData.type} onChange={e => setInputData({...inputData, type: e.target.value})} /><br /><br />
           </div>
           <button id="add-expense" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Expense</button><br /><br />
@@ -153,6 +153,7 @@ function NonUni_Split() {
           {expenseInfo.map(participant => (
             <div key={participant.user_id}>
               <input
+                className="normal-info"
                 type="checkbox"
                 id={participant.user_id}
                 name="participant"
@@ -166,10 +167,11 @@ function NonUni_Split() {
                 placeholder="Share"
                 value={participantShares[participant.user_id] || ''}
                 onChange={(e) => handleParticipantShareChange(e, participant.user_id)}
+                style={{marginLeft: '1.5rem'}}
               />
             </div>
           ))}
-        </div>
+        </div><br /><br />
         <button id="done" className="universal-button" type= "submit" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Done</button><br /><br />
       </form>
       {error && <p>Error: {error}</p>}
