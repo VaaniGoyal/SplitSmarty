@@ -9,9 +9,9 @@ const User = db.User;
 const router = express.Router()
 const SECRET_KEY = 'LKJnbvgHJK8765RfG'
 
-function signUp(req, res) {
+async function signup(req, res) {
     try {
-        User.create({
+        const user = await User.create({
             username: req.body.username,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8),
@@ -20,11 +20,10 @@ function signUp(req, res) {
             phone_number: req.body.phone_number,
             upi_id: req.body.upi_id
         })
-
-        res.sendStatus(200)
+        res.status(200).json(user)
     } catch (error) {
         console.log(error);
-        res.sendStatus(400)
+        res.status(400).send(error)
     }
 }
 
@@ -216,7 +215,7 @@ async function deleteUser(req, res, next) {
 }
 
 module.exports = {
-    login, logout, signUp,
+    login, logout, signup,
     createUser,
     getUsers,
     getUserById,

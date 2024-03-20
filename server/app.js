@@ -20,7 +20,7 @@ const userController = require('./controllers/user.controller.js')
 const authRoutes = require('./routes/requireAuth');
 
 // routes
-app.post('/signup', userController.signUp)
+app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 app.get('/logout', userController.logout)
 
@@ -31,5 +31,5 @@ require('./routes/splitgroup.routes')(app);
 require('./routes/split.routes')(app);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port http://localhost:${PORT}\n\n`);
 });

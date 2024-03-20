@@ -1,6 +1,6 @@
+const { Op } = require('sequelize')
 const db = require('../models')
 const SplitGroup = db.SplitGroup;
-const Op = db.sequelize.Op;
 
 // Create a new group
 async function createSplitGroup(req, res, next) {
@@ -142,6 +142,11 @@ async function updateGroup(req, res, next) {
     } catch (error) {
         next(error);
     }
+}
+
+// Leave group by member
+async function leaveGroup(req, res, next) {
+
 }
 
 // Delete SplitGroup

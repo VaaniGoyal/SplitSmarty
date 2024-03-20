@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const splitController = require('./split.controller');
+const splitController = require('../controllers/Split.controller');
 
 router.post('/:groupId/add', splitController.addSplit);
 router.delete('/:groupId/:splitId', splitController.deleteSplit);
