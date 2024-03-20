@@ -35,11 +35,17 @@ body {
   left: 0;
 }
 
-.page-head {
+.page-head-1 {
   font-size: 5rem; /* Converted from 500% */
   font-family: 'Nunito', Arial, sans-serif;
   color: #000f73;
   margin-left: 0rem;
+}
+.page-head-2 {
+  font-size: 5rem; /* Converted from 500% */
+  font-family: 'Nunito', Arial, sans-serif;
+  color: #000f73;
+  margin-left: 20rem;
 }
 /* Input Styles */
 input[type="text"],
@@ -60,22 +66,14 @@ input[type="password"] {
   font-size: 1.2rem; /* Increase font size for larger size */
   border-radius: 5rem;
 }
-.universal-button {
-  background-color: #8699da; /* Change background color to purple */
-  color: white; /* Change text color to white */
-  font-weight: bold;
-  padding: 0.5rem 4rem; /* Increase padding for larger size */
-  font-size: 1.2rem; /* Increase font size for larger size */
-  border-radius: 5rem;
-}
+
 .group-button {
   background-color: none;
   color: #444b59;
   font-weight: bold;
   border: none;
   margin-bottom: 0.5rem;
-  margin-left: auto; /* Align to the right */
-  margin-right: auto; /* Align to the left */
+  margin-left: 22rem; /* Align to the right */
   display: block; /* Ensures full-width */
   width: fit-content; /* Adjust width to content */
   padding: 1rem; /* Adjusted padding for smaller screens */

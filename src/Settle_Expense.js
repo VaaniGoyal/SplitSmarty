@@ -39,41 +39,7 @@ function Settle_Expense() {
   };
   
   const handleSettleFromExpense = (toId, fromId, sharedExpense, expenseId) => {
-    // // Find the expense with the provided to_id, from_id, expense_id, and isSettled equal to 0
-    // const expenseToSettle = toExpenses.find(expense => 
-    //   expense.to_id === toId && 
-    //   expense.from_id === fromId &&
-    //   expense.expense_id === expenseId &&
-    //   expense.isSettled === 0
-    // );
-  
-    // if (!expenseToSettle) {
-    //   setError('Expense to settle not found');
-    //   return;
-    // }
-  
-    // // Update the expense to mark it as settled
-    // const updatedExpense = { ...expenseToSettle, isSettled: 1 };
-  
-    // axios.post('http://localhost:3030/split', updatedExpense)
-    //   .then(() => {
-    //     console.log("Expense settled successfully");
-  
-    //     // Make a DELETE request to delete the found expense
-    //     axios.delete('http://localhost:3030/split', { data: updatedExpense })
-    //       .then(() => {
-    //         console.log("Expense deleted successfully");
-    //         // Remove the deleted expense from the state
-    //         const updatedToExpenses = toExpenses.filter(expense => expense.expense_id !== expenseToSettle.expense_id);
-    //         setToExpenses(updatedToExpenses);
-    //       })
-    //       .catch(err => {
-    //         setError('Failed to delete expense: ' + err.message);
-    //       });
-    //   })
-    //   .catch(err => {
-    //     setError('Failed to settle expense: ' + err.message);
-    //   });
+    
   };
   
   
@@ -85,7 +51,7 @@ function Settle_Expense() {
   return (
     <div className="Display_Group">
       <br />
-      <p> <span className="page-head">Your Expenses</span></p><br /><br />
+      <p> <span className="page-head-2">Your Expenses</span></p><br /><br />
       <div className="normal-info">
         {fromExpenses.map(expense => (
           <div key={expense.expense_id} className="expense-item">
@@ -102,7 +68,7 @@ function Settle_Expense() {
             ) : (
               <div className="normal-info">
                 <p>You are yet to pay Rupees {expense.shared_expense} to {getUsernameById(expense.from_id)}
-                  <button onClick={() => handleSettleFromExpense(expense.to_id, expense.from_id, expense.shared_expense, expense.expense_id)} className="universal-button" color="white">Settle Expense</button>
+                  <button onClick={() => handleSettleFromExpense} className="universal-button" style={{marginLeft: '7.5rem'}}>Settle Expense</button>
                 </p>
               </div>
             )}

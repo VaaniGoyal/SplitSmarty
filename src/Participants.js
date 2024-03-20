@@ -56,17 +56,17 @@ function Participants() {
   return (
     <div className="Participants">
       <br />
-      <p> <span className="page-head">Group Members</span></p><br /><br />
-      <div className="normal-info">
+      <p> <span className="page-head-2">Group Members</span></p><br /><br />
+      <div>
         {memberInfo.map((name, index) => (
           <div key={index}>
-            <p>{name}</p>
+            <p className="normal-info" style={{marginLeft: '30rem'}}>{name}</p>
           </div>
         ))}
         {error && <p>Error: {error}</p>}
       </div>
-      <button id="add-member" onClick={handleAddParticipantClick} className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Add Participant</button><br /><br />
-      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '1.5rem', marginRight: '5rem' }}>Log Out</button><br /><br />
+      <button id="add-member" onClick={handleAddParticipantClick} className="universal-button" style={{ marginLeft: '25rem'}}>Add Participant</button><br /><br />
+      <button onClick={handleLogoutClick} id="log-out" className="universal-button" style={{ marginLeft: '27rem'}}>Log Out</button><br /><br />
     </div>
   );
 }
