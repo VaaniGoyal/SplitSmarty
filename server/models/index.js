@@ -1,52 +1,19 @@
-// 'use strict';
+import AdminGroup from "./AdminGroup";
+import User from "./User";
+import SplitGroup from "./SplitGroup";
+import Split from "./Split";
+import GroupExpense from "./GroupExpense";
+import Member from "./Member";
+import Payment from "./Payment";
+import Expense from "./Expense";
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-const db = {};
-
-// Read each model file in the models directory and import it
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-  
-// Sync models with database
-(async () => {
-  await sequelize.sync({ force: true }); // This will drop the tables if they already exist and create new ones
-})();
-
-// Apply associations
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-// Export sequelize and Sequelize instance along with models
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-
-module.exports = sequelize;
+export {
+  AdminGroup,
+  User,
+  SplitGroup,
+  Split,
+  GroupExpense,
+  Member,
+  Payment,
+  Expense,
+};

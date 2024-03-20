@@ -1,37 +1,55 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/database";
+import GroupExpense from "./GroupExpense";
+import User from "./User";
 
-module.exports = (sequelize) => {
-    class Split extends Model {}
-    Split.init({
-        Split_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        description: DataTypes.STRING,
-        amount: DataTypes.FLOAT,
-        createdAt: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
-        date: DataTypes.DATE,
-        equal_split: DataTypes.BOOLEAN,
-        balance: DataTypes.FLOAT
-    }, { sequelize, modelName: 'Split' });
+const Split = sequelize.define(
+  "Split",
+  {
+    expense_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    share_expense: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    from_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    to_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    isSettled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
-    Split.associate = (models) => {
-        Split.belongsTo(models.SplitGroup);
-        Split.hasOne(models.User, {
-            as: 'SplitRequester'
-        });
-        Split.hasMany(models.User, {
-            as: 'SplitMembers',
-            foreignKey: 'splitId',
-            scope: {
-                '$Split.SplitGroup.id$': sequelize.col('users.splitGroupId')
-            }
-        });
-    };
+Split.belongsTo(GroupExpense, {
+  foreignKey: "expense_id",
+  onDelete: "CASCADE",
+  as: "groupExpense",
+});
 
-    return Split;
-};
+Split.belongsTo(User, {
+  foreignKey: "from_id",
+  onDelete: "CASCADE",
+  as: "fromUser",
+});
+
+Split.belongsTo(User, {
+  foreignKey: "to_id",
+  onDelete: "CASCADE",
+  as: "toUser",
+});
+
+export default Split;
