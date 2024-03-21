@@ -1,35 +1,38 @@
 const { Op } = require("sequelize");
-const { SplitGroup: _SplitGroup, Udhaari, User } = require("../models");
+const { SplitGroup: _SplitGroup, User } = require("../models");
 const SplitGroup = _SplitGroup;
 
-// Create a new group
+const { AdminGroup, Member } = require("../models");
+
 async function createSplitGroup(req, res, next) {
   try {
-    // add all attributes
-    const { user_id, group_name, description } = req.body;
-    if (!group_name) {
+    const { name, description } = req.body;
+    console.log(name);
+    console.log(description);
+    if (!name) {
       return res.status(400).json({ error: "Group name is required." });
     }
-
-    // Create SplitGroup
-    const splitGroup = await SplitGroup.create({
-      name: group_name,
-      description,
+    console.log("reached here");
+    const groupId = Math.floor(Math.random() * 1000000);
+    const userId = req.params.id;
+    console.log(groupId);
+    console.log(userId);
+    const newGroup = await SplitGroup.create({
+      group_id: groupId,
+      name: name,
+      group_describe: description,
     });
+    await Member.create({ member_id: userId, group_id: groupId });
+    await AdminGroup.create({ admin_id: userId, group_id: groupId });
 
-    // Associate user with the group
-    await Udhaari.create({ user_id, group_id: splitGroup.group_id });
-    res
-      .status(201)
-      .json({ message: "Split group created successfully.", data: splitGroup });
+    res.status(201).json({ message: "Group created successfully." });
   } catch (error) {
-    console.error("Error creating split group:", error);
+    console.error("Error creating group:", error);
     res.status(500).json({ error: "Internal server error." });
     next(error);
   }
 }
 
-// Get all groups for a user
 async function getUserGroups(req, res, next) {
   try {
     const userId = req.params.userId;
@@ -37,24 +40,13 @@ async function getUserGroups(req, res, next) {
       where: {
         user_id: userId,
       },
-    })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occured while getting user data. Please try again!",
-        });
-      });
+    });
     res.json(userGroups);
   } catch (error) {
     next(error);
   }
 }
 
-// Get group members
 async function getMembers(req, res, next) {
   try {
     const groupId = req.params.groupId;
@@ -62,24 +54,13 @@ async function getMembers(req, res, next) {
       where: {
         group_id: groupId,
       },
-    })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occured while getting data. Please try again!",
-        });
-      });
+    });
     res.json(groupMembers);
   } catch (error) {
     next(error);
   }
 }
 
-// get all splits in a group
 async function getAllSplits(req, res, next) {
   try {
     const groupId = req.params.groupId;
@@ -87,29 +68,17 @@ async function getAllSplits(req, res, next) {
       where: {
         group_id: groupId,
       },
-    })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occured while getting data. Please try again!",
-        });
-      });
+    });
     res.json(groupSplits);
   } catch (error) {
     next(error);
   }
 }
 
-// Get group by title (search for group)
 async function getGroupByTitle(req, res, next) {
   try {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
     SplitGroup.findAll({ where: condition })
       .then((data) => {
         res.send(data);
@@ -126,11 +95,9 @@ async function getGroupByTitle(req, res, next) {
   }
 }
 
-// Add new member to group
 async function addNewMember(req, res, next) {
   try {
     const groupId = req.params.groupId;
-
     const { user_email } = req.query.user_email;
     const user = User.findOne({ where: { email: user_email } });
     Udhaari.create({
@@ -150,7 +117,6 @@ async function addNewMember(req, res, next) {
   } catch (error) {}
 }
 
-// Update group
 async function updateGroup(req, res, next) {
   try {
     const id = req.params.id;
@@ -178,10 +144,8 @@ async function updateGroup(req, res, next) {
   }
 }
 
-// Leave group by member
 async function leaveGroup(req, res, next) {}
 
-// Delete SplitGroup
 async function deleteGroup(req, res, next) {
   try {
     const group_id = req.params.id;
@@ -196,7 +160,7 @@ async function deleteGroup(req, res, next) {
   }
 }
 
-const splitGroupController = {
+module.exports = {
   createSplitGroup,
   getUserGroups,
   getMembers,
@@ -206,5 +170,3 @@ const splitGroupController = {
   updateGroup,
   deleteGroup,
 };
-
-module.exports = splitGroupController;

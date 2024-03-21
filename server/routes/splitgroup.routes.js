@@ -3,7 +3,7 @@ const router = express.Router();
 const sgController = require('../controllers/splitGroup.controller.js');
 
 // Define routes for user-related operations
-router.post('/', sgController.createSplitGroup);
+router.post('/createSplitGroup/:id', sgController.createSplitGroup);
 router.get('/:userId', sgController.getUserGroups);
 router.get('/:groupId', sgController.getMembers);
 router.put('/:id', sgController.updateGroup);
