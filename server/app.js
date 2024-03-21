@@ -2,7 +2,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const sequelize = require("./config/database.js");
-const { AdminGroup } = require("./models/index.js");
+const userRoutes = require("./routes/user.routes.js");
+const splitgroupRoutes = require("./routes/splitgroup.routes.js");
+const splitRoutes = require("./routes/split.routes.js");
 
 dotenv.config();
 const app = express();
@@ -20,6 +22,8 @@ async function ConnectToDatabaseAuthentication() {
     console.error("Unable to connect to the database:", error);
   }
 }
+
+userRoutes(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
