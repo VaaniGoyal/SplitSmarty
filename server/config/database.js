@@ -1,7 +1,7 @@
-import { Sequelize } from "sequelize";
+const { Sequelize } = require("sequelize");
 
 const databaseConfig = {
-  database: "SplitSmarty",
+  database: "FakeData",
   username: "DeShaw",
   password: "Ko@130404",
   host: "localhost",
@@ -18,4 +18,4 @@ const sequelize = new Sequelize(
   }
 );
 
-export default sequelize;
+module.exports = sequelize;

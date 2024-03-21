@@ -1,7 +1,7 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import GroupExpense from "./GroupExpense";
-import User from "./User";
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../config/database");
+const GroupExpense = require("./GroupExpense");
+const User = require("./User");
 
 const Split = sequelize.define(
   "Split",
@@ -52,4 +52,4 @@ Split.belongsTo(User, {
   as: "toUser",
 });
 
-export default Split;
+module.exports = Split;

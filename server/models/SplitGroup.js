@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../config/database");
 
 const SplitGroup = sequelize.define(
   "SplitGroup",
@@ -24,4 +24,4 @@ const SplitGroup = sequelize.define(
   }
 );
 
-export default SplitGroup;
+module.exports = SplitGroup;

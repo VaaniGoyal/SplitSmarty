@@ -1,13 +1,13 @@
-import AdminGroup from "./AdminGroup";
-import User from "./User";
-import SplitGroup from "./SplitGroup";
-import Split from "./Split";
-import GroupExpense from "./GroupExpense";
-import Member from "./Member";
-import Payment from "./Payment";
-import Expense from "./Expense";
+const AdminGroup = require("./AdminGroup");
+const User = require("./User");
+const SplitGroup = require("./SplitGroup");
+const Split = require("./Split");
+const GroupExpense = require("./GroupExpense");
+const Member = require("./Member");
+const Payment = require("./Payment");
+const Expense = require("./Expense");
 
-export {
+module.exports = {
   AdminGroup,
   User,
   SplitGroup,

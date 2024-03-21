@@ -1,9 +1,9 @@
-import { Op } from "sequelize";
-import { Router } from "express";
-import { hashSync, compareSync } from "bcryptjs";
-import { sign } from "jsonwebtoken";
+const { Op } = require("sequelize");
+const { Router } = require("express");
+const { hashSync, compareSync } = require("bcryptjs");
+const { sign } = require("jsonwebtoken");
 
-import { User as _User } from "../models";
+const { User: _User } = require("../models");
 const User = _User;
 
 const router = Router();
@@ -183,5 +183,4 @@ async function deleteUser(req, res, next) {
     next(error);
   }
 }
-
-export default { login, logout, createUser, name, updateUser, deleteUser };
+module.exports = { login, logout, createUser, name, updateUser, deleteUser };

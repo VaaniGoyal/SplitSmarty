@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
-import express from "express";
-import * as dotenv from "dotenv";
-import sequelize from "./config/database.js";
-// import userController from "./controllers/user.controller"; // ! import statement giving error
-// import authRoutes from "./routes/requireAuth"; // ! import statement giving error
+const express = require("express");
+const dotenv = require("dotenv");
+const sequelize = require("./config/database.js");
+const { AdminGroup } = require("./models/index.js");
 
 dotenv.config();
-import app from express();
+const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -21,8 +20,6 @@ async function ConnectToDatabaseAuthentication() {
     console.error("Unable to connect to the database:", error);
   }
 }
-
-// ! Convert properly to ESM format
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

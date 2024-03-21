@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import User from "./User";
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../config/database");
+const User = require("./User");
 
 const Payment = sequelize.define(
   "Payment",
@@ -41,4 +41,4 @@ Payment.belongsTo(User, {
   as: "toUser",
 });
 
-export default Payment;
+module.exports = Payment;

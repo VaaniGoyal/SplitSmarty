@@ -1,7 +1,7 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import User from "./User";
-import SplitGroup from "./SplitGroup";
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../config/database");
+const User = require("./User");
+const SplitGroup = require("./SplitGroup");
 
 const Member = sequelize.define(
   "Member",
@@ -31,4 +31,4 @@ Member.belongsTo(SplitGroup, {
   onDelete: "CASCADE",
 });
 
-export default Member;
+module.exports = Member;

@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import SplitGroup from "./SplitGroup";
+const { DataTypes, Model } = require("sequelize");
+const sequelize = require("../config/database");
+const SplitGroup = require("./SplitGroup");
 
 const GroupExpense = sequelize.define(
   "GroupExpense",
@@ -27,4 +27,4 @@ GroupExpense.belongsTo(SplitGroup, {
   as: "splitGroup",
 });
 
-export default GroupExpense;
+module.exports = GroupExpense;
