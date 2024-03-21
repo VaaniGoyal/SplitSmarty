@@ -7,16 +7,16 @@ const { AdminGroup, Member } = require("../models");
 async function createSplitGroup(req, res, next) {
   try {
     const { name, description } = req.body;
-    console.log(name);
-    console.log(description);
+    // console.log(name);
+    // console.log(description);
     if (!name) {
       return res.status(400).json({ error: "Group name is required." });
     }
-    console.log("reached here");
+    // console.log("reached here");
     const groupId = Math.floor(Math.random() * 1000000);
     const userId = req.params.id;
-    console.log(groupId);
-    console.log(userId);
+    // console.log(groupId);
+    // console.log(userId);
     const newGroup = await SplitGroup.create({
       group_id: groupId,
       name: name,
@@ -61,7 +61,7 @@ async function getMembers(req, res, next) {
   }
 }
 
-async function getAllSplits(req, res, next) {
+async function getgroupExpense(req, res, next) {
   try {
     const groupId = req.params.groupId;
     const groupSplits = await SplitGroup.Split.findAll({
@@ -97,23 +97,11 @@ async function getGroupByTitle(req, res, next) {
 
 async function addNewMember(req, res, next) {
   try {
-    const groupId = req.params.groupId;
+    const groupId = req.params.id;
+    const userId = req.params.id;
     const { user_email } = req.query.user_email;
     const user = User.findOne({ where: { email: user_email } });
-    Udhaari.create({
-      group_id: groupId,
-      user_id: user.user_id,
-    })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occured while getting Groups. Please try again!",
-        });
-      });
+    Member.create({ member_id: userId, group_id: groupId });
   } catch (error) {}
 }
 
@@ -164,9 +152,16 @@ module.exports = {
   createSplitGroup,
   getUserGroups,
   getMembers,
-  getAllSplits,
+  getgroupExpense,
   addNewMember,
   getGroupByTitle,
   updateGroup,
   deleteGroup,
 };
+
+
+// TODO: create admin function
+// TODO: get expense
+// TODO: remove member
+
+
