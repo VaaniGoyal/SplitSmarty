@@ -23,7 +23,7 @@ async function createUser(req, res) {
       return res.status(400).json({ message: "Email field is required." });
     }
 
-    const user_id = Math.floor(Math.random() * 1000000); 
+    const user_id = Math.floor(Math.random() * 1000000);
 
     const newUser = await User.create({
       name,
