@@ -43,48 +43,46 @@ async function createUser(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ where: { email: email } });
 
-  const user = await User.findOne({ where: { email } }).catch((err) => {
-    console.log(err);
-  });
+    if (!user) {
+      return res.status(400).json({ message: "Email not found!" });
+    }
 
-  if (!user) {
-    return res.status(400).json({
-      message: "Email not found!",
+    if (password != user.password) {
+      return res.status(400).json({ message: "Incorrect password!" });
+    }
+
+    const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
+    const token = sign({ sub: user.user_id, exp }, SECRET_KEY);
+
+    res.cookie("Authorization", token, {
+      expires: new Date(exp),
+      httpOnly: true,
+      sameSite: "lax",
     });
-  }
 
-  const passwordMatch = compareSync(password, user.password);
-  if (!passwordMatch) {
-    return res.status(400).json({
-      message: "Wrong password!",
+    res.json({
+      message: `Welcome, ${user.name}`,
+      token: token,
     });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  // jwt token
-  const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
-  const token = sign({ sub: user.user_id, exp }, SECRET_KEY);
-
-  res.cookie("Authorization", token, {
-    expires: new Date(exp),
-    httpOnly: true,
-    sameSite: "lax",
-  });
-
-  res.json({
-    message: `Welcome back, ${user.name}`,
-    token: token,
-  });
 }
 
 async function logout(req, res) {
   try {
     const token = req.headers.authorization.split(" ")[1];
 
-    res.status(200).json({ message: "Logged out successfully", token: token });
-    router.redirect("/");
+    res.clearCookie("Authorization");
+
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error during logout:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 }
 
@@ -120,53 +118,29 @@ async function logout(req, res) {
 //     next(error);
 //   }
 // }
-
-// Get user by title
-async function name(req, res, next) {
-  try {
-    const name = req.query.name;
-    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-
-    User.findAll({ where: condition })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occured while getting user data. Please try again!",
-        });
-      });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function updateUser(req, res, next) {
   try {
-    const id = req.params.id;
-    User.update(req.body, {
-      where: { id: id },
-    })
-      .then((num) => {
-        if (num === 1) {
-          res.send({
-            message: "User data updated succesfully",
-          });
-        } else {
-          res.send({
-            message: `Cannot update USer with id=${id}. Maybe User not found or req.body was empty`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.send({
-          message: err.message || `Error updating USer with id=${id}`,
-        });
+    const id = req.params.id; // Extract the id from the URL parameter
+
+    // Update the user where the user_id matches the extracted id
+    const [num] = await User.update(req.body, {
+      where: { user_id: id },
+    });
+
+    if (num === 1) {
+      res.status(200).json({
+        message: "User data updated successfully",
       });
+    } else {
+      res.status(404).json({
+        message: `Cannot update user with id ${id}. User not found or request body was empty`,
+      });
+    }
   } catch (error) {
-    next(error);
+    console.error("Error updating user:", error);
+    res.status(500).json({
+      message: "Failed to update user",
+    });
   }
 }
 
@@ -178,9 +152,11 @@ async function deleteUser(req, res, next) {
       return res.status(404).json({ message: "User not found" });
     }
     await user.destroy();
-    res.status(204).end();
+    res
+      .status(204)
+      .json({ message: `User with ID ${userId} has been deleted` });
   } catch (error) {
     next(error);
   }
 }
-module.exports = { login, logout, createUser, name, updateUser, deleteUser };
+module.exports = { login, logout, createUser, updateUser, deleteUser };
