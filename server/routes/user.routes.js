@@ -1,14 +1,14 @@
-const express = require('express');
+import express from "express";
 const router = express.Router();
-const UserController = require('../controllers/user.controller.js');
+import userController from "../controllers/user.controller.js";
 
-// Define routes for user-related operations
-router.post('/', UserController.createUser);
-router.get('/', UserController.getUsers);
-router.get('/:id', UserController.getUserById);
-router.put('/:id', UserController.updateUser);
-router.delete('/:id', UserController.deleteUser);
+router.post("/login", userController.login);
+router.post("/logout", userController.logout);
+router.post("/createUser", userController.createUser);
+router.get("/name", userController.name);
+router.put("/updateUser/:id", userController.updateUser);
+router.delete("/deleteUser/:id", userController.deleteUser);
 
-module.exports = function(app) {
-    app.use('/api/users', router);
+module.exports = function (app) {
+  app.use("/api/users", router);
 };

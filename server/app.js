@@ -6,8 +6,7 @@ import sequelize from "./config/database.js";
 // import authRoutes from "./routes/requireAuth"; // ! import statement giving error
 
 dotenv.config();
-
-const app = express();
+import app from express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -24,16 +23,6 @@ async function ConnectToDatabaseAuthentication() {
 }
 
 // ! Convert properly to ESM format
-
-// app.post("/signup", userController.signUp);
-// app.post("/login", userController.login);
-// app.get("/logout", userController.logout);
-
-// app.use("/auth", authRoutes);
-
-// require("./routes/user.routes")(app);
-// require("./routes/splitgroup.routes")(app);
-// require("./routes/split.routes")(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
