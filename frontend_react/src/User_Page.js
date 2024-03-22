@@ -12,7 +12,7 @@ function User_Page() {
   useEffect(() => {
     if (userID) {
       axios
-        .get(`http://localhost:5000/api/users/getUserInfo/${userID}`)
+        .get(`http://localhost:5000/api/users/getUserByID/${userID}`)
         .then((response) => {
           const matchedUser = response.data;
           if (matchedUser) {

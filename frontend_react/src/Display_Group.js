@@ -1,83 +1,48 @@
 //Display_Group.js
+
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import "./App.css";
+import { Link, useNavigate } from "react-router-dom";
+import './App.css';
 
 function Display_Group() {
-  const [groupInfo, setGroupInfo] = useState([]);
-  const navigate = useNavigate();
+  const [groupNames, setGroupNames] = useState([]);
   const [error, setError] = useState("");
-  const location = useLocation();
-  const userId = location.state && location.state.userId;
+  const navigate = useNavigate();
+  const userID = localStorage.getItem("userID");
 
   useEffect(() => {
-    if (userId) {
-      axios
-        .get(`http://localhost:5000/members`)
-        .then((res) => {
-          const matchedGroups = res.data.filter(
-            (member) => member.member_id === userId
-          );
-          if (matchedGroups.length > 0) {
-            const groupIdsArray = matchedGroups.map((group) => group.group_id);
-            // Fetch group information using group IDs
-            axios
-              .get(`http://localhost:5000/group`)
-              .then((response) => {
-                const groups = response.data.filter((group) =>
-                  groupIdsArray.includes(group.group_id)
-                );
-                setGroupInfo(groups);
-              })
-              .catch((error) => setError("Failed to fetch group information"));
-          } else {
-            setError("No groups found for the user");
-          }
-        })
-        .catch((err) => setError(err.message));
-    }
-  }, [userId]);
+    const fetchUserGroups = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/sg/getUserGroups/${userID}`);
+        setGroupNames(response.data);
+      } catch (error) {
+        setError("Failed to fetch user groups. Please try again.");
+      }
+    };
 
-  const handleGroupClick = (groupId) => {
-    navigate("/Group_Page", { state: { groupId: groupId, userId: userId } });
+    fetchUserGroups();
+  }, [userID]);
+
+  const handleGroupClick = (groupName) => {
+    navigate(`/Group_Page/${groupName}`);
   };
-  const handleLogoutClick = () => {
-    // Logic to clear user session data and redirect to login page
-    // For example, you can use localStorage to clear user data
-    localStorage.removeItem("userId");
-    navigate("/login_page");
-  };
+
   return (
-    <div className="Display_Group">
-      <br />
-      <p>
-        {" "}
-        <span className="page-head-2">Your Groups</span>
-      </p>
-      <br />
-      <br />
-      <div>
-        {groupInfo.map((group) => (
-          <button
-            key={group.group_id}
-            onClick={() => handleGroupClick(group.group_id)}
-            className="group-button"
-          >
-            Group Name: {group.group_describe}
-          </button>
-        ))}
-      </div>
+    <div>
+      <p className="page-head-2">Your Groups</p>
+      {groupNames.length === 0 ? (
+        <p>No groups found for the user.</p>
+      ) : (
+        <div>
+          {groupNames.map((groupName, index) => (
+            <button key={index} onClick={() => handleGroupClick(groupName)} className="group-button">
+              Group Name: {groupName}
+            </button>
+          ))}
+        </div>
+      )}
       {error && <p>Error: {error}</p>}
-      <div className="button-container">
-        <button
-          className="universal-button"
-          onClick={handleLogoutClick}
-          style={{ marginLeft: "25rem" }}
-        >
-          Log out
-        </button>
-      </div>
     </div>
   );
 }
