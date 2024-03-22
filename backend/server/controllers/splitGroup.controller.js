@@ -49,7 +49,8 @@ async function getUserGroups(req, res, next) {
     });
     const groupNames = userGroups.map((userGroup) => ({
       name: userGroup.SplitGroup.name,
-      group_id: userGroup.SplitGroup.group_id
+      group_id: userGroup.SplitGroup.group_id,
+      group_describe: userGroup.SplitGroup.group_describe,
     }));
     res.json(groupNames);
   } catch (error) {
@@ -70,12 +71,12 @@ async function getMembers(req, res, next) {
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["name", "user_id"],
         },
       ],
     });
     const memberNames = groupMembers.map(
-      (groupMember) => groupMember.User.name
+      (groupMember) => groupMember.User
     );
     res.json(memberNames);
   } catch (error) {
