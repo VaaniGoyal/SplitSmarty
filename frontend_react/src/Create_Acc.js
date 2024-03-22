@@ -217,7 +217,7 @@ function Create_Acc() {
             type="submit"
             style={{ marginLeft: "10rem", marginRight: "5rem" }}
           >
-            Sign In
+            Sign Up
           </button>
           <br />
           <br />
