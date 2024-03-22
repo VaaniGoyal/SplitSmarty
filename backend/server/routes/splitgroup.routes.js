@@ -6,7 +6,6 @@ router.post('/createSplitGroup/:id', sgController.createSplitGroup);
 router.get('/getUserGroups/:id', sgController.getUserGroups);
 router.get('/getMembers/:id', sgController.getMembers);
 router.get('/getGroupbyId/:id', sgController.getGroupById);
-router.put('/updateGroup/:id', sgController.updateGroup);
 router.post('addMember/:id', sgController.addNewMember);
 router.delete('deleteGroup/:id', sgController.deleteGroup);
 
