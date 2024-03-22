@@ -23,11 +23,11 @@ function Display_Group() {
     fetchUserGroups();
   }, [userID]);
 
-  const handleGroupClick = (groupName, groupId, groupDescribe) => {
+  const handleGroupClick = (groupName, groupId) => {
     // Store groupId and groupName in local variables before navigating
     localStorage.setItem("selectedGroupId", groupId);
     localStorage.setItem("selectedGroupName", groupName);
-    localStorage.setItem("selectedGroupDescription", groupDescribe);
+    // localStorage.setItem("selectedGroupDescription", groupDescribe);
     navigate('/Group_Page');
   };
   
@@ -40,7 +40,7 @@ function Display_Group() {
       ) : (
         <div>
           {groupNames.map((group, index) => (
-            <button key={index} onClick={() => handleGroupClick(group.name, group.group_id, group.group_describe)} className="group-button">
+            <button key={index} onClick={() => handleGroupClick(group.name, group.group_id)} className="group-button">
               Group Name: {group.name}
             </button>
           ))}

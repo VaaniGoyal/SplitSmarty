@@ -75,7 +75,13 @@ function Add_Participant() {
   const handleAddUserToGroup = async () => {
     try {
       // Send request to add user to group
-      const response = await axios.post(`http://localhost:5000/api/sg/addMember/${groupID}`, { email });
+      const response = await axios.post(
+        "http://localhost:5000/api/sg/addMember/${groupID}",
+         {
+          email: email
+          }
+        );
+      console.log(email);
 
       if (response.status === 200) {
         // Reset email input
@@ -101,16 +107,14 @@ function Add_Participant() {
       <br />
       <label htmlFor="email">Enter user's email:</label>
       <input
-        type="email"
+        type="text"
         id="email"
-        value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="example@example.com"
       />
       <button
         className="universal-button"
         onClick={handleAddUserToGroup}
-        disabled={!email.trim()}
       >
         Add
       </button>

@@ -28,8 +28,8 @@ function Group_Page() {
   const handleViewClick = () => {
     navigate("/Participants");
   };
-  const handleViewExpenseClick = () => {
-    // navigate("/Participants");
+  const handleAddExpenseClick = () => {
+    navigate("/Add_Expense");
   };
   const handleLogoutClick = () => {
     localStorage.removeItem("userID");
@@ -44,12 +44,12 @@ function Group_Page() {
       <p>
         {" "}
         <span className="page-head-2">{groupName}</span>
-        <p className="normal-info">{groupDescription}</p>
+        
       </p>
       <br />
       <br />
       
-
+      {/*  display group expenses here*/} 
       {error && <p className="error-message">{error}</p>}
       <button
         onClick={handleViewClick}
@@ -59,11 +59,11 @@ function Group_Page() {
         View Members
       </button><br /><br />
       <button
-        onClick={handleViewExpenseClick}
+        onClick={handleAddExpenseClick}
         className="universal-button"
         style={{ marginLeft: "25rem" }}
       >
-        View Expenses
+        Add Expenses
       </button><br /><br />
       <button
         onClick={handleLogoutClick}
