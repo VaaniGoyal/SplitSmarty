@@ -86,13 +86,40 @@ async function getAllSplits(req, res, next) {
   }
 }
 
-// settle up expenses of a given user
-async function settleUp(req, res, next) {
-  const userId = req.params.userId;
-  const groupId = req.params.groupId;
+async function settleUp(req, res) {
+  try {
+    const userId = req.params.userId;
+    const splitGroupId = req.params.groupId;
+    // Fetch all splits within the current split group for the  current user
+    const splits = await Split.findAll({
+      include: [
+        {
+          model: GroupExpense,
+          where: { group_id: splitGroupId },
+        },
+        {
+          model: User,
+          where: { user_id: userId },
+        },
+      ],
+    });
 
-  // get all splits involving userId in that gropId
-  let splits = [];
+    // Extract split details and construct an array of objects
+    const splitDetails = splits.map((split) => ({
+      from_id: split.from_id,
+      to_id: split.to_id,
+      amount: split.amount,
+      isSettled: split.isSettled,
+    }));
+
+    // Trigger the algorithm
+    const settlements = calculateSettlements(splitDetails);
+
+    res.json({ settlements });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 const spltController = {
