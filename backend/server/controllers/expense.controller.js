@@ -1,25 +1,36 @@
 const { Expense: _Expense, GroupExpense } = require("../models");
 const Expense = _Expense;
 
-// Add a new split to a group
 async function addExpense(req, res) {
   try {
-    const { description, amount } = req.body;
-    const groupId = req.params.groupId;
-    // Create the split with the provided group ID
-    const newExpense = await Expense.create({
-      description: description,
-      amount: amount,
-      groupId: groupId,
+    const { amount, type } = req.body;
+    const groupId = req.params.groupid;
+    const payerId = req.params.payerid;
+    const expense_id = Math.floor(Math.random() * 1000000);
+    const date_time = new Date().toISOString();
+
+    const newExpense = await GroupExpense.create({
+      group_id: groupId,
+      expense_id: expense_id,
     });
+
+    await Expense.create({
+      expense_id: expense_id,
+      payer_id: payerId,
+      date_time: date_time,
+      amount: amount,
+      type: type,
+    });
+
     res.status(201).json(newExpense);
   } catch (error) {
     console.error("Error adding split:", error);
     res.status(500).json({ error: "Failed to add split to group." });
   }
 }
-
-// Delete a split from the group
+async function addSplitForExpense(req,res){
+   
+}
 async function deleteExpense(req, res) {
   try {
     const groupId = req.params.groupId;
@@ -86,11 +97,9 @@ async function getAllSplits(req, res, next) {
   }
 }
 
-const spltController = {
+module.exports = {
   getAllSplits,
   addExpense,
   deleteExpense,
   payExpense,
 };
-
-module.exports = spltController;

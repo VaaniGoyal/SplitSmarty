@@ -13,10 +13,6 @@ const SplitGroup = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    group_describe: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
   },
   {
     freezeTableName: true,
