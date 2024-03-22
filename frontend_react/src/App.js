@@ -1,20 +1,21 @@
 //App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes
-import { Navigation, Footer } from './Template';
-import Login_Page from './Login_Page';
-import Uniform_Split from './Uniform_Split';
-import User_Page from './User_Page';
-import Group_Page from './Group_Page';
-import Create_Acc from './Create_Acc';
-import Display_Group from './Display_Group';
-import Participants from './Participants';
-import NonUni_Split from './NonUni_Split';
-import Settle_Expense from './Settle_Expense';
-import Create_Group from './Create_Group';
-import Add_Participant from './Add_Participant';
-import Add_Expense from './Add_Expense';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Routes
+import { Navigation, Footer } from "./Template";
+import Login_Page from "./Login_Page";
+import Uniform_Split from "./Uniform_Split";
+import User_Page from "./User_Page";
+import Group_Page from "./Group_Page";
+import Create_Acc from "./Create_Acc";
+import Display_Group from "./Display_Group";
+import Participants from "./Participants";
+import NonUni_Split from "./NonUni_Split";
+import Settle_Expense from "./Settle_Expense";
+import Create_Group from "./Create_Group";
+import Add_Participant from "./Add_Participant";
+import Add_Expense from "./Add_Expense";
+import Split_Page from "./Split_Page";
+import "./App.css";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/Create_Group" element={<Create_Group />} />
           <Route path="/Add_Participant" element={<Add_Participant />} />
           <Route path="/Add_Expense" element={<Add_Expense />} />
+          <Route path="/Split_Page" element={<Split_Page />} />
         </Routes>
       </div>
     </Router>

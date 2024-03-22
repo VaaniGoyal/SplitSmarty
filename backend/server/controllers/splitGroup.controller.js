@@ -1,12 +1,18 @@
 const { Op } = require("sequelize");
-const { SplitGroup: _SplitGroup, User, GroupExpense, Expense, Split } = require("../models");
+const {
+  SplitGroup: _SplitGroup,
+  User,
+  GroupExpense,
+  Expense,
+  Split,
+} = require("../models");
 const SplitGroup = _SplitGroup;
 
 const { AdminGroup, Member } = require("../models");
 
 async function createSplitGroup(req, res, next) {
   try {
-    const { name} = req.body;
+    const { name } = req.body;
     // console.log(name);
     // console.log(description);
     if (!name) {
@@ -49,10 +55,6 @@ async function getUserGroups(req, res, next) {
     const groupNames = userGroups.map((userGroup) => ({
       name: userGroup.SplitGroup.name,
       group_id: userGroup.SplitGroup.group_id,
-<<<<<<< HEAD
-      group_describe: userGroup.SplitGroup.group_describe
-=======
->>>>>>> integrationKomal
     }));
     res.json(groupNames);
   } catch (error) {
@@ -61,7 +63,6 @@ async function getUserGroups(req, res, next) {
     next(error);
   }
 }
-
 
 async function getMembers(req, res, next) {
   try {
@@ -77,9 +78,7 @@ async function getMembers(req, res, next) {
         },
       ],
     });
-    const memberNames = groupMembers.map(
-      (groupMember) => groupMember.User
-    );
+    const memberNames = groupMembers.map((groupMember) => groupMember.User);
     res.json(memberNames);
   } catch (error) {
     console.error("Error retrieving user groups:", error);
@@ -102,7 +101,6 @@ async function getGroupById(req, res, next) {
   }
 }
 
-
 async function addNewMember(req, res) {
   try {
     const { id: groupId } = req.params;
@@ -110,34 +108,49 @@ async function addNewMember(req, res) {
     const { email } = req.body;
 
     const user = await User.findOne({ where: { email: email } });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+    console.log(user);
 
-    const isMember = await Member.findOne({ where: { member_id: user.user_id, group_id: groupId } });
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+    const adminCheck = await AdminGroup.findOne({
+      where: { admin_id: user.user_id, group_id: groupId },
+    });
+    if (!adminCheck) {
+      return res.status(401).json({ error: "Only Admins can add members" });
+    }
+    const isMember = await Member.findOne({
+      where: { member_id: user.user_id, group_id: groupId },
+    });
     if (isMember) {
-      return res.status(400).json({ error: 'User is already a member of this group' });
+      return res
+        .status(400)
+        .json({ error: "User is already a member of this group" });
     }
 
     await Member.create({ member_id: user.user_id, group_id: groupId });
 
-    res.status(200).json({ message: 'User added to the group successfully' });
+    res.status(200).json({ message: "User added to the group successfully" });
   } catch (error) {
-    console.error('Error adding member to split group:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error adding member to split group:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-};
+}
 
 async function deleteGroup(req, res, next) {
   const group_id = req.params.id;
   try {
-    const groupExpenses = await GroupExpense.findAll({ where: { group_id: group_id } });
-    const expenseIds = groupExpenses.map(groupExpense => groupExpense.expense_id);
+    const groupExpenses = await GroupExpense.findAll({
+      where: { group_id: group_id },
+    });
+    const expenseIds = groupExpenses.map(
+      (groupExpense) => groupExpense.expense_id
+    );
 
     for (const expenseId of expenseIds) {
       await Split.destroy({ where: { expense_id: expenseId } });
       await Expense.destroy({ where: { expense_id: expenseId } });
-      await GroupExpense.destroy({ where: { expense_id: expenseId} });
+      await GroupExpense.destroy({ where: { expense_id: expenseId } });
     }
 
     await Member.destroy({ where: { group_is: group_id } });
@@ -149,7 +162,6 @@ async function deleteGroup(req, res, next) {
     next(error);
   }
 }
-
 
 module.exports = {
   createSplitGroup,

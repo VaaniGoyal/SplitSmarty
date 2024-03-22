@@ -1,8 +1,8 @@
 //Display_Group.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import './App.css';
+import { Link, useNavigate } from "react-router-dom";
+import "./App.css";
 
 function Display_Group() {
   const [groupNames, setGroupNames] = useState([]);
@@ -13,30 +13,28 @@ function Display_Group() {
   useEffect(() => {
     const fetchUserGroups = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/sg/getUserGroups/${userID}");
+        // console.log(`http://localhost:5000/api/sg/getUserGroups/${userID}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/sg/getUserGroups/${userID}`
+        );
         setGroupNames(response.data);
       } catch (error) {
         setError("Failed to fetch user groups. Please try again.");
       }
     };
-
-    fetchUserGroups();
+    if (userID) {
+      console.log(userID);
+      fetchUserGroups();
+    }
   }, [userID]);
 
-<<<<<<< HEAD
-  const handleGroupClick = (groupName, groupId) => {
+  const handleGroupClick = (groupName, groupId, groupDescribe) => {
     // Store groupId and groupName in local variables before navigating
     localStorage.setItem("selectedGroupId", groupId);
     localStorage.setItem("selectedGroupName", groupName);
-    // localStorage.setItem("selectedGroupDescription", groupDescribe);
-=======
-  const handleGroupClick = (groupName, groupId, groupDescribe) => {
-    localStorage.setItem("selectedGroupId", groupId);
-    localStorage.setItem("selectedGroupName", groupName);
->>>>>>> integrationKomal
-    navigate('/Group_Page');
+    localStorage.setItem("selectedGroupDescription", groupDescribe);
+    navigate("/Group_Page");
   };
-  
 
   return (
     <div>
@@ -46,11 +44,17 @@ function Display_Group() {
       ) : (
         <div>
           {groupNames.map((group, index) => (
-<<<<<<< HEAD
-            <button key={index} onClick={() => handleGroupClick(group.name, group.group_id)} className="group-button">
-=======
-            <button key={index} onClick={() => handleGroupClick(group.name, group.group_id, group.group_describe)} className="group-button">
->>>>>>> integrationKomal
+            <button
+              key={index}
+              onClick={() =>
+                handleGroupClick(
+                  group.name,
+                  group.group_id,
+                  group.group_describe
+                )
+              }
+              className="group-button"
+            >
               Group Name: {group.name}
             </button>
           ))}
