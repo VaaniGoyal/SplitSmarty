@@ -107,19 +107,19 @@ async function logout(req, res) {
 //   }
 // }
 
-// Get user by ID
-// async function getUserById(req, res, next) {
-//   try {
-//     const userId = req.params.id;
-//     const user = await User.findByPk(userId);
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-//     res.json(user);
-//   } catch (error) {
-//     next(error);
-//   }
-// }
+async function getUserById(req, res, next) {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function updateUser(req, res, next) {
   try {
     const id = req.params.id; // Extract the id from the URL parameter
@@ -161,4 +161,4 @@ async function deleteUser(req, res, next) {
     next(error);
   }
 }
-module.exports = { login, logout, createUser, updateUser, deleteUser };
+module.exports = { login, logout, createUser, updateUser, deleteUser, getUserById };
