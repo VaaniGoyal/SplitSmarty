@@ -105,7 +105,7 @@ async function addNewMember(req, res) {
   try {
     const { id: groupId } = req.params;
 
-    const { email } = req.body;
+    const { email, addingMember } = req.body;
 
     const user = await User.findOne({ where: { email: email } });
     console.log(user);
@@ -114,9 +114,12 @@ async function addNewMember(req, res) {
       return res.status(401).json({ error: "User not found" });
     }
     const adminCheck = await AdminGroup.findOne({
-      where: { admin_id: user.user_id, group_id: groupId },
+      where: { group_id: groupId },
     });
-    if (!adminCheck) {
+    const admin = adminCheck.admin_id;
+    console.log(addingMember);
+    console.log(admin);
+    if (admin != addingMember) {
       return res.status(401).json({ error: "Only Admins can add members" });
     }
     const isMember = await Member.findOne({

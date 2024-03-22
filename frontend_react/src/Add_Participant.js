@@ -8,6 +8,7 @@ function Add_Participant() {
   const groupID = localStorage.getItem("selectedGroupId");
   const groupName = localStorage.getItem("selectedGroupName");
   const groupDescription = localStorage.getItem("selectedGroupDescription");
+  const userID = localStorage.getItem("userID");
 
   const handleAddUserToGroup = async () => {
     try {
@@ -15,6 +16,7 @@ function Add_Participant() {
         `http://localhost:5000/api/sg/addMember/${groupID}`,
         {
           email: email,
+          addingMember: userID,
         }
       );
       // console.log("Hello World");

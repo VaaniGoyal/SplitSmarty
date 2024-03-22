@@ -1,11 +1,12 @@
-const { Expense: _Expense, GroupExpense } = require("../models");
+const { Expense: _Expense, GroupExpense,Split } = require("../models");
 const Expense = _Expense;
 
 async function addExpense(req, res) {
   try {
-    const { amount, type } = req.body;
+    const { amount, type, splitAmount } = req.body;
     const groupId = req.params.groupid;
     const payerId = req.params.payerid;
+
     const expense_id = Math.floor(Math.random() * 1000000);
     const date_time = new Date().toISOString();
 
@@ -22,15 +23,26 @@ async function addExpense(req, res) {
       type: type,
     });
 
+    const userIds = Object.keys(splitAmount);
+    for (const userId of userIds) {
+      const amount = splitAmount[userId];
+      if (amount != 0 && userId != payerId) {
+        await Split.create({
+          expense_id: expense_id,
+          share_expense: parseInt(amount),
+          to_id: parseInt(payerId),
+          from_id: parseInt(userId),
+        });
+      }
+    }
+
     res.status(201).json(newExpense);
   } catch (error) {
     console.error("Error adding split:", error);
     res.status(500).json({ error: "Failed to add split to group." });
   }
 }
-async function addSplitForExpense(req,res){
-   
-}
+
 async function deleteExpense(req, res) {
   try {
     const groupId = req.params.groupId;
