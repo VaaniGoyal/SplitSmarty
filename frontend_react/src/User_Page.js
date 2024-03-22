@@ -33,9 +33,9 @@ function User_Page() {
     navigate("/Create_Group");
   };
 
-  const handleSettleExpensesClick = () => {
-    navigate("/Settle_Expense");
-  };
+  // const handleSettleExpensesClick = () => {
+  //   navigate("/Settle_Expense");
+  // };
 
   const handleLogoutClick = () => {
     // Logic to clear user session data and redirect to login page
@@ -75,13 +75,13 @@ function User_Page() {
       >
         Create Group
       </button>
-      <button
+      {/* <button
         onClick={handleSettleExpensesClick}
         className="universal-button"
         style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
         View your expenses
-      </button>
+      </button> */}
       <br />
       <br />
       <br />

@@ -1,77 +1,92 @@
-// Add_Participant.js
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+
+// import React, { useState } from "react";
+// import axios from "axios";
+// import "./App.css"
+
+// function Add_Participant() {
+//   const [email, setEmail] = useState("");
+//   const [error, setError] = useState("");
+//   const groupID = localStorage.getItem("selectedGroupId");
+//   const groupName = localStorage.getItem("selectedGroupName");
+//   const groupDescription = localStorage.getItem("selectedGroupDescription");
+
+//   const handleAddUserToGroup = async () => {
+//     try {
+//       // Send request to add user to group
+//       const response = await axios.post("http://localhost:5000/api/sg/addMember/${groupID}", { email });
+
+//       if (response.status === 200) {
+//         // Reset email input
+//         setEmail("");
+//         setError(""); // Reset error if successfully added
+//       } else {
+//         setError("Failed to add user to group.");
+//       }
+//     } catch (error) {
+//       setError("Failed to add user to group: " + error.message);
+//     }
+//   };
+
+//   return (
+//     <div className="Add_Participant">
+
+//       <br />
+//       <p>
+//         {" "}
+//         <span className="page-head-2">{groupName}</span>
+//         <p className="normal-info">{groupDescription}</p>
+//       </p>
+//       <br />
+//       <br />
+//       <label htmlFor="email">Enter user's email:</label>
+//       <input
+//         type="email"
+//         id="email"
+//         value={email}
+//         onChange={(e) => setEmail(e.target.value)}
+//         placeholder="example@example.com"
+//       />
+//       <button
+//         className="universal-button"
+//         onClick={handleAddUserToGroup}
+//         disabled={!email.trim()}
+//       >
+//         Add
+//       </button>
+//       {error && <p>Error: {error}</p>}
+//     </div>
+//   );
+// }
+
+// export default Add_Participant;
+
+
+import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
 
 function Add_Participant() {
-  const [members, setMembers] = useState([]);
-  const [usersNotInGroup, setUsersNotInGroup] = useState([]);
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const groupId = location.state && location.state.groupId;
-  const userId = location.state && location.state.userId;
+  const groupID = localStorage.getItem("selectedGroupId");
+  const groupName = localStorage.getItem("selectedGroupName");
+  const groupDescription = localStorage.getItem("selectedGroupDescription");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch members and users data
-        const [membersRes, usersRes] = await Promise.all([
-          axios.get("http://localhost:5000/members?group_id=${groupId}"),
-          axios.get("http://localhost:5000/user"),
-        ]);
-
-        const membersData = membersRes.data;
-        const usersData = usersRes.data;
-
-        // Set members of the group
-        setMembers(membersData);
-
-        // Get users who are not members of the group
-        const usersNotInGroup = usersData.filter(
-          (user) =>
-            !membersData.some((member) => member.member_id === user.user_id)
-        );
-
-        setUsersNotInGroup(usersNotInGroup);
-        setError(""); // Reset error if data is successfully fetched
-      } catch (error) {
-        setError("Failed to fetch data: " + error.message);
-      }
-    };
-
-    if (groupId) {
-      fetchData();
-    }
-  }, [groupId]);
-
-  const handleAddUserToGroup = async (userId) => {
+  const handleAddUserToGroup = async () => {
     try {
-      // Add the user to the group
-      await axios.post("http://localhost:5000/members", {
-        group_id: groupId,
-        member_id: userId,
-      });
-      // Refresh data after adding the user to the group
-      const updatedUsersNotInGroup = usersNotInGroup.filter(
-        (user) => user.user_id !== userId
-      );
-      setUsersNotInGroup(updatedUsersNotInGroup);
-      // Refresh members list
-      const updatedMembers = [
-        ...members,
-        { group_id: groupId, member_id: userId },
-      ];
-      setMembers(updatedMembers);
+      // Send request to add user to group
+      const response = await axios.post(`http://localhost:5000/api/sg/addMember/${groupID}`, { email });
+
+      if (response.status === 200) {
+        // Reset email input
+        setEmail("");
+        setError(""); // Reset error if successfully added
+      } else {
+        setError("Failed to add user to group.");
+      }
     } catch (error) {
       setError("Failed to add user to group: " + error.message);
     }
-  };
-
-  const handleLogoutClick = () => {
-    localStorage.removeItem("userId");
-    navigate("/login_page");
   };
 
   return (
@@ -79,44 +94,27 @@ function Add_Participant() {
       <br />
       <p>
         {" "}
-        <span className="page-head-2">Group Members</span>
+        <span className="page-head-2">{groupName}</span>
+        <p className="normal-info">{groupDescription}</p>
       </p>
       <br />
       <br />
-      <div className="normal-info">
-        {members.map((member, index) => (
-          <div key={index}>
-            <p>{member.name}</p>
-          </div>
-        ))}
-        {error && <p>Error: {error}</p>}
-      </div>
-      <div className="normal-info">
-        Add Members to Group:
-        <ul className="normal-info">
-          {usersNotInGroup.map((user) => (
-            <li key={user.user_id}>
-              {user.name}
-              <button
-                className="universal-button"
-                onClick={() => handleAddUserToGroup(user.user_id)}
-              >
-                Add
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <label htmlFor="email">Enter user's email:</label>
+      <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="example@example.com"
+      />
       <button
-        id="log-out"
-        onClick={handleLogoutClick}
         className="universal-button"
-        style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
+        onClick={handleAddUserToGroup}
+        disabled={!email.trim()}
       >
-        Log Out
+        Add
       </button>
-      <br />
-      <br />
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }

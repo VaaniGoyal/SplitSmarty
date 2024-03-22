@@ -1,5 +1,4 @@
 //Display_Group.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,9 +23,14 @@ function Display_Group() {
     fetchUserGroups();
   }, [userID]);
 
-  const handleGroupClick = (groupName) => {
-    navigate(`/group/${groupName}`);
+  const handleGroupClick = (groupName, groupId, groupDescribe) => {
+    // Store groupId and groupName in local variables before navigating
+    localStorage.setItem("selectedGroupId", groupId);
+    localStorage.setItem("selectedGroupName", groupName);
+    localStorage.setItem("selectedGroupDescription", groupDescribe);
+    navigate('/Group_Page');
   };
+  
 
   return (
     <div>
@@ -35,9 +39,9 @@ function Display_Group() {
         <p>No groups found for the user.</p>
       ) : (
         <div>
-          {groupNames.map((groupName, index) => (
-            <button key={index} onClick={() => handleGroupClick(groupName)} className="group-button">
-              Group Name: {groupName}
+          {groupNames.map((group, index) => (
+            <button key={index} onClick={() => handleGroupClick(group.name, group.group_id, group.group_describe)} className="group-button">
+              Group Name: {group.name}
             </button>
           ))}
         </div>

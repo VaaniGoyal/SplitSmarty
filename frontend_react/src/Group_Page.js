@@ -5,127 +5,73 @@ import axios from "axios";
 import "./App.css";
 
 function Group_Page() {
-  const [expenseInfo, setExpenseInfo] = useState([]);
+  const [memberInfo, setMemberInfo] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const groupID = localStorage.getItem("selectedGroupId");
-  const userID = localStorage.getItem("userID");
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const [expensesRes, usersRes] = await Promise.all([
-  //         axios.get("http://localhost:5000/expenses"),
-  //         axios.get("http://localhost:5000/user"),
-  //       ]);
+  const groupName = localStorage.getItem("selectedGroupName");
+  const groupDescription = localStorage.getItem("selectedGroupDescription");
 
-  //       const expensesData = expensesRes.data;
-  //       const usersData = usersRes.data;
+  useEffect(() => {
+    const fetchGroupMembers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/sg/getMembers/${groupID}`);
+        setMemberInfo(response.data);
+      } catch (error) {
+        setError("Failed to fetch members. Please try again.");
+      }
+    };
 
-  //       // Fetch group expenses
-  //       const groupExpensesRes = await axios.get(
-  //         "http://localhost:5000/group_expenses"
-  //       );
-  //       const groupExpenses = groupExpensesRes.data;
+    fetchGroupMembers();
+  }, [groupID]);
 
-  //       // Filter expenses based on groupId matching in group_expenses
-  //       const filteredExpenses = groupExpenses
-  //         .filter((expense) => expense.group_id === groupId)
-  //         .map((expense) => {
-  //           // Match payer_id with user_id and replace with user name
-  //           const matchedExpense = expensesData.find(
-  //             (e) => e.expense_id === expense.expense_id
-  //           );
-  //           const user = usersData.find(
-  //             (user) => user.user_id === matchedExpense.payer_id
-  //           );
-  //           return {
-  //             ...matchedExpense,
-  //             payer_name: user ? user.name : "Unknown User",
-  //           };
-  //         });
-
-  //       setExpenseInfo(filteredExpenses);
-  //     } catch (error) {
-  //       setError("Failed to fetch data: " + error.message);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [groupId]); // Fetch data whenever groupId changes
-
-  const handleParticipantsClick = () => {
+  const handleViewClick = () => {
     navigate("/Participants");
   };
-
-  // const handleUniformSplitClick = () => {
-  //   navigate("/Uniform_Split", { state: { groupId: groupId, userId: userId } });
-  // };
-
-  // const handleNonUniformSplitClick = () => {
-  //   navigate("/NonUni_Split", { state: { groupId: groupId, userId: userId } });
-  // };
-
+  const handleViewExpenseClick = () => {
+    // navigate("/Participants");
+  };
   const handleLogoutClick = () => {
     localStorage.removeItem("userID");
     navigate("/login_page");
   };
 
-  // Function to format date and time
-  const formatDateTime = (dateTimeStr) => {
-    const dateTime = new Date(dateTimeStr);
-    const date = dateTime.toLocaleDateString();
-    const time = dateTime.toLocaleTimeString();
-    return `on ${date} at ${time}`;
-  };
+  
 
   return (
     <div className="Group_Page">
       <br />
       <p>
         {" "}
-        <span className="page-head-2">Group Name</span>
+        <span className="page-head-2">{groupName}</span>
+        <p className="normal-info">{groupDescription}</p>
       </p>
       <br />
       <br />
-      <div className="normal-info">
-        {expenseInfo.map((expense) => (
-          <div key={expense.expense_id}>
-            <p>
-              Rupees: {expense.amount} paid by {expense.payer_name}{" "}
-              {formatDateTime(expense.date_time)} for {expense.type}
-            </p>
-            <hr />
-          </div>
-        ))}
-      </div>
-      {error && <p>Error: {error}</p>}
+      
+
+      {error && <p className="error-message">{error}</p>}
       <button
-        onClick={handleParticipantsClick}
-        id="view-participants"
+        onClick={handleViewClick}
         className="universal-button"
-        style={{ marginLeft: "10rem", marginRight: "10rem" }}
+        style={{ marginLeft: "25rem" }}
       >
-        View Participants
-      </button>
+        View Members
+      </button><br /><br />
+      <button
+        onClick={handleViewExpenseClick}
+        className="universal-button"
+        style={{ marginLeft: "25rem" }}
+      >
+        View Expenses
+      </button><br /><br />
       <button
         onClick={handleLogoutClick}
-        id="log-out"
         className="universal-button"
-        style={{ marginLeft: "5rem", marginRight: "10rem" }}
+        style={{ marginLeft: "25rem" }}
       >
-        Log out
+        Log Out
       </button>
-      <br />
-      <br />
-      <p>
-        {" "}
-        <span className="normal-info" margin-left="1rem">
-          Add an Expense (choose type of expense) :{" "}
-        </span>
-      </p>
-      
-      <br />
-      <br />
     </div>
   );
 }
