@@ -8,68 +8,65 @@ function Group_Page() {
   const [expenseInfo, setExpenseInfo] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const groupId = location.state && location.state.groupId;
-  const userId = location.state && location.state.userId;
+  const groupID = localStorage.getItem("selectedGroupId");
+  const userID = localStorage.getItem("userID");
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const [expensesRes, usersRes] = await Promise.all([
+  //         axios.get("http://localhost:5000/expenses"),
+  //         axios.get("http://localhost:5000/user"),
+  //       ]);
 
-  useEffect(() => {
-    // Fetch expenses and users data
-    const fetchData = async () => {
-      try {
-        const [expensesRes, usersRes] = await Promise.all([
-          axios.get("http://localhost:5000/expenses"),
-          axios.get("http://localhost:5000/user"),
-        ]);
+  //       const expensesData = expensesRes.data;
+  //       const usersData = usersRes.data;
 
-        const expensesData = expensesRes.data;
-        const usersData = usersRes.data;
+  //       // Fetch group expenses
+  //       const groupExpensesRes = await axios.get(
+  //         "http://localhost:5000/group_expenses"
+  //       );
+  //       const groupExpenses = groupExpensesRes.data;
 
-        // Fetch group expenses
-        const groupExpensesRes = await axios.get(
-          "http://localhost:5000/group_expenses"
-        );
-        const groupExpenses = groupExpensesRes.data;
+  //       // Filter expenses based on groupId matching in group_expenses
+  //       const filteredExpenses = groupExpenses
+  //         .filter((expense) => expense.group_id === groupId)
+  //         .map((expense) => {
+  //           // Match payer_id with user_id and replace with user name
+  //           const matchedExpense = expensesData.find(
+  //             (e) => e.expense_id === expense.expense_id
+  //           );
+  //           const user = usersData.find(
+  //             (user) => user.user_id === matchedExpense.payer_id
+  //           );
+  //           return {
+  //             ...matchedExpense,
+  //             payer_name: user ? user.name : "Unknown User",
+  //           };
+  //         });
 
-        // Filter expenses based on groupId matching in group_expenses
-        const filteredExpenses = groupExpenses
-          .filter((expense) => expense.group_id === groupId)
-          .map((expense) => {
-            // Match payer_id with user_id and replace with user name
-            const matchedExpense = expensesData.find(
-              (e) => e.expense_id === expense.expense_id
-            );
-            const user = usersData.find(
-              (user) => user.user_id === matchedExpense.payer_id
-            );
-            return {
-              ...matchedExpense,
-              payer_name: user ? user.name : "Unknown User",
-            };
-          });
+  //       setExpenseInfo(filteredExpenses);
+  //     } catch (error) {
+  //       setError("Failed to fetch data: " + error.message);
+  //     }
+  //   };
 
-        setExpenseInfo(filteredExpenses);
-      } catch (error) {
-        setError("Failed to fetch data: " + error.message);
-      }
-    };
-
-    fetchData();
-  }, [groupId]); // Fetch data whenever groupId changes
+  //   fetchData();
+  // }, [groupId]); // Fetch data whenever groupId changes
 
   const handleParticipantsClick = () => {
-    navigate("/Participants", { state: { groupId: groupId, userId: userId } });
+    navigate("/Participants");
   };
 
-  const handleUniformSplitClick = () => {
-    navigate("/Uniform_Split", { state: { groupId: groupId, userId: userId } });
-  };
+  // const handleUniformSplitClick = () => {
+  //   navigate("/Uniform_Split", { state: { groupId: groupId, userId: userId } });
+  // };
 
-  const handleNonUniformSplitClick = () => {
-    navigate("/NonUni_Split", { state: { groupId: groupId, userId: userId } });
-  };
+  // const handleNonUniformSplitClick = () => {
+  //   navigate("/NonUni_Split", { state: { groupId: groupId, userId: userId } });
+  // };
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userID");
     navigate("/login_page");
   };
 
@@ -126,22 +123,7 @@ function Group_Page() {
           Add an Expense (choose type of expense) :{" "}
         </span>
       </p>
-      <button
-        onClick={handleUniformSplitClick}
-        id="uniform-split"
-        className="universal-button"
-        style={{ marginLeft: "10rem", marginRight: "10rem" }}
-      >
-        Uniform Split
-      </button>
-      <button
-        onClick={handleNonUniformSplitClick}
-        id="non-uniform-split"
-        className="universal-button"
-        style={{ marginLeft: "5rem", marginRight: "10rem" }}
-      >
-        Non-Uniform Split
-      </button>
+      
       <br />
       <br />
     </div>

@@ -17,23 +17,6 @@ function Create_Acc() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // // Fetch the user data from the server to determine the next user_id
-      // const response = await axios.get("http://localhost:5000/user");
-      // const users = response.data;
-      // console.log(users);
-
-      // // Find the maximum userId to generate the next userId
-      // const maxUserId = Math.max(
-      //   ...users.map((user) => parseInt(user.user_id))
-      // );
-
-      // // Generate the next userId
-      // const userId = maxUserId + 1;
-
-      // // Add the userId to the form data
-      // const userDataWithId = { user_id: userId, ...inputData };
-
-      // Send the form data to the server to create the user
       const createUserResponse = await axios.post(
         "http://localhost:5000/api/users/createUser",
         inputData
@@ -217,7 +200,7 @@ function Create_Acc() {
             type="submit"
             style={{ marginLeft: "10rem", marginRight: "5rem" }}
           >
-            Sign In
+            Sign Up
           </button>
           <br />
           <br />

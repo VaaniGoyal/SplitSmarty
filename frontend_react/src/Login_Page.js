@@ -11,14 +11,6 @@ function Login_Page() {
   const [signInSuccess, setSignInSuccess] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/api/users/login")
-  //     .then((res) => {
-  //       setData(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
   const togglePasswordVisibility = () => {
     var passwordField = document.getElementById("password");
     if (passwordField.type === "password") {
@@ -40,13 +32,16 @@ function Login_Page() {
       );
 
       // Assuming your backend returns a token upon successful login
-      const token = response.data.token;
+      const {token, userID} = response.data;
+      localStorage.setItem("token", token);
+      // Save userID to local storage
+      localStorage.setItem("userID", userID);
 
       // Save token to local storage or session storage or cookies
       localStorage.setItem("token", token);
       alert("Logged in Successfully");
       // Redirect to user page upon successful login
-      navigate("/User_Page", { state: { userId: response.userID } });
+      navigate("/User_Page");
     } catch (error) {
       setError("Sign-in failed. Please try again.");
     }
@@ -133,17 +128,7 @@ function Login_Page() {
       />
       <br />
       <br />
-      <button
-        style={{
-          marginLeft: "0",
-          marginRight: "5rem",
-          marginBottom: "1rem",
-        }}
-        onClick={togglePasswordVisibility}
-      >
-        Show Password
-      </button>
-      <br></br>
+      
       <button
         onClick={handleButtonClick}
         id="sign-in"
@@ -151,7 +136,7 @@ function Login_Page() {
         className="universal-button"
         style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
-        Sign Up
+        Sign In
       </button>
       <br />
       <br />

@@ -1,22 +1,20 @@
-//User_Page.js
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
 function User_Page() {
   const [userInfo, setUserInfo] = useState(null);
-  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const location = useLocation();
-  const userId = location.state && location.state.userId;
+  const userID = localStorage.getItem("userID");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (userId) {
+    if (userID) {
       axios
-        .get(`http://localhost:5000/user`)
-        .then((res) => {
-          const matchedUser = res.data.find((d) => d.user_id === userId);
+        .get(`http://localhost:5000/api/users/getUserByID/${userID}`)
+        .then((response) => {
+          const matchedUser = response.data;
           if (matchedUser) {
             setUserInfo(matchedUser);
           } else {
@@ -25,21 +23,24 @@ function User_Page() {
         })
         .catch((err) => setError(err.message));
     }
-  }, [userId]);
+  }, [userID]);
 
   const handleViewGroupsClick = () => {
-    navigate("/Display_Group", { state: { userId: userId } });
+    navigate("/Display_Group");
   };
+
   const handleCreateGroupClick = () => {
-    navigate("/Create_Group", { state: { userId: userId } });
+    navigate("/Create_Group");
   };
+
   const handleSettleExpensesClick = () => {
-    navigate("/Settle_Expense", { state: { userId: userId } });
+    navigate("/Settle_Expense");
   };
+
   const handleLogoutClick = () => {
     // Logic to clear user session data and redirect to login page
     // For example, you can use localStorage to clear user data
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userID");
     navigate("/login_page");
   };
 
@@ -47,7 +48,6 @@ function User_Page() {
     <div className="User_Page">
       <br />
       <p>
-        {" "}
         <span className="page-head-2">User Profile</span>
       </p>
       <br />
@@ -63,7 +63,6 @@ function User_Page() {
       {error && <p>Error: {error}</p>}
       <button
         onClick={handleViewGroupsClick}
-        id="view-groups"
         className="universal-button"
         style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
@@ -71,7 +70,6 @@ function User_Page() {
       </button>
       <button
         onClick={handleCreateGroupClick}
-        id="create-groups"
         className="universal-button"
         style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
@@ -79,7 +77,6 @@ function User_Page() {
       </button>
       <button
         onClick={handleSettleExpensesClick}
-        id="view-expenses"
         className="universal-button"
         style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
@@ -91,7 +88,6 @@ function User_Page() {
       <br />
       <button
         onClick={handleLogoutClick}
-        id="log-out"
         className="universal-button"
         style={{ marginLeft: "25rem" }}
       >
