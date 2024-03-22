@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { SplitGroup: _SplitGroup, User } = require("../models");
+const { SplitGroup: _SplitGroup, User, GroupExpense, Expense, Split } = require("../models");
 const SplitGroup = _SplitGroup;
 
 const { AdminGroup, Member } = require("../models");
@@ -125,46 +125,28 @@ async function addNewMember(req, res) {
   }
 };
 
-async function updateGroup(req, res, next) {
-  try {
-    const id = req.params.id;
-    SplitGroup.update(req.body, {
-      where: { id: id },
-    })
-      .then((num) => {
-        if (num === 1) {
-          res.send({
-            message: "User data updated succesfully",
-          });
-        } else {
-          res.send({
-            message: `Cannot update USer with id=${id}. Maybe User not found or req.body was empty`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.send({
-          message: err.message || `Error updating User with id=${id}`,
-        });
-      });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function deleteGroup(req, res, next) {
+  const group_id = req.params.id;
   try {
-    const group_id = req.params.id;
-    const group = await SplitGroup.findByPk(group_id);
-    if (!group) {
-      return res.status(404).json({ message: "SplitGroup not found" });
+    const groupExpenses = await GroupExpense.findAll({ where: { group_id: group_id } });
+    const expenseIds = groupExpenses.map(groupExpense => groupExpense.expense_id);
+
+    for (const expenseId of expenseIds) {
+      await Split.destroy({ where: { expense_id: expenseId } });
+      await Expense.destroy({ where: { expense_id: expenseId } });
+      await GroupExpense.destroy({ where: { expense_id: expenseId} });
     }
-    await group.destroy();
+
+    await Member.destroy({ where: { group_is: group_id } });
+    await AdminGroup.destroy({ where: { group_id: group_id } });
+    await SplitGroup.destroy({ where: { group_id: group_id } });
+
     res.status(204).end();
   } catch (error) {
     next(error);
   }
 }
+
 
 module.exports = {
   createSplitGroup,
@@ -172,7 +154,6 @@ module.exports = {
   getMembers,
   addNewMember,
   getGroupById,
-  updateGroup,
   deleteGroup,
 };
 
