@@ -1,11 +1,5 @@
 const { Op } = require("sequelize");
-const {
-  SplitGroup: _SplitGroup,
-  User,
-  GroupExpense,
-  Expense,
-  Split,
-} = require("../models");
+const { SplitGroup: _SplitGroup, User, GroupExpense, Expense, Split } = require("../models");
 const SplitGroup = _SplitGroup;
 
 const { AdminGroup, Member } = require("../models");
@@ -49,13 +43,13 @@ async function getUserGroups(req, res, next) {
       include: [
         {
           model: SplitGroup,
-          attributes: ["name", "group_id"],
+          attributes: ["name", "group_id", "group_describe"],
         },
       ],
     });
     const groupNames = userGroups.map((userGroup) => ({
       name: userGroup.SplitGroup.name,
-      group_id: userGroup.SplitGroup.group_id,
+      group_id: userGroup.SplitGroup.group_id
     }));
     res.json(groupNames);
   } catch (error) {
@@ -64,6 +58,7 @@ async function getUserGroups(req, res, next) {
     next(error);
   }
 }
+
 
 async function getMembers(req, res, next) {
   try {
@@ -75,7 +70,7 @@ async function getMembers(req, res, next) {
       include: [
         {
           model: User,
-          attributes: ["name", "group_id", "group_describe"],
+          attributes: ["name"],
         },
       ],
     });
@@ -104,6 +99,7 @@ async function getGroupById(req, res, next) {
   }
 }
 
+
 async function addNewMember(req, res) {
   try {
     const { id: groupId } = req.params;
@@ -112,41 +108,33 @@ async function addNewMember(req, res) {
 
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    const isMember = await Member.findOne({
-      where: { member_id: user.user_id, group_id: groupId },
-    });
+    const isMember = await Member.findOne({ where: { member_id: user.user_id, group_id: groupId } });
     if (isMember) {
-      return res
-        .status(400)
-        .json({ error: "User is already a member of this group" });
+      return res.status(400).json({ error: 'User is already a member of this group' });
     }
 
     await Member.create({ member_id: user.user_id, group_id: groupId });
 
-    res.status(200).json({ message: "User added to the group successfully" });
+    res.status(200).json({ message: 'User added to the group successfully' });
   } catch (error) {
-    console.error("Error adding member to split group:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error adding member to split group:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-}
+};
 
 async function deleteGroup(req, res, next) {
   const group_id = req.params.id;
   try {
-    const groupExpenses = await GroupExpense.findAll({
-      where: { group_id: group_id },
-    });
-    const expenseIds = groupExpenses.map(
-      (groupExpense) => groupExpense.expense_id
-    );
+    const groupExpenses = await GroupExpense.findAll({ where: { group_id: group_id } });
+    const expenseIds = groupExpenses.map(groupExpense => groupExpense.expense_id);
 
     for (const expenseId of expenseIds) {
       await Split.destroy({ where: { expense_id: expenseId } });
       await Expense.destroy({ where: { expense_id: expenseId } });
-      await GroupExpense.destroy({ where: { expense_id: expenseId } });
+      await GroupExpense.destroy({ where: { expense_id: expenseId} });
     }
 
     await Member.destroy({ where: { group_is: group_id } });
@@ -158,6 +146,7 @@ async function deleteGroup(req, res, next) {
     next(error);
   }
 }
+
 
 module.exports = {
   createSplitGroup,
