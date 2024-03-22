@@ -7,7 +7,7 @@ router.get('/getUserGroups/:id', sgController.getUserGroups);
 router.get('/getMembers/:id', sgController.getMembers);
 router.get('/getGroupbyId/:id', sgController.getGroupById);
 router.put('/updateGroup/:id', sgController.updateGroup);
-router.post('addMember/:id/:id', sgController.addNewMember);
+router.post('addMember/:id', sgController.addNewMember);
 router.delete('deleteGroup/:id', sgController.deleteGroup);
 
 module.exports = function(app) {

@@ -95,48 +95,31 @@ async function getGroupById(req, res, next) {
   }
 }
 
-async function addNewMember(req, res, next) {
+
+async function addNewMember(req, res) {
   try {
-    const userId = req.params.id; // Assuming the user ID parameter is named 'userId' in the URL
-    const groupId = req.params.id; // Assuming the group ID parameter is named 'groupId' in the URL
+    const { id: groupId } = req.params;
 
-    // Check if the user is an admin of the group
-    const isAdmin = await AdminGroup.findOne({
-      where: { admin_id: userId, group_id: groupId },
-    });
+    const { email } = req.body;
 
-    if (!isAdmin) {
-      return res
-        .status(403)
-        .json({
-          error: "You are not authorized to add members to this group.",
-        });
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    // Check if the entry already exists in the Member table
-    const existingMember = await Member.findOne({
-      where: { member_id: userId, group_id: groupId },
-    });
-
-    if (existingMember) {
-      return res
-        .status(400)
-        .json({ error: "This member is already part of the group." });
+    const isMember = await Member.findOne({ where: { member_id: user.user_id, group_id: groupId } });
+    if (isMember) {
+      return res.status(400).json({ error: 'User is already a member of this group' });
     }
 
-    // Create a new entry in the Member table with the provided member_id and group_id
-    const newMember = await Member.create({
-      member_id: userId,
-      group_id: groupId,
-    });
+    await Member.create({ member_id: user.user_id, group_id: groupId });
 
-    res
-      .status(201)
-      .json({ message: "Member added successfully", data: newMember });
+    res.status(200).json({ message: 'User added to the group successfully' });
   } catch (error) {
-    next(error);
+    console.error('Error adding member to split group:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-}
+};
 
 async function updateGroup(req, res, next) {
   try {
