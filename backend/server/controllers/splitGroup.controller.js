@@ -43,11 +43,14 @@ async function getUserGroups(req, res, next) {
       include: [
         {
           model: SplitGroup,
-          attributes: ["name"],
+          attributes: ["name", "group_id"],
         },
       ],
     });
-    const groupNames = userGroups.map((userGroup) => userGroup.SplitGroup.name);
+    const groupNames = userGroups.map((userGroup) => ({
+      name: userGroup.SplitGroup.name,
+      group_id: userGroup.SplitGroup.group_id
+    }));
     res.json(groupNames);
   } catch (error) {
     console.error("Error retrieving user groups:", error);
@@ -55,6 +58,7 @@ async function getUserGroups(req, res, next) {
     next(error);
   }
 }
+
 
 async function getMembers(req, res, next) {
   try {
