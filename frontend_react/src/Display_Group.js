@@ -25,7 +25,7 @@ function Display_Group() {
   }, [userID]);
 
   const handleGroupClick = (groupName) => {
-    navigate(`/Group_Page/${groupName}`);
+    navigate(`/group/${groupName}`);
   };
 
   return (
