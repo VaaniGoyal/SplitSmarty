@@ -16,7 +16,7 @@ function Create_Group() {
     event.preventDefault();
     try {
       const createGroupResponse = await axios.post(
-        `http://localhost:5000/api/sg/createSplitGroup/${userID}`, // Use backticks for template literals
+        `http://localhost:5000/api/sg/createSplitGroup/${userID}`, 
         groupData
       );
   

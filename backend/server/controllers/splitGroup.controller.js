@@ -6,7 +6,7 @@ const { AdminGroup, Member } = require("../models");
 
 async function createSplitGroup(req, res, next) {
   try {
-    const { name, description } = req.body;
+    const { name} = req.body;
     // console.log(name);
     // console.log(description);
     if (!name) {
@@ -20,7 +20,6 @@ async function createSplitGroup(req, res, next) {
     const newGroup = await SplitGroup.create({
       group_id: groupId,
       name: name,
-      group_describe: description,
     });
     await Member.create({ member_id: userId, group_id: groupId });
     await AdminGroup.create({ admin_id: userId, group_id: groupId });
@@ -43,14 +42,13 @@ async function getUserGroups(req, res, next) {
       include: [
         {
           model: SplitGroup,
-          attributes: ["name", "group_id", "group_describe"],
+          attributes: ["name", "group_id"],
         },
       ],
     });
     const groupNames = userGroups.map((userGroup) => ({
       name: userGroup.SplitGroup.name,
       group_id: userGroup.SplitGroup.group_id,
-      group_describe: userGroup.SplitGroup.group_describe,
     }));
     res.json(groupNames);
   } catch (error) {
