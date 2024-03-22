@@ -43,7 +43,7 @@ async function getUserGroups(req, res, next) {
       include: [
         {
           model: SplitGroup,
-          attributes: ["name", group_id],
+          attributes: ["name"],
         },
       ],
     });
