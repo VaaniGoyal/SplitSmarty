@@ -1,13 +1,9 @@
-const { Op } = require("sequelize");
-const { Router } = require("express");
-const { hashSync, compareSync } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
 const { User: _User } = require("../models");
 const User = _User;
 
-const router = Router();
-const SECRET_KEY = "LKJnbvgHJK8765RfG";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 async function createUser(req, res) {
   try {
@@ -109,7 +105,7 @@ async function logout(req, res) {
 
 async function getUserId(req, res) {
   try {
-    const{email, password} = req.body;
+    const { email, password } = req.body;
     const user = await User.findOne({ where: { email: email, password: password } });
     if (user) {
       res.json(user.user_id);
@@ -118,7 +114,7 @@ async function getUserId(req, res) {
     }
   } catch (error) {
     console.error('Error retrieving user ID:', error);
-    throw error; 
+    throw error;
   }
 }
 
@@ -176,4 +172,5 @@ async function deleteUser(req, res, next) {
     next(error);
   }
 }
+
 module.exports = { login, logout, createUser, updateUser, deleteUser, getUserById, getUserId };
