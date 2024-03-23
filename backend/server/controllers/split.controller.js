@@ -1,45 +1,7 @@
 const { Split: _Split, SplitGroup } = require("../models");
 const Split = _Split;
 
-// Add a new split to a group
-async function addSplit(req, res) {
-  try {
-    const { description, amount } = req.body;
-    const groupId = req.params.groupId;
-    // Create the split with the provided group ID
-    const newSplit = await Split.create({
-      description: description,
-      amount: amount,
-      groupId: groupId,
-    });
-    res.status(201).json(newSplit);
-  } catch (error) {
-    console.error("Error adding split:", error);
-    res.status(500).json({ error: "Failed to add split to group." });
-  }
-}
 
-// Delete a split from the group
-async function deleteSplit(req, res) {
-  try {
-    const groupId = req.params.groupId;
-    const splitId = req.params.splitId;
-    // Find the split by ID and group ID
-    const split = await Split.findOne({
-      where: { id: splitId, groupId: groupId },
-    });
-    if (!split) {
-      return res.status(404).json({ error: "Split not found in group." });
-    }
-    await split.destroy();
-    res.status(204).end();
-  } catch (error) {
-    console.error("Error deleting split:", error);
-    res.status(500).json({ error: "Failed to delete split." });
-  }
-}
-
-// Pay a split if the member is included in it
 async function paySplit(req, res) {
   try {
     const groupId = req.params.groupId;
