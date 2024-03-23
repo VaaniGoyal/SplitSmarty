@@ -162,10 +162,8 @@ async function deleteGroup(req, res, next) {
     await SplitGroup.destroy({ where: { group_id: groupId } });
 
     res.status(200).json({message: "SplitGroup and related records deleted successfully"});
-    console.log("done");
   } catch (error) {
     res.status(404).json({error: "Error deleting SplitGroup"});
-    console.log("error");
     throw new Error("Failed to delete SplitGroup and related records");
   }
 }
@@ -183,8 +181,6 @@ async function checkAdmin(req, res, next){
     console.error("Error checking.", error);
     res.status(500).json({ error: "Internal server error" });
   }
-  
-
 }
 
 module.exports = {
