@@ -141,30 +141,28 @@ async function addNewMember(req, res) {
 }
 
 async function deleteGroup(req, res, next) {
-  const group_id = req.params.id;
   try {
-    const groupExpenses = await GroupExpense.findAll({
-      where: { group_id: group_id },
-    });
-    const expenseIds = groupExpenses.map(
-      (groupExpense) => groupExpense.expense_id
-    );
+    const groupId = req.params.id;
+    const groupExpenses = await GroupExpense.findAll({ where: { group_id: groupId } });
 
-    for (const expenseId of expenseIds) {
-      await Split.destroy({ where: { expense_id: expenseId } });
-      await Expense.destroy({ where: { expense_id: expenseId } });
-      await GroupExpense.destroy({ where: { expense_id: expenseId } });
+    const expenseIds = groupExpenses.map(expense => expense.expense_id);
+    for (const expense in expenseIds){
+      await Expense.destroy({ where: { expense_id: expense } });
+      await Split.destroy({ where: { expense_id: expense } });
     }
 
-    await Member.destroy({ where: { group_is: group_id } });
-    await AdminGroup.destroy({ where: { group_id: group_id } });
-    await SplitGroup.destroy({ where: { group_id: group_id } });
+    await GroupExpense.destroy({ where: { group_id: groupId } });
+    await AdminGroup.destroy({ where: { group_id: groupId } });
+    await Member.destroy({ where: { group_id: groupId } });
+    await SplitGroup.destroy({ where: { group_id: groupId } });
 
-    res.status(204).end();
+    console.log("SplitGroup and related records deleted successfully");
   } catch (error) {
-    next(error);
+    console.error("Error deleting SplitGroup:", error);
+    throw new Error("Failed to delete SplitGroup and related records");
   }
 }
+
 
 async function checkAdmin(req, res, next){
   try{
