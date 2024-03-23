@@ -39,10 +39,14 @@ function Create_Group() {
       </p>
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
       {error && <p>Error: {error}</p>}
       <form onSubmit={handleCreateGroup}>
         <div>
-          <label htmlFor="name" className="normal-info">
+          <label htmlFor="name" className="normal-info" style={{marginLeft: '12rem', marginRight: '-10rem'}}>
             Enter Group Name{" "}
           </label>
           <input
@@ -57,7 +61,7 @@ function Create_Group() {
           <br />
         </div>
         <div>
-          <label htmlFor="group_describe" className="normal-info">
+          <label htmlFor="group_describe" className="normal-info" style={{marginLeft: '12rem', marginRight: '-13.5rem'}}>
             Enter Group Description{" "}
           </label>
           <input
@@ -75,12 +79,10 @@ function Create_Group() {
           type="submit"
           id="sign-in"
           className="universal-button"
-          style={{ marginLeft: "1rem", marginRight: "5rem" }}
+          style={{ marginLeft: "27.5rem", marginRight: "5rem" }}
         >
           Done
         </button>
-        <br />
-        <br />
       </form>
     </div>
   );

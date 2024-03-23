@@ -25,7 +25,6 @@ function NonUni_Split() {
           `http://localhost:5000/api/sg/getMembers/${groupID}`
         );
         setMembers(response.data);
-        setMembers(response.data);
       } catch (error) {
         setError("Failed to fetch members. Please try again.");
       }
@@ -35,21 +34,38 @@ function NonUni_Split() {
   }, [groupID]);
 
   const handleExpenseChange = (userId, value) => {
-    setParticipantExpenses(prevExpenses => {
+    setParticipantExpenses((prevExpenses) => {
       const updatedExpenses = new Map(prevExpenses);
       updatedExpenses.set(userId, value);
       return updatedExpenses;
     });
   };
-  
+
+  const validateAmounts = () => {
+    const totalAmount = parseFloat(inputData.amount);
+    let totalExpenses = 0;
+
+    participantExpenses.forEach((amount) => {
+      totalExpenses += parseFloat(amount);
+    });
+
+    return totalExpenses === totalAmount;
+  };
+
   const handleAddExpense = async (amount, type, expensesMap) => {
     try {
+      const isValid = validateAmounts();
+      if (!isValid) {
+        setError("Total participant amount is not equal to the total amount.");
+        return;
+      }
+
       const response = await axios.post(
         `http://localhost:5000/api/exp/groups/${groupID}/expenses/${userID}`,
         {
           amount: amount,
           type: type,
-          splitAmount: expensesMap
+          splitAmount: Object.fromEntries(expensesMap),
         }
       );
       navigate("/Group_Page");
@@ -67,18 +83,22 @@ function NonUni_Split() {
     <div className="NonUni_Split">
       <br />
       <p>
-        <span className="page-head-1">{groupName}</span>
+        <span className="page-head-2">{groupName}</span>
       </p>
       <br />
       <br />
       <div className="normal-info">
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="amount" className="normal-info">
+            <label
+              htmlFor="amount"
+              className="normal-info"
+              style={{ marginLeft: "18rem", marginRight: "-18rem" }}
+            >
               Amount
             </label>
             <input
-              type="number"
+              type="text"
               name="amount"
               placeholder="amount"
               value={inputData.amount}
@@ -90,7 +110,11 @@ function NonUni_Split() {
             <br />
           </div>
           <div>
-            <label htmlFor="type" className="normal-info">
+            <label
+              htmlFor="type"
+              className="normal-info"
+              style={{ marginLeft: "18rem", marginRight: "-16.25rem" }}
+            >
               Type
             </label>
             <input
@@ -106,13 +130,20 @@ function NonUni_Split() {
             <br />
           </div>
           <div>
-            <h3>Enter Expenses:</h3>
+            <h3 style={{ marginLeft: "18rem" }}>Select Participants:</h3>
             {members.map((member) => (
               <div key={member.user_id}>
-                <label htmlFor={`${member.user_id}`}>{member.name}</label>
+                <label
+                  style={{ marginLeft: "18rem" }}
+                  htmlFor={`${member.user_id}`}
+                >
+                  {member.name}
+                </label>
                 <input
-                  type="number"
+                  type="text"
                   id={`${member.user_id}`}
+                  style={{ marginLeft: "7.5rem" }}
+                  placeholder="enter member's amount"
                   value={participantExpenses.get(member.user_id) || ""}
                   onChange={(e) =>
                     handleExpenseChange(member.user_id, e.target.value)
@@ -121,8 +152,15 @@ function NonUni_Split() {
               </div>
             ))}
           </div>
+          <br />
+          <br />
+          <br />
           <div>
-            <button type="submit" className="universal-button">
+            <button
+              type="submit"
+              className="universal-button"
+              style={{ marginLeft: "25rem" }}
+            >
               Add Expense
             </button>
           </div>
@@ -135,5 +173,3 @@ function NonUni_Split() {
 }
 
 export default NonUni_Split;
-
-

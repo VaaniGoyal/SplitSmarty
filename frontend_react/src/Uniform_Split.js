@@ -10,12 +10,13 @@ function Uniform_Split() {
     type: "",
   });
   const [selectedParticipants, setSelectedParticipants] = useState([]);
-  const [participantShares, setParticipantShares] = useState({});
+  const [participantShares, setParticipantShares] = useState(new Map());
   const [members, setMembers] = useState([]);
   const [error, setError] = useState("");
   const userID = localStorage.getItem("userID");
   const groupID = localStorage.getItem("selectedGroupId");
   const groupName = localStorage.getItem("selectedGroupName");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -37,7 +38,6 @@ function Uniform_Split() {
       if (prevSelected.includes(userId)) {
         return prevSelected.filter((id) => id !== userId);
       } else {
-        // If the user is not selected, add them to the selected list
         return [...prevSelected, userId];
       }
     });
@@ -49,9 +49,9 @@ function Uniform_Split() {
       totalSelectedParticipants > 0
         ? (inputData.amount / totalSelectedParticipants).toFixed(2)
         : 0;
-    const updatedParticipantShares = {};
+    const updatedParticipantShares = new Map();
     selectedParticipants.forEach((id) => {
-      updatedParticipantShares[id] = splitAmount;
+      updatedParticipantShares.set(id, splitAmount);
     });
     setParticipantShares(updatedParticipantShares);
   }, [selectedParticipants, inputData.amount]);
@@ -59,17 +59,18 @@ function Uniform_Split() {
   const handleAddExpense = async (e) => {
     e.preventDefault();
     try {
+      console.log(participantShares);
       const response = await axios.post(
         `http://localhost:5000/api/exp/groups/${groupID}/expenses/${userID}`,
         {
-          ...inputData,
-          participants: selectedParticipants,
-          splitAmount: participantShares 
+          amount: inputData.amount,
+          type: inputData.type,
+          splitAmount: Object.fromEntries(participantShares),
         }
       );
       navigate("/Group_Page");
+      // Handle success scenario
     } catch (error) {
-      setError("Failed to add expense. Please try again.");
       setError("Failed to add expense. Please try again.");
     }
   };
@@ -78,96 +79,38 @@ function Uniform_Split() {
     <div className="Uniform_Split">
       <br />
       <p>
-        <span className="page-head-1">{groupName}</span>
-      </p>
-      <br />
-      <br />
-      <p>
-        <span className="page-head-1">{groupName}</span>
+        <span className="page-head-2">{groupName}</span>
       </p>
       <br />
       <br />
       <div className="normal-info">
         <form onSubmit={handleAddExpense}>
           <div>
-            <label htmlFor="amount" className="normal-info">
+            <label
+              htmlFor="amount"
+              className="normal-info"
+              style={{ marginLeft: "18rem", marginRight: "-18rem" }}
+            >
               Amount
             </label>
             <input
-              type="number"
+              type="text"
               name="amount"
               placeholder="amount"
               value={inputData.amount}
               onChange={(e) => {
                 setInputData({ ...inputData, amount: e.target.value });
               }}
-              
             />
             <br />
             <br />
           </div>
           <div>
-            <label htmlFor="type" className="normal-info">
-              Type
-            </label>
-            <input
-              type="text"
-              name="type"
-              placeholder="type"
-              value={inputData.type}
-              onChange={(e) =>
-                setInputData({ ...inputData, type: e.target.value })
-              }
-            />
-            <br />
-            <br />
-            <label htmlFor="amount" className="normal-info">
-              Amount
-            </label>
-            <input
-              type="number"
-              name="amount"
-              placeholder="amount"
-              value={inputData.amount}
-              onChange={(e) =>
-                setInputData({ ...inputData, amount: e.target.value })
-              }
-            />
-            <br />
-            <br />
-          </div>
-          <div>
-            <label htmlFor="type" className="normal-info">
-              Type
-            </label>
-            <input
-              type="text"
-              name="type"
-              placeholder="type"
-              value={inputData.type}
-              onChange={(e) =>
-                setInputData({ ...inputData, type: e.target.value })
-              }
-            />
-            <br />
-            <br />
-            <label htmlFor="amount" className="normal-info">
-              Amount
-            </label>
-            <input
-              type="number"
-              name="amount"
-              placeholder="amount"
-              value={inputData.amount}
-              onChange={(e) =>
-                setInputData({ ...inputData, amount: e.target.value })
-              }
-            />
-            <br />
-            <br />
-          </div>
-          <div>
-            <label htmlFor="type" className="normal-info">
+            <label
+              htmlFor="type"
+              className="normal-info"
+              style={{ marginLeft: "18rem", marginRight: "-16.25rem" }}
+            >
               Type
             </label>
             <input
@@ -183,30 +126,37 @@ function Uniform_Split() {
             <br />
           </div>
           <div>
-            <h3>Select Participants:</h3>
+            <h3 style={{ marginLeft: "18rem" }}>Select Participants:</h3>
             {members.map((member) => (
               <div key={member.user_id}>
                 <input
                   type="checkbox"
                   id={`${member.user_id}`}
                   value={member.user_id}
+                  style={{ marginLeft: "18rem" }}
                   checked={selectedParticipants.includes(member.user_id)}
                   onChange={() => handleCheckboxChange(member.user_id)}
                 />
                 <label htmlFor={`${member.user_id}`}>{member.name}</label>
                 <input
                   type="text"
-                  value={participantShares[member.user_id] || ""}
+                  placeholder="share"
+                  value={participantShares.get(member.user_id) || ""}
                   readOnly
+                  style={{ marginLeft: "6.5rem" }}
                 />
               </div>
             ))}
           </div>
+          <br />
+          <br />
+          <br />
           <div>
-            <button type="submit" className="universal-button">
-              Add Expense
-            </button>
-            <button type="submit" className="universal-button">
+            <button
+              type="submit"
+              className="universal-button"
+              style={{ marginLeft: "25rem" }}
+            >
               Add Expense
             </button>
           </div>

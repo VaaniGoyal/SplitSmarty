@@ -8,9 +8,9 @@ const cors = require("cors");
 const moneyRoutes = require("./routes/money.routes.js");
 const settleRoutes = require("./routes/settle.routes.js");
 
-dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());

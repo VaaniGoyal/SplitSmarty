@@ -13,8 +13,8 @@ import NonUni_Split from "./NonUni_Split";
 import Settle_Expense from "./Settle_Expense";
 import Create_Group from "./Create_Group";
 import Add_Participant from "./Add_Participant";
-import Add_Expense from "./Add_Expense";
 import Split_Page from "./Split_Page";
+import Settle_Up from "./Settle_Up";
 import "./App.css";
 
 function App() {
@@ -36,8 +36,8 @@ function App() {
           <Route path="/Settle_Expense" element={<Settle_Expense />} />
           <Route path="/Create_Group" element={<Create_Group />} />
           <Route path="/Add_Participant" element={<Add_Participant />} />
-          <Route path="/Add_Expense" element={<Add_Expense />} />
           <Route path="/Split_Page" element={<Split_Page />} />
+          <Route path="/Settle_Up" element={<Settle_Up />} />          
         </Routes>
       </div>
     </Router>

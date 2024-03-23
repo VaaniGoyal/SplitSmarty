@@ -23,6 +23,8 @@ function Login_Page() {
   };
   const handleButtonClick = async () => {
     try {
+      console.log(email);
+      console.log(password);
       const response = await axios.post(
         "http://localhost:5000/api/users/login",
         {
@@ -32,7 +34,7 @@ function Login_Page() {
       );
 
       // Assuming your backend returns a token upon successful login
-      const {token, userID} = response.data;
+      const { token, userID } = response.data;
       localStorage.setItem("token", token);
       // Save userID to local storage
       localStorage.setItem("userID", userID);
@@ -48,39 +50,31 @@ function Login_Page() {
   };
 
   return (
-    <div className="Login_Page">
+    <div style={{ marginLeft: "18%", marginTop: "10%" }} className="Login_Page">
       <br />
       <p>
         {" "}
-        <span className="page-head-1">Split Smarty</span>
+        <span
+          className="page-head-2"
+          style={{ marginLeft: "22%", fontSize: "80px" }}
+        >
+          Split Smarty
+        </span>
       </p>
       <br />
       <br />
-      <span
-        style={{
-          fontSize: "1.5rem",
-          fontFamily: "Overpass, Arial, sans-serif",
-          color: "#444b59",
-          fontWeight: "bold",
-        }}
-      >
-        WELCOME BACK!
-      </span>
+      <br />
+
+      <span className="page-head-1">WELCOME BACK!</span>
       <br />
       <br />
-      <span
-        style={{
-          fontSize: "0.9rem",
-          fontFamily: "Overpass, Arial, sans-serif",
-          color: "#444b59",
-        }}
-      >
+      <span className="page-head-3">
         Don't have an account,
         <Link to="/Create_Acc">
           <button
             id="sign-up-2"
             style={{
-              color: "#8699da",
+              color: "#000f73",
               marginLeft: "0.0625rem",
               padding: "0.0625rem 0.0625rem",
             }}
@@ -96,6 +90,7 @@ function Login_Page() {
           fontSize: "1.2rem",
           fontFamily: "Overpass, Arial, sans-serif",
           color: "#444b59",
+          marginLeft: "23.5rem",
         }}
       >
         Email Address
@@ -104,7 +99,8 @@ function Login_Page() {
       <br />
       <input
         type="text"
-        placeholder="Your email"
+        className="input-text"
+        placeholder="you email"
         onChange={(e) => setEmail(e.target.value)}
       />
       <br />
@@ -114,6 +110,7 @@ function Login_Page() {
           fontSize: "1.2rem",
           fontFamily: "Overpass, Arial, sans-serif",
           color: "#444b59",
+          marginLeft: "23.5rem",
         }}
       >
         Password
@@ -122,25 +119,30 @@ function Login_Page() {
       <br />
       <input
         type="password"
+        className="input-text"
         id="password"
         placeholder="Your password"
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
       <br />
-      
+
       <button
         onClick={handleButtonClick}
         id="sign-in"
         type="submit"
         className="universal-button"
-        style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
+        style={{ marginLeft: "30%" }}
       >
         Sign In
       </button>
       <br />
       <br />
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <div style={{ marginLeft: "29%" }} className="error">
+          {error}
+        </div>
+      )}
     </div>
   );
 }

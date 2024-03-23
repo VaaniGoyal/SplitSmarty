@@ -11,17 +11,26 @@ const Expense = _Expense;
 async function addExpense(req, res) {
   try {
     const { amount, type, splitAmount } = req.body;
+    console.log(req.body);
     const groupId = req.params.groupid;
     const payerId = req.params.payerid;
+    console.log(amount);
+    console.log(type);
+    console.log(splitAmount);
+    console.log(groupId);
+    console.log(payerId);
 
     const expense_id = Math.floor(Math.random() * 1000000);
     const date_time = new Date().toISOString();
+    console.log(expense_id);
 
     const newExpense = await GroupExpense.create({
       group_id: groupId,
       expense_id: expense_id,
     });
-
+    console.log(
+      "====================================================================Created newGroupExpense============================================"
+    );
     await Expense.create({
       expense_id: expense_id,
       payer_id: payerId,
@@ -29,10 +38,14 @@ async function addExpense(req, res) {
       amount: amount,
       type: type,
     });
-
+    console.log(
+      "====================================================================Created newExpense============================================"
+    );
     const userIds = Object.keys(splitAmount);
+    console.log(userIds);
     for (const userId of userIds) {
       const amount = splitAmount[userId];
+      console.log(amount);
       if (amount != 0 && userId != payerId) {
         await Split.create({
           expense_id: expense_id,
@@ -84,18 +97,18 @@ async function getGroupExpense(req, res) {
     const expenses = await GroupExpense.findAll({
       where: {
         group_id: groupId,
-      }
+      },
     });
     const expenseIds = expenses.map((expense) => expense.expense_id);
     const listExpense = [];
     for (const expenseId of expenseIds) {
-        const expenseInfo = await Expense.findOne({
-          where: {
-            expense_id: expenseId,
-          },
-        });
-        listExpense.push(expenseInfo);
-      }
+      const expenseInfo = await Expense.findOne({
+        where: {
+          expense_id: expenseId,
+        },
+      });
+      listExpense.push(expenseInfo);
+    }
     res.status(200).json(listExpense);
   } catch (error) {
     res.status(500).json({ error: "Failed to get expense information." });

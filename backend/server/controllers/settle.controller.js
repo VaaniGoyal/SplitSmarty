@@ -18,6 +18,7 @@ async function settleup(req, res) {
     for (const expenses of expense) {
       expenseIds.push(expenses.expense_id);
     }
+    console.log(expenseIds);
 
     const listSettle = [];
 
@@ -55,6 +56,10 @@ async function settleup(req, res) {
 
     const settle = [];
 
+    for (const expenseId of expenseIds) {
+      await Split.destroy({ where: { isSettled: 0, expense_id: expenseId } });
+    }
+
     function minCashFlow(graph) {
       var amount = Array.from({ length: N }, (_, i) => 0);
       for (p = 0; p < N; p++)
@@ -71,7 +76,31 @@ async function settleup(req, res) {
       amount[mxCredit] -= min;
       amount[mxDebit] += min;
 
-      const x = [personIds[mxDebit], personIds[mxCredit], min];
+      const expense_id = Math.floor(Math.random() * 1000000);
+      const DateTime = new Date();
+
+      GroupExpense.create({
+        group_id: groupId,
+        expense_id: expense_id,
+      });
+
+      Expense.create({
+        expense_id: expense_id,
+        payer_id: parseInt(personIds[mxCredit]),
+        date_time: DateTime,
+        amount: min,
+        type: "split",
+      });
+
+      Split.create({
+        expense_id: expense_id,
+        share_expense: min,
+        from_id: personIds[mxDebit],
+        to_id: personIds[mxCredit],
+        isSettled: 0,
+      });
+
+      const x = [personIds[mxDebit], personIds[mxCredit], min, expense_id];
       settle.push(x);
       minCashFlowRec(amount);
     }
@@ -101,13 +130,15 @@ async function settleup(req, res) {
   }
 }
 
-// async function payment(req, res) {
-//   try {
-
-//   } catch (error) {
-//     console.error("Error", error);
-//     res.status(500).json({ error: "Failed" });
-//   }
-// }
+async function payment(req, res, next) {
+  try {
+    const expenseId = req.params.id;
+    await Split.update({ isSettled: 1 }, { where: { expense_id: expenseId } });
+    res.status(200).json({ message: "Successful payment." });
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).json({ error: "Failed" });
+  }
+}
 
 module.exports = { settleup, payment };

@@ -37,18 +37,11 @@ function Create_Acc() {
       <br />
       <p>
         {" "}
-        <span className="page-head-1">Split Smarty</span>
+        <span className="page-head-2">Split Smarty</span>
       </p>
       <br />
       <br />
-      <span
-        style={{
-          fontSize: "1.5rem",
-          fontFamily: "Overpass, Arial, sans-serif",
-          color: "#444b59",
-          fontWeight: "bold",
-        }}
-      >
+      <span className="page-head-3" style={{fontWeight: 'bold', fontSize: '1.5rem', marginLeft: '24rem'}}>
         CREATE YOUR ACCOUNT!
       </span>
       <br />
@@ -63,7 +56,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "8.5rem",
+                marginRight: "-14rem",
+                marginLeft: "18rem",
               }}
             >
               Name
@@ -86,7 +80,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "7.1rem",
+                marginRight: "-15.25rem",
+                marginLeft: "18rem",
               }}
             >
               Email ID
@@ -109,7 +104,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "5.2rem",
+                marginRight: "-17rem",
+                marginLeft: "18rem",
               }}
             >
               Contact No.
@@ -132,7 +128,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "6.25rem",
+                marginRight: "-16rem",
+                marginLeft: "18rem",
               }}
             >
               Password
@@ -155,7 +152,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "7.9rem",
+                marginRight: "-14.25rem",
+                marginLeft: "18rem",
               }}
             >
               UPI ID
@@ -178,7 +176,8 @@ function Create_Acc() {
                 fontSize: "1.2rem",
                 fontFamily: "Overpass, Arial, sans-serif",
                 color: "#444b59",
-                marginRight: "2rem",
+                marginRight: "-20rem",
+                marginLeft: "18rem",
               }}
             >
               Describe Yourself
@@ -198,7 +197,7 @@ function Create_Acc() {
             id="sign-in"
             className="universal-button"
             type="submit"
-            style={{ marginLeft: "10rem", marginRight: "5rem" }}
+            style={{ marginLeft: "27rem", marginRight: "5rem" }}
           >
             Sign Up
           </button>

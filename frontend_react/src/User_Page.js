@@ -75,21 +75,10 @@ function User_Page() {
       >
         Create Group
       </button>
-      {/* <button
-        onClick={handleSettleExpensesClick}
-        className="universal-button"
-        style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
-      >
-        View your expenses
-      </button> */}
-      <br />
-      <br />
-      <br />
-      <br />
       <button
         onClick={handleLogoutClick}
         className="universal-button"
-        style={{ marginLeft: "25rem" }}
+        style={{ marginLeft: "1.5rem", marginRight: "5rem" }}
       >
         Log Out
       </button>

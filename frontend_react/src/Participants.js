@@ -1,3 +1,4 @@
+//Participants.js
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -8,44 +9,49 @@ function Participants() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const groupID = localStorage.getItem("selectedGroupId");
+  const userID = localStorage.getItem("userID");
   const groupName = localStorage.getItem("selectedGroupName");
 
   useEffect(() => {
     const fetchGroupMembers = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/sg/getMembers/${groupID}`);
-        const membersWithAdminStatus = await Promise.all(response.data.map(async member => {
-          try {
-            const isAdmin = await checkAdminStatus(member.user_id);
-            return { ...member, isAdmin };
-          } catch (error) {
-            console.error("Error checking admin status for member", member.id, error);
-            return { ...member, isAdmin: false };
-          }
-        }));
-        setMemberInfo(membersWithAdminStatus);
+        setMemberInfo(response.data); // Set memberInfo to response.data
       } catch (error) {
         setError("Failed to fetch members. Please try again.");
       }
     };
-
+  
     fetchGroupMembers();
   }, [groupID]);
-
-  const checkAdminStatus = async (user_id) => {
-    try {
-      const adminCheckResponse = await axios.get(`http://localhost:5000/api/sg/groups/${groupID}/user/${user_id}`);
-      if(adminCheckResponse.data.message === "He is the admin!"){
-        return true;
-      }else{
-        return false;
-      }
-    } catch (error) {
-      console.error("Error checking admin status for user ID", user_id, error);
-      return false;
-    }
-  };
-
+  
+  // const checkAdminStatus = async (userId) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:5000/api/sg/groups/${groupID}/user/${userId}`);
+  //     console.log(userId);
+  //     console.log("Admin status response:", response.data); // Log the response data
+  //      return response.data === "he is admin";
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 404) {
+  //       console.log("User is not an admin.");
+  //       return false;
+  //     } else {
+  //       console.error("Failed to check admin status:", error);
+  //       return null; // Return null for other error cases
+  //     }
+  //   }
+  // };
+ 
+  
+  // const handleRemoveMember = async (memberId) => {
+  //   try {
+  //     await axios.delete(`http://localhost:5000/api/sg/groups/${groupID}/admin/${userID}/remove/${memberId}`);
+  //     // Refresh group list after leaving the group
+  //     navigate("/Display_Groups");
+  //   } catch (error) {
+  //     setError("Failed to leave group. Please try again.");
+  //   }
+  // };
   const handleAddClick = () => {
     navigate("/Add_Participant");
   };
@@ -54,8 +60,6 @@ function Participants() {
     localStorage.removeItem("userID");
     navigate("/login_page");
   };
-
-  
 
   return (
     <div className="Participants">
@@ -66,15 +70,18 @@ function Participants() {
       <br />
       <br />
       <div className="group-members">
-        <h3>Group Members:</h3>
+        <h2>Group Members:</h2>
         {memberInfo.length > 0 ? (
           <ul>
-            {memberInfo.map((member, index) => (
-              <li key={index}>
-                {member.name} {member.isAdmin ? <span>(Admin)</span> : null}
-              </li>
-            ))}
-          </ul>
+          {memberInfo.map((member, index) => (
+            <li className="expense-list" style={{fontSize: "1.5rem", paddingBottom: "1rem"}} key={index}>
+              {member.name} 
+              {/* {member.user_id}  
+               {checkAdminStatus(member.user_id) ? "(Admin)" : "(Participant)"} */}
+               {/* <button className="universal-button" onClick={handleRemoveMember(member.user_id)}>Remove Member</button> */}
+            </li>
+          ))}
+        </ul>
         ) : (
           <p>No members found.</p>
         )}

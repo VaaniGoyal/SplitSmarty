@@ -1,8 +1,6 @@
 const { sign } = require("jsonwebtoken");
-
 const { User: _User } = require("../models");
 const User = _User;
-
 const SECRET_KEY = process.env.SECRET_KEY;
 
 async function createUser(req, res) {
@@ -87,14 +85,16 @@ async function logout(req, res) {
 async function getUserId(req, res) {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email, password: password } });
+    const user = await User.findOne({
+      where: { email: email, password: password },
+    });
     if (user) {
       res.json(user.user_id);
     } else {
       res.json("No user found");
     }
   } catch (error) {
-    console.error('Error retrieving user ID:', error);
+    console.error("Error retrieving user ID:", error);
     throw error;
   }
 }
@@ -154,4 +154,12 @@ async function deleteUser(req, res, next) {
   }
 }
 
-module.exports = { login, logout, createUser, updateUser, deleteUser, getUserById, getUserId };
+module.exports = {
+  login,
+  logout,
+  createUser,
+  updateUser,
+  deleteUser,
+  getUserById,
+  getUserId,
+};

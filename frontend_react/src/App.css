@@ -1,15 +1,22 @@
+
 body {
   background-image: url('images/background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  overflow: scroll;
   font-family: Arial, sans-serif;
   color: #333;
-  height: 100vh;
+  min-height: 100vh;
   margin-left: 5rem;
   line-height: 1rem;
+  overflow: auto; /* Enable scrolling */
+  background-attachment: fixed; /* Keep background fixed */
 }
+
+.content {
+  padding: 20px; /* Adjust padding to prevent content from being hidden behind the background */
+}
+
 .nav {
   color: #444b59;
 }
@@ -36,16 +43,23 @@ body {
 }
 
 .page-head-1 {
-  font-size: 5rem; /* Converted from 500% */
+  font-size: 1.5rem; /* Converted from 500% */
   font-family: 'Nunito', Arial, sans-serif;
-  color: #000f73;
-  margin-left: 0rem;
+  color: #444b59;
+  margin-left: 27rem;
+  font-weight: bold;
 }
 .page-head-2 {
   font-size: 5rem; /* Converted from 500% */
   font-family: 'Nunito', Arial, sans-serif;
   color: #000f73;
   margin-left: 20rem;
+}
+.page-head-3 {
+  font-size: 0.9rem; /* Converted from 500% */
+  font-family: 'Nunito', Arial, sans-serif;
+  color: #444b59;
+  margin-left: 27.5rem;
 }
 /* Input Styles */
 input[type="text"],
@@ -56,6 +70,7 @@ input[type="password"] {
   padding: 0.5rem; /* Converted from 8px */
   border: 0.0625rem solid #789ade; /* Converted from 1px */
   border-radius: 1rem; /* Converted from 100px */
+  margin-left: 23rem;
 }
 /*buttons*/
 .universal-button {
@@ -65,6 +80,16 @@ input[type="password"] {
   padding: 0.5rem 4rem; /* Increase padding for larger size */
   font-size: 1.2rem; /* Increase font size for larger size */
   border-radius: 5rem;
+}
+.universal-button-2 {
+  background-color: #8699da; /* Change background color to purple */
+  color: white; /* Change text color to white */
+  font-weight: bold;
+  padding: 1rem 1rem; /* Increase padding for larger size */
+  font-size: 1.2rem; /* Increase font size for larger size */
+  border-radius: 5rem;
+  margin-left: 20rem;
+  margin-top: -10rem;
 }
 
 .group-button {
@@ -105,4 +130,11 @@ button:hover {
 .normal-info p {
   margin-bottom: 2rem;
   color: #444b59; /* Change color as needed */
+}
+/* In your App.css file or any other CSS file where you define styles */
+.expense-list li {
+  font-family: 'Times New Roman', Times, serif; /* Change the font family to whatever you prefer */
+  font-size: 1rem; 
+  margin-left: 2rem;
+  margin-bottom: 2rem;
 }
