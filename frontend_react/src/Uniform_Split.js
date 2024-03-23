@@ -64,10 +64,10 @@ function Uniform_Split() {
         {
           amount: inputData.amount,
           type: inputData.type,
-          expenses: Array.from(participantShares.entries())
+          splitAmount: participantShares
         }
       );
-      // Handle success scenario
+      navigate("/Group_Page");
     } catch (error) {
       setError("Failed to add expense. Please try again.");
     }
@@ -92,9 +92,10 @@ function Uniform_Split() {
               name="amount"
               placeholder="amount"
               value={inputData.amount}
-              onChange={(e) =>
-                setInputData({ ...inputData, amount: e.target.value })
-              }
+              onChange={(e) => {
+                setInputData({ ...inputData, amount: e.target.value });
+              }}
+              
             />
             <br />
             <br />
@@ -147,5 +148,7 @@ function Uniform_Split() {
 }
 
 export default Uniform_Split;
+
+
 
 
