@@ -34,26 +34,24 @@ function NonUni_Split() {
   }, [groupID]);
 
   const handleExpenseChange = (userId, value) => {
-    const updatedExpenses = new Map(participantExpenses);
-    updatedExpenses.set(userId, value);
-    setParticipantExpenses(updatedExpenses);
+    setParticipantExpenses(prevExpenses => {
+      const updatedExpenses = new Map(prevExpenses);
+      updatedExpenses.set(userId, value);
+      return updatedExpenses;
+    });
   };
-
+  
   const handleAddExpense = async (amount, type, expensesMap) => {
     try {
       const response = await axios.post(
         `http://localhost:5000/api/exp/groups/${groupID}/expenses/${userID}`,
         {
-          amount,
-          type,
-          expenses: Array.from(expensesMap.entries()), // Convert map to array of [key, value] pairs
+          amount: amount,
+          type: type,
+          splitAmount: expensesMap
         }
       );
-      setSuccess(true);
-      // Redirect to Group Page after 2 seconds
-      setTimeout(() => {
-        navigate("/Group_Page") // Adjust the route as needed
-      }, 2000);
+      navigate("/Group_Page");
     } catch (error) {
       setError("Failed to add expense. Please try again.");
     }
@@ -136,4 +134,5 @@ function NonUni_Split() {
 }
 
 export default NonUni_Split;
+
 
