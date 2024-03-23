@@ -18,7 +18,7 @@ async function settleup(req, res) {
     for (const expenses of expense) {
       expenseIds.push(expenses.expense_id);
     }
-    
+
     const listSettle = [];
 
     for (const expenseId of expenseIds) {
@@ -31,7 +31,7 @@ async function settleup(req, res) {
           to_id: parseInt(splitExpense.to_id),
           share_expense: parseInt(splitExpense.share_expense),
         });
-      });      
+      });
     }
 
     const uniquePersons = new Set();
@@ -43,7 +43,9 @@ async function settleup(req, res) {
     const personIds = Array.from(uniquePersons);
     const N = personIds.length;
 
-    const graph = Array.from({ length: N }, () => Array.from({ length: N }, () => 0));
+    const graph = Array.from({ length: N }, () =>
+      Array.from({ length: N }, () => 0)
+    );
 
     listSettle.forEach((expense) => {
       const fromIndex = personIds.indexOf(expense.from_id);
@@ -51,13 +53,13 @@ async function settleup(req, res) {
       graph[fromIndex][toIndex] += expense.share_expense;
     });
 
-    const settle=[];
- 
+    const settle = [];
+
     function minCashFlow(graph) {
       var amount = Array.from({ length: N }, (_, i) => 0);
       for (p = 0; p < N; p++)
         for (i = 0; i < N; i++) amount[p] += graph[i][p] - graph[p][i];
-      
+
       minCashFlowRec(amount);
     }
 
@@ -69,7 +71,7 @@ async function settleup(req, res) {
       amount[mxCredit] -= min;
       amount[mxDebit] += min;
 
-      const x =[personIds[mxDebit], personIds[mxCredit], min];
+      const x = [personIds[mxDebit], personIds[mxCredit], min];
       settle.push(x);
       minCashFlowRec(amount);
     }
@@ -99,4 +101,13 @@ async function settleup(req, res) {
   }
 }
 
-module.exports = { settleup };
+// async function payment(req, res) {
+//   try {
+
+//   } catch (error) {
+//     console.error("Error", error);
+//     res.status(500).json({ error: "Failed" });
+//   }
+// }
+
+module.exports = { settleup, payment };

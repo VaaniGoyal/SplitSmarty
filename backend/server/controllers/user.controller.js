@@ -84,25 +84,6 @@ async function logout(req, res) {
   }
 }
 
-// async function getUsers(req, res, next) {
-//   try {
-//     const users = await User.findAll()
-//       .then((data) => {
-//         res.send(data);
-//       })
-//       .catch((err) => {
-//         res.status(500).send({
-//           message:
-//             err.message ||
-//             "Some error occured while getting user data. Please try again!",
-//         });
-//       });
-//     res.json(users);
-//   } catch (error) {
-//     next(error);
-//   }
-// }
-
 async function getUserId(req, res) {
   try {
     const { email, password } = req.body;
@@ -123,7 +104,7 @@ async function getUserById(req, res, next) {
     const userId = req.params.id;
     const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json(user.name);
     }
     res.json(user);
   } catch (error) {
