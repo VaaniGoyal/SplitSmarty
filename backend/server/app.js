@@ -6,7 +6,7 @@ const userRoutes = require("./routes/user.routes.js");
 const splitgroupRoutes = require("./routes/splitgroup.routes.js");
 const splitRoutes = require("./routes/split.routes.js");
 const cors = require("cors");
-const expenseRoutes = require("./routes/expense.routes.js");
+const moneyRoutes = require("./routes/money.routes.js");
 
 dotenv.config();
 const app = express();
@@ -29,7 +29,8 @@ async function ConnectToDatabaseAuthentication() {
 userRoutes(app);
 splitgroupRoutes(app);
 splitRoutes(app);
-expenseRoutes(app);
+moneyRoutes(app);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
