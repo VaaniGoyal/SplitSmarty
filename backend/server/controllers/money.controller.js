@@ -54,10 +54,12 @@ async function deleteExpense(req, res) {
   try {
     const expenseId = req.params.id;
 
-    const groupExpense = await GroupExpense.findOne({ where: { expense_id: expenseId }, });
+    const groupExpense = await GroupExpense.findOne({
+      where: { expense_id: expenseId },
+    });
     if (!groupExpense) {
       return res.status(404).json({ error: "Expense not found in group." });
-    }    
+    }
     await Expense.destroy({ where: { expense_id: expenseId } });
 
     const split = await Split.findAll({
@@ -72,9 +74,32 @@ async function deleteExpense(req, res) {
 
     res.status(200).json({ message: "Successfully deleted the expense." });
   } catch (error) {
-    console.error("Error deleting expense:", error);
     res.status(500).json({ error: "Failed to delete expense." });
   }
 }
 
-module.exports = { addExpense, deleteExpense };
+async function getGroupExpense(req, res) {
+  try {
+    const groupId = req.params.id;
+    const expenses = await GroupExpense.findAll({
+      where: {
+        group_id: groupId,
+      }
+    });
+    const expenseIds = expenses.map((expense) => expense.expense_id);
+    const listExpense = [];
+    for (const expenseId of expenseIds) {
+        const expenseInfo = await Expense.findOne({
+          where: {
+            expense_id: expenseId,
+          },
+        });
+        listExpense.push(expenseInfo);
+      }
+    res.status(200).json(listExpense);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get expense information." });
+  }
+}
+
+module.exports = { addExpense, deleteExpense, getGroupExpense };
