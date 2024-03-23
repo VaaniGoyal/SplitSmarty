@@ -10,13 +10,12 @@ function Uniform_Split() {
     type: "",
   });
   const [selectedParticipants, setSelectedParticipants] = useState([]);
-  const [participantShares, setParticipantShares] = useState(new Map());
+  const [participantShares, setParticipantShares] = useState({});
   const [members, setMembers] = useState([]);
   const [error, setError] = useState("");
   const userID = localStorage.getItem("userID");
   const groupID = localStorage.getItem("selectedGroupId");
   const groupName = localStorage.getItem("selectedGroupName");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -38,6 +37,7 @@ function Uniform_Split() {
       if (prevSelected.includes(userId)) {
         return prevSelected.filter((id) => id !== userId);
       } else {
+        // If the user is not selected, add them to the selected list
         return [...prevSelected, userId];
       }
     });
@@ -49,9 +49,9 @@ function Uniform_Split() {
       totalSelectedParticipants > 0
         ? (inputData.amount / totalSelectedParticipants).toFixed(2)
         : 0;
-    const updatedParticipantShares = new Map();
+    const updatedParticipantShares = {};
     selectedParticipants.forEach((id) => {
-      updatedParticipantShares.set(id, splitAmount);
+      updatedParticipantShares[id] = splitAmount;
     });
     setParticipantShares(updatedParticipantShares);
   }, [selectedParticipants, inputData.amount]);
@@ -62,19 +62,25 @@ function Uniform_Split() {
       const response = await axios.post(
         `http://localhost:5000/api/exp/groups/${groupID}/expenses/${userID}`,
         {
-          amount: inputData.amount,
-          type: inputData.type,
-          splitAmount: participantShares
+          ...inputData,
+          participants: selectedParticipants,
+          splitAmount: participantShares 
         }
       );
       navigate("/Group_Page");
     } catch (error) {
+      setError("Failed to add expense. Please try again.");
       setError("Failed to add expense. Please try again.");
     }
   };
 
   return (
     <div className="Uniform_Split">
+      <br />
+      <p>
+        <span className="page-head-1">{groupName}</span>
+      </p>
+      <br />
       <br />
       <p>
         <span className="page-head-1">{groupName}</span>
@@ -115,6 +121,66 @@ function Uniform_Split() {
             />
             <br />
             <br />
+            <label htmlFor="amount" className="normal-info">
+              Amount
+            </label>
+            <input
+              type="number"
+              name="amount"
+              placeholder="amount"
+              value={inputData.amount}
+              onChange={(e) =>
+                setInputData({ ...inputData, amount: e.target.value })
+              }
+            />
+            <br />
+            <br />
+          </div>
+          <div>
+            <label htmlFor="type" className="normal-info">
+              Type
+            </label>
+            <input
+              type="text"
+              name="type"
+              placeholder="type"
+              value={inputData.type}
+              onChange={(e) =>
+                setInputData({ ...inputData, type: e.target.value })
+              }
+            />
+            <br />
+            <br />
+            <label htmlFor="amount" className="normal-info">
+              Amount
+            </label>
+            <input
+              type="number"
+              name="amount"
+              placeholder="amount"
+              value={inputData.amount}
+              onChange={(e) =>
+                setInputData({ ...inputData, amount: e.target.value })
+              }
+            />
+            <br />
+            <br />
+          </div>
+          <div>
+            <label htmlFor="type" className="normal-info">
+              Type
+            </label>
+            <input
+              type="text"
+              name="type"
+              placeholder="type"
+              value={inputData.type}
+              onChange={(e) =>
+                setInputData({ ...inputData, type: e.target.value })
+              }
+            />
+            <br />
+            <br />
           </div>
           <div>
             <h3>Select Participants:</h3>
@@ -130,13 +196,16 @@ function Uniform_Split() {
                 <label htmlFor={`${member.user_id}`}>{member.name}</label>
                 <input
                   type="text"
-                  value={participantShares.get(member.user_id) || ""}
+                  value={participantShares[member.user_id] || ""}
                   readOnly
                 />
               </div>
             ))}
           </div>
           <div>
+            <button type="submit" className="universal-button">
+              Add Expense
+            </button>
             <button type="submit" className="universal-button">
               Add Expense
             </button>
@@ -148,7 +217,3 @@ function Uniform_Split() {
 }
 
 export default Uniform_Split;
-
-
-
-

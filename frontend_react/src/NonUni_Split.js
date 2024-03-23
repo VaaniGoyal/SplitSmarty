@@ -25,6 +25,7 @@ function NonUni_Split() {
           `http://localhost:5000/api/sg/getMembers/${groupID}`
         );
         setMembers(response.data);
+        setMembers(response.data);
       } catch (error) {
         setError("Failed to fetch members. Please try again.");
       }

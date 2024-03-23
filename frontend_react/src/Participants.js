@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -18,8 +17,7 @@ function Participants() {
         const membersWithAdminStatus = await Promise.all(response.data.map(async member => {
           try {
             const isAdmin = await checkAdminStatus(member.user_id);
-             return { ...member, isAdmin: true};
-            
+            return { ...member, isAdmin };
           } catch (error) {
             console.error("Error checking admin status for member", member.id, error);
             return { ...member, isAdmin: false };
@@ -57,6 +55,8 @@ function Participants() {
     navigate("/login_page");
   };
 
+  
+
   return (
     <div className="Participants">
       <br />
@@ -71,7 +71,7 @@ function Participants() {
           <ul>
             {memberInfo.map((member, index) => (
               <li key={index}>
-                {member.name} {member.isAdmin ? <span>(Admin)</span> : <span></span>}
+                {member.name} {member.isAdmin ? <span>(Admin)</span> : null}
               </li>
             ))}
           </ul>
@@ -102,4 +102,3 @@ function Participants() {
 }
 
 export default Participants;
-

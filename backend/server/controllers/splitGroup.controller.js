@@ -169,19 +169,20 @@ async function deleteGroup(req, res, next) {
 }
 
 
-async function checkAdmin(req, res, next){
-  try{
+async function checkAdmin(req, res, next) {
+  try {
     const { group_id: groupId, user_id: userId } = req.params;
-    const check = await AdminGroup.findOne({ admin_id: userId, group_id: groupId });
-    if(!check){
-      res.status(404).json({ error: "Cannot find the admin" });
+    const check = await AdminGroup.findOne({ where: { admin_id: userId, group_id: groupId } });
+    if (!check) {
+      return res.status(404).json({ error: "Cannot find the admin" });
     }
-    res.status(401).json({ message: "He is the admin!"});
-  }catch(error){
-    console.error("Error checking.", error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(200).json({ message: "He is the admin!" });
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }
+
 
 module.exports = {
   createSplitGroup,
