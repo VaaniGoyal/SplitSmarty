@@ -142,7 +142,12 @@ async function addNewMember(req, res) {
 
 async function deleteGroup(req, res, next) {
   try {
-    const groupId = req.params.id;
+    const { group_id: groupId, user_id: userId} = req.params;
+
+    const check = await AdminGroup.findOne({where:{ admin_id: userId, group_id: groupId}});
+    if(!check){
+      res.status(201).json({error: "You are not the Admin"});
+    }
     const groupExpenses = await GroupExpense.findAll({ where: { group_id: groupId } });
 
     const expenseIds = groupExpenses.map(expense => expense.expense_id);
@@ -156,9 +161,11 @@ async function deleteGroup(req, res, next) {
     await Member.destroy({ where: { group_id: groupId } });
     await SplitGroup.destroy({ where: { group_id: groupId } });
 
-    console.log("SplitGroup and related records deleted successfully");
+    res.status(200).json({message: "SplitGroup and related records deleted successfully"});
+    console.log("done");
   } catch (error) {
-    console.error("Error deleting SplitGroup:", error);
+    res.status(404).json({error: "Error deleting SplitGroup"});
+    console.log("error");
     throw new Error("Failed to delete SplitGroup and related records");
   }
 }
