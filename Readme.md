@@ -28,8 +28,6 @@ SplitSmarty offers the following key features to effectively manage group expens
 SplitSmarty is built using the following technology stack:
 
 - **Frontend**:
-  - HTML
-  - CSS
   - JavaScript (React.js)
 - **Backend**:
   - Node.js
